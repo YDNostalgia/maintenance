@@ -19,15 +19,21 @@
     <context:component-scan base-package="com.gxa.controller,com.gxa.exceptionhandler,com.gxa.config"/>
     <mvc:annotation-driven conversion-service="conversionService"/>
 
+
     <!--    开启注解-->
 <!--    <mvc:annotation-driven/>-->
+
+
+
+<!--    配置跳转路径-->
+<!--    <mvc:view-controller path="/index.html" view-name="login"/>-->
+<!--    <mvc:view-controller path="/login.html" view-name="login"/>-->
 
 
 <!--    静态资源映射-->
 <!--    <mvc:resources mapping="/asserts/**" location="/asserts/"></mvc:resources>-->
     <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
-
 
     <!-- 转换器配置 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
@@ -67,6 +73,5 @@
     <!--启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用-->
 <!--    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
 <!--          depends-on="lifecycleBeanPostProcessor"/>-->
-
 
 </beans>
