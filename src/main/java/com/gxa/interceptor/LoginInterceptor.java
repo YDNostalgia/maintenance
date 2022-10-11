@@ -1,6 +1,5 @@
 package com.gxa.interceptor;
 
-import com.gxa.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
