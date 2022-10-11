@@ -1,4 +1,4 @@
-package com.gxa.util;
+package com.gxa.utils;
 
 public class TableResult {
     private Integer code;

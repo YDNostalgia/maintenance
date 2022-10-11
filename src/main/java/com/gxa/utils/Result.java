@@ -1,4 +1,4 @@
-package com.gxa.util;
+package com.gxa.utils;
 
 public class Result {
     private Integer code;
