@@ -1,5 +1,6 @@
 package com.gxa.controller;
 
+import com.gxa.dto.EquipmentManagementDto;
 import com.gxa.entity.EquipmentManagement;
 import com.gxa.service.EquipmentManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class EquipmentManagementController {
 
     @ResponseBody
     @RequestMapping("/equipment")
-    public List<EquipmentManagement> listEquipment(){
+    public List<EquipmentManagement> listEquipment(EquipmentManagementDto equipmentManagementDto){
+
              List<EquipmentManagement> equipmentManagements=this.equipmentManagementService.queryAll();
              System.out.println(equipmentManagements);
              return equipmentManagements;
