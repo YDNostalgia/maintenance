@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.PersonalMapper">
+    <resultMap id="personalResultMap" type="personal">
+        <result property="pname" column="pname"/>
+        <result property="pdept" column="pdept"/>
+        <result property="pjob" column="pjob"/>
+        <result property="pclass" column="pclass"/>
+    </resultMap>
+    <select id="queryAll" resultMap="personalResultMap">
+        SELECT p.pname,p.pdept,p.pjob,p.pclass FROM p_list p
+    </select>
+</mapper>

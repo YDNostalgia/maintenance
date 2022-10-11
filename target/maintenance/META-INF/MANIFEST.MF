@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
 Built-By: FengYin
 Build-Jdk: Oracle OpenJDK version 1.8.0_331
 
+=======
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: 刘浩
+Build-Jdk: Oracle OpenJDK version 1.8.0_333
+
+>>>>>>> 9b75fe9d34c0bac4a3b674f3c4d3436ffc6f0677

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -13,4 +14,22 @@
     </typeAliases>
 
 
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+<!--        显示sql语句 此行配置如果删除 则不在后台显示SQL语句-->
+        <setting name="logImpl" value="STDOUT_lOGGING"/>
+    </settings>
+
+<!--        开启别名-->
+    <typeAliases>
+        <package name="com.gxa.entity"/>
+    </typeAliases>
+
+
+>>>>>>> 9b75fe9d34c0bac4a3b674f3c4d3436ffc6f0677
 </configuration>
