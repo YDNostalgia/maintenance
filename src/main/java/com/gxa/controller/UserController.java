@@ -2,6 +2,9 @@ package com.gxa.controller;
 
 import com.gxa.entity.User;
 import com.gxa.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -9,16 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
+@Api(value = "用户信息")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/user/login")
+    @ApiOperation("用户列表")
     public String login(User user, HttpSession session){
 
         System.out.println(user);
