@@ -29,6 +29,7 @@ public class EquipmentManagementController {
              Integer count=this.equipmentManagementService.queryCount(equipmentManagementDto);
              List<EquipmentManagement> equipmentManagements=this.equipmentManagementService.queryAll(equipmentManagementDto);
              R r=new R();
+             //1
              r.put("count",count);
              r.put("data",equipmentManagements);
              return r;
