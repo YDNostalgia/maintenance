@@ -10,7 +10,7 @@
                             http://www.springframework.org/schema/mvc
                             http://www.springframework.org/schema/mvc/spring-mvc.xsd
                              ">
-<!--    配置事务解析器-->
+    <!--        视图解析器 将一个视图解析放到ioc的容器中-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
@@ -19,19 +19,22 @@
     <context:component-scan base-package="com.gxa.controller,com.gxa.exceptionhandler,com.gxa.config"/>
     <mvc:annotation-driven conversion-service="conversionService"/>
 
+
     <!--    开启注解-->
 <!--    <mvc:annotation-driven/>-->
+
+
 
 <!--    配置跳转路径-->
 <!--    <mvc:view-controller path="/index.html" view-name="login"/>-->
 <!--    <mvc:view-controller path="/login.html" view-name="login"/>-->
 
+
 <!--    静态资源映射-->
 <!--    <mvc:resources mapping="/asserts/**" location="/asserts/"></mvc:resources>-->
-    <bean class="com.gxa.config.SwaggerConfig"/>
-
     <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+
     <!-- 转换器配置 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
@@ -60,16 +63,15 @@
         allowed-methods：允许请求方式(GET\POST\HEAD)
         allowed-origins：允许源(http://domain2.com)
 -->
-<!--    <mvc:cors>-->
-<!--        <mvc:mapping path="/**" allow-credentials="true" allowed-headers="*" allowed-methods="*" allowed-origins="*"/>-->
-<!--    </mvc:cors>-->
+    <mvc:cors>
+        <mvc:mapping path="/**" />
+    </mvc:cors>
 
 
     <!--配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法-->
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+<!--    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
     <!--启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用-->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor"/>
-
+<!--    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
+<!--          depends-on="lifecycleBeanPostProcessor"/>-->
 
 </beans>

@@ -4,7 +4,6 @@ import com.gxa.dto.EquipmentManagementDto;
 import com.gxa.entity.EquipmentManagement;
 import com.gxa.mapper.EquipmentManagementMapper;
 import com.gxa.service.EquipmentManagementService;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
