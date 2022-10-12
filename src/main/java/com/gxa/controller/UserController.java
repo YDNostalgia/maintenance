@@ -38,14 +38,8 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
 
         try{
-
-            if(subject.isAuthenticated()){
-                User user1 = (User)subject.getPrincipal();
-                System.out.println("登陆成功！！！");
+            subject.login(token);
                 return "redirect:/main.html";
-            }else {
-                return "redirect:/index.html";
-            }
 
         }catch (Exception e){
             e.printStackTrace();
