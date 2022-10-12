@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.StatuteMapper">
+
+    <resultMap id="statuteTypeResultMap" type="statuteType">
+        <id property="statuteTypeId" column="statute_type_id"/>
+        <result property="statuteTypeName" column="statute_type_name"/>
+        <result property="statuteTypeUpdateTime" column="statute_type_update_time"/>
+    </resultMap>
+
+    <resultMap id="statuteResultMap" type="statute">
+        <id property="statuteId" column="statute_id"/>
+        <result property="statuteName" column="statute_name"/>
+        <result property="details" column="details"/>
+        <result property="statuteUpdateTime" column="statute_update_time"/>
+        <result property="fileAddress" column="fileAddress"/>
+        <association property="statuteType" resultMap="statuteTypeResultMap"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="statuteResultMap">
+        SELECT s.statute_id,s.statute_name,s.details,s.statute_update_time,s.fileAddress,st.statute_type_id,st.statute_type_name,st.statute_type_update_time
+        FROM statute s,statute_type st
+        WHERE s.statute_type_id = st.statute_type_id
+    </select>
+</mapper>
