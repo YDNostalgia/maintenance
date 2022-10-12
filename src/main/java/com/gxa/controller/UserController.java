@@ -26,6 +26,12 @@ public class UserController {
 
         System.out.println(user);
 
+         //这里会把生成的jwt返回
+//        String jwt = jwtLoginService.login(usr);
+//        //如果jwt为空，说明用户未登录，直接返回个错误
+//        if (jwt==null||"".equals(jwt)){
+//            return ReturnResult.error();
+//        }
 
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
         Subject subject = SecurityUtils.getSubject();
