@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "法规")
 public class Statute {
-    @ApiModelProperty (value = "法规编号",name = "id")
+    @ApiModelProperty (value = "法规编号",name = "statuteId")
     private Integer statuteId;
     @ApiModelProperty (value = "法规名称",name = "statuteName")
     private String statuteName;
