@@ -48,6 +48,7 @@
                 /** = anon
                 /docs=anon
                 /swagger-ui.html=anon
+                /docs.html=anon
                 /webjars/springfox-swagger-ui/**=anon
                 /swagger-resources/**=anon
                 /v2/api-docs=anon

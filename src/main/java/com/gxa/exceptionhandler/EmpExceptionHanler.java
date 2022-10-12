@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-//@Component
-//@ControllerAdvice
+@Component
+@ControllerAdvice
 public class EmpExceptionHanler {
 
     @ExceptionHandler(value = Exception.class)

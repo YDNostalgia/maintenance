@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EquipmentManagementService {
     List<EquipmentManagement> queryAll(EquipmentManagementDto equipmentManagementDto);
+    Integer queryCount(EquipmentManagementDto equipmentManagementDto);
 }

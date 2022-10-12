@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EquipmentManagementMapper {
     List<EquipmentManagement> queryAllEquipmentManagement(EquipmentManagementDto equipmentManagementDto);
+    Integer queryConut(EquipmentManagementDto equipmentManagementDto);
 }

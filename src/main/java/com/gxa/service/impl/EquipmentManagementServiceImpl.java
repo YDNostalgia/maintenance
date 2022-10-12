@@ -1,9 +1,9 @@
 package com.gxa.service.impl;
 
-import com.gxa.dto.EquipmentManagementDto;
 import com.gxa.entity.EquipmentManagement;
 import com.gxa.mapper.EquipmentManagementMapper;
 import com.gxa.service.EquipmentManagementService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,14 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     @Autowired
     private EquipmentManagementMapper equipmentManagementMapper;
     @Override
-    public List<EquipmentManagement> queryAll(EquipmentManagementDto equipmentManagementDto) {
-        List<EquipmentManagement> equipmentManagements=this.equipmentManagementMapper.queryAllEquipmentManagement(equipmentManagementDto);
+    public List<EquipmentManagement> queryAll() {
+        List<EquipmentManagement> equipmentManagements=this.equipmentManagementMapper.queryAllEquipmentManagement();
         return equipmentManagements;
+    }
+
+    @Override
+    public Integer queryCount(EquipmentManagementDto equipmentManagementDto) {
+         Integer count=this.equipmentManagementMapper.queryConut(equipmentManagementDto);
+        return count;
     }
 }
