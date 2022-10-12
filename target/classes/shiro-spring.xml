@@ -47,7 +47,7 @@
                 /user/login = anon
                 /logout = logout
 <!--                /emps = perms[emp:list]-->
-                /** = anon
+                /** = authc
                 /docs=anon
                 /swagger-ui.html=anon
                 /webjars/springfox-swagger-ui/**=anon
