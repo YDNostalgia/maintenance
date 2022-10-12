@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -19,4 +20,39 @@
         FROM equipment_managment e1,equipmentclassification e2,equipmentname e3,storage_location s,use_units u
         WHERE e1.equipmentclassification_id=e2.id and e1.equipmentname_id=e3.id and e1.useunits_id=u.id and e1.storagelocation_id=s.id
     </select>
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.EquipmentManagementMapper">
+    <resultMap id="equipmentManagementMap" type="equipmentManagement">
+        <id property="id" column="id"></id>
+        <result property="equipmentName" column="equipment_name"></result>
+        <result property="equipmentclassificationName" column="e2.equipmentclassification_name"></result>
+        <result property="state" column="state"></result>
+        <result property="price" column="price"></result>
+        <result property="modalities" column="modalities"></result>
+        <result property="useunitsName" column="useunits_name"></result>
+        <result property="storagelocationName" column="storagelocation_name"></result>
+        <result property="responsiblePerson" column="responsible_person"></result>
+    </resultMap>
+    <select id="queryAllEquipmentManagement" resultMap="equipmentManagementMap" parameterType="equipmentManagementDto" >
+        SELECT e1.id,e3.equipment_name,e2.equipmentclassification_name,e1.state,e1.price,e1.modalities,u.useunits_name,s.storagelocation_name,e1.responsible_person
+        FROM equipment_managment e1,equipmentclassification e2,equipmentname e3,storage_location s,use_units u
+        WHERE e1.equipmentclassification_id=e2.id and e1.equipmentname_id=e3.id and e1.useunits_id=u.id and e1.storagelocation_id=s.id
+        <if test="id != null and id!=''">
+            AND e1.id=#{id}
+        </if>
+        <if test="equipmentclassification_id != null and equipmentclassification_id!=''">
+            AND e2.id=#{id}
+        </if>
+        <if test="modalities != null and modalities!=''">
+            AND e1.modalities=#{modalities}
+        </if>
+        <if test="state != null and state!=''">
+            AND e1.state=#{state}
+        </if>
+    </select>
+>>>>>>> 8cb43eeaff3eef78d25ec6fce6fa374e1a7e813d
 </mapper>
