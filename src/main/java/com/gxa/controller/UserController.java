@@ -25,23 +25,22 @@ public class UserController {
     public String login(@RequestBody User user, HttpSession session){
 
         System.out.println(user);
-
-         //这里会把生成的jwt返回
-//        String jwt = jwtLoginService.login(usr);
+//
+////         这里会把生成的jwt返回
+//        String jwt = jwtLoginService.login(user);
 //        //如果jwt为空，说明用户未登录，直接返回个错误
-//        if (jwt==null||"".equals(jwt)){
-//            return ReturnResult.error();
-//        }
+////        if (jwt==null||"".equals(jwt)){
+////            return R.error();
+////        }
+
 
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
         Subject subject = SecurityUtils.getSubject();
 
         try{
-
             subject.login(token);
-            //登录成功
+                return "redirect:/main.html";
 
-            return "redirect:/main.html";
         }catch (Exception e){
             e.printStackTrace();
             //登录失败
