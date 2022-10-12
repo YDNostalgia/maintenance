@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class EquipmentManagementDto {
     private Integer id;
-    private Integer equipmentclassification_id;
+    private Integer equipmentclassificationId;
     private String modalities;
     private String state;
 
@@ -13,7 +13,7 @@ public class EquipmentManagementDto {
     public String toString() {
         return "EquipmentManagementDto{" +
                 "id=" + id +
-                ", equipmentclassification_id=" + equipmentclassification_id +
+                ", equipmentclassification_id=" + equipmentclassificationId +
                 ", modalities='" + modalities + '\'' +
                 ", state=" + state +
                 '}';

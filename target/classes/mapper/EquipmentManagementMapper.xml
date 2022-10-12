@@ -22,7 +22,7 @@
             AND e1.id=#{id}
         </if>
         <if test="equipmentclassification_id != null and equipmentclassification_id!=''">
-            AND e2.id=#{id}
+            AND e2.id=#{equipmentclassification_id}
         </if>
         <if test="modalities != null and modalities!=''">
             AND e1.modalities=#{modalities}
