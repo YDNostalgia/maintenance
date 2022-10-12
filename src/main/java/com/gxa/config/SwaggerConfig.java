@@ -16,7 +16,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("webapi")
+//                .groupName("webapi")
                 .apiInfo(apiInfo())
                 .enable(true)
                 .select()
