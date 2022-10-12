@@ -2,7 +2,9 @@ package com.gxa.service.impl;
 
 import com.gxa.entity.Personal;
 import com.gxa.entity.PersonalDept;
+import com.gxa.entity.PersonalJob;
 import com.gxa.mapper.PersonalDeptMapper;
+import com.gxa.mapper.PersonalJobMapper;
 import com.gxa.mapper.PersonalMapper;
 import com.gxa.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class PersonalServiceImpl implements PersonalService {
     @Autowired
     private PersonalDeptMapper personalDeptMapper;
 
+    @Autowired
+    private PersonalJobMapper personalJobMapper;
+
     @Override
     public List<Personal> queryAllPersonal() {
         List<Personal> personals = this.personalMapper.queryAllPersonal();
@@ -29,5 +34,11 @@ public class PersonalServiceImpl implements PersonalService {
     public List<PersonalDept> queryAllPersonalDept() {
         List<PersonalDept> personalDepts = this.personalDeptMapper.queryAllPersonalDept();
         return personalDepts;
+    }
+
+    @Override
+    public List<PersonalJob> queryAllPersonalJob() {
+        List<PersonalJob> personalJobs = this.personalJobMapper.queryAllPersonalJob();
+        return personalJobs;
     }
 }

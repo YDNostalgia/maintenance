@@ -33,7 +33,7 @@
 <!--    静态资源映射-->
 <!--    <mvc:resources mapping="/asserts/**" location="/asserts/"></mvc:resources>-->
     <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
-    <mvc:resources location="classpath:/META-INF/resources/" mapping="docs.html"/>
+<!--    <mvc:resources location="classpath:/META-INF/resources/" mapping="docs.html"/>-->
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
 
     <!-- 转换器配置 -->

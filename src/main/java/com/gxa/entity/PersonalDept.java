@@ -8,7 +8,7 @@ import lombok.Data;
 @ApiModel("部门信息")
 public class PersonalDept {
 
-    @ApiModelProperty(value = "部门id",name = "id")
+    @ApiModelProperty(value = "部门id")
     private Integer id;
     @ApiModelProperty(value = "部门",name = "pdept")
     private String pdept;
