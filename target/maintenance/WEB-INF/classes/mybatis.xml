@@ -11,6 +11,7 @@
 <!--        开启别名-->
     <typeAliases>
         <package name="com.gxa.entity"/>
+        <package name="com.gxa.dto"/>
     </typeAliases>
 
 

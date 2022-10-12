@@ -18,4 +18,10 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
         List<EquipmentManagement> equipmentManagements=this.equipmentManagementMapper.queryAllEquipmentManagement(equipmentManagementDto);
         return equipmentManagements;
     }
+
+    @Override
+    public Integer queryCount(EquipmentManagementDto equipmentManagementDto) {
+         Integer count=this.equipmentManagementMapper.queryConut(equipmentManagementDto);
+        return count;
+    }
 }

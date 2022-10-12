@@ -7,7 +7,7 @@ public class EquipmentManagementDto {
     private Integer id;
     private Integer equipmentclassification_id;
     private String modalities;
-    private Integer state;
+    private String state;
 
     @Override
     public String toString() {

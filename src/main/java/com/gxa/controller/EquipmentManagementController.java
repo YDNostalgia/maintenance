@@ -28,7 +28,8 @@ public class EquipmentManagementController {
     public TableResult listEquipment(EquipmentManagementDto equipmentManagementDto){
         //System.out.println(equipmentManagementDto);
              List<EquipmentManagement> equipmentManagements=this.equipmentManagementService.queryAll(equipmentManagementDto);
-        TableResult tableResult =new TableResult(0,"成功",4,equipmentManagements);
+             Integer count=this.equipmentManagementService.queryCount(equipmentManagementDto);
+        TableResult tableResult =new TableResult(0,"成功",count,equipmentManagements);
              //System.out.println(tableResult);
              return tableResult;
     }

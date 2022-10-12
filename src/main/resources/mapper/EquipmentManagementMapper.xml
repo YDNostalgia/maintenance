@@ -31,4 +31,21 @@
             AND e1.state=#{state}
         </if>
     </select>
+    <select id="queryConut" resultType="java.lang.Integer" parameterType="equipmentManagementDto">
+        SELECT count(e1.id)
+        FROM equipment_managment e1,equipmentclassification e2,equipmentname e3,storage_location s,use_units u
+        WHERE e1.equipmentclassification_id=e2.id and e1.equipmentname_id=e3.id and e1.useunits_id=u.id and e1.storagelocation_id=s.id
+        <if test="id != null and id!=''">
+            AND e1.id=#{id}
+        </if>
+        <if test="equipmentclassification_id != null and equipmentclassification_id!=''">
+            AND e2.id=#{equipmentclassification_id}
+        </if>
+        <if test="modalities != null and modalities!=''">
+            AND e1.modalities=#{modalities}
+        </if>
+        <if test="state != null and state!=''">
+            AND e1.state=#{state}
+        </if>
+    </select>
 </mapper>
