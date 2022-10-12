@@ -27,6 +27,7 @@ public class EquipmentManagementController {
     @ApiOperation("装备查询")
     public TableResult listEquipment(EquipmentManagementDto equipmentManagementDto){
         //System.out.println(equipmentManagementDto);
+        //1
              List<EquipmentManagement> equipmentManagements=this.equipmentManagementService.queryAll(equipmentManagementDto);
              Integer count=this.equipmentManagementService.queryCount(equipmentManagementDto);
         TableResult tableResult =new TableResult(0,"成功",count,equipmentManagements);
