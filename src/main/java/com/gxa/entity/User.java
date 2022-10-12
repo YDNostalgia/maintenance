@@ -9,15 +9,52 @@ import lombok.Data;
 public class User {
     @ApiModelProperty("编号id")
     private Integer id;
-    @ApiModelProperty("用户名userName")
+    @ApiModelProperty("userName")
     private String userName;
-    @ApiModelProperty("密码pwd")
+    @ApiModelProperty("pwd")
     private String pwd;
-    @ApiModelProperty("盐值salt")
+    @ApiModelProperty("salt")
     private String salt;
-    @ApiModelProperty("电话phoneNumber")
-    private String phoneNumber;
-    @ApiModelProperty("添加时间addTime")
-    private Data addTime;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 }
