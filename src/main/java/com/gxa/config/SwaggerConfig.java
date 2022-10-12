@@ -26,8 +26,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("XXX项目接口文档")
-                .description("XXX项目接口测试")
+                .title("维修管理系统接口文档")
+                .description("维修管理系统接口测试")
                 .version("1.0.0")
                 .contact(new Contact("作者名字", "https://www.baidu.com", "邮箱"))
                 .termsOfServiceUrl("")
