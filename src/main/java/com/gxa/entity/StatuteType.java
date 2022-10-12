@@ -18,6 +18,8 @@ public class StatuteType {
     private Integer statuteTypeId;
     @ApiModelProperty(value = "法规类型名称",name = "statuteTypeName")
     private String statuteTypeName;
+    @ApiModelProperty(value = "法规条数",name = "numberOfDocuments")
+    private Integer numberOfDocuments;
     @ApiModelProperty(value = "更新时间",name = "updateTime")
     private Date updateTime;
 }

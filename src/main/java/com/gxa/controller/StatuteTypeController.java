@@ -1,38 +1,37 @@
 package com.gxa.controller;
 
-import com.gxa.dto.StatuteDto;
+import com.gxa.dto.StatuteTypeDto;
 import com.gxa.entity.Statute;
+import com.gxa.entity.StatuteType;
 import com.gxa.service.StatuteService;
+import com.gxa.service.StatuteTypeService;
 import com.gxa.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@Api("法规")
-public class StatuteController {
+@Api("法规类型")
+public class StatuteTypeController {
 
     @Autowired
-    private StatuteService statuteService;
+    private StatuteTypeService statuteTypeService;
     @ApiOperation("查询法规")
-    @GetMapping("/statute")
-    public R list(@RequestBody StatuteDto statuteDto){
+    @GetMapping("/statuteType")
+    public R list(@RequestBody StatuteTypeDto statuteTypeDto){
         R r;
-//        List<Statute> statutes = this.statuteService.queryAll();
-        Integer limit = statuteDto.getLimit();
-        Integer page = statuteDto.getPage();
-        List<Statute> statutes = this.statuteService.queryAll();
+        Integer limit = statuteTypeDto.getLimit();
+        Integer page = statuteTypeDto.getPage();
 
-        if (statutes != null){
+        List<StatuteType> statuteTypes = statuteTypeService.queryAll();
+        if (statuteTypes != null){
             r = R.ok();
-            r.put("data",statutes);
+            r.put("data",statuteTypes);
             r.put("count",20);
             return r;
         }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.StatuteTypeMapper">
+
+    <resultMap id="statuteTypeResultMap" type="statuteType">
+        <id property="statuteTypeId" column="statute_type_id"/>
+        <result property="statuteTypeName" column="statute_type_name"/>
+        <result property="numberOfDocuments" column="total"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="statuteTypeResultMap">
+
+        SELECT st.statute_type_id,st.statute_type_name,st.update_time,v.total
+        FROM statute_type st,(SELECT s.statute_type_id,count(s.statute_type_id) total
+                              FROM statute s
+                              GROUP BY s.statute_type_id) v
+        WHERE st.statute_type_id = v.statute_type_id
+
+    </select>
+
+</mapper>
