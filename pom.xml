@@ -132,17 +132,6 @@
       <version>${servlet.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.5.10</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
-      <version>4.4.12</version>
-    </dependency>
 
     <!--以下json依赖jackson-->
     <dependency>
@@ -221,6 +210,21 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>${swagger.version}</version>
     </dependency>
+
+
+    <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.5.10</version>
+    </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+  <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpcore</artifactId>
+    <version>4.4.12</version>
+  </dependency>
+
 
   </dependencies>
 

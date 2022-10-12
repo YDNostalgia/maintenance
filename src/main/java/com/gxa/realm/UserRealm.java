@@ -34,6 +34,7 @@ public class UserRealm extends AuthorizingRealm {
 
         //三个参数：1、当前登录的这个用户  2、从数据库中查询的密码  3、realm的名字
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,user.getPwd(),salt,this.getName());
+        System.out.println("----------"+authenticationInfo);
         return authenticationInfo;
     }
 
