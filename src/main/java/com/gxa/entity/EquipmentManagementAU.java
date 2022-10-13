@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("装备实体")
-public class EquipmentManagement {
+@ApiModel("装备添加修改的实体")
+public class EquipmentManagementAU {
     @ApiModelProperty("装备编号")
     private Integer id;
 
     @ApiModelProperty("装备名称")
-    private  EquipmentName equipmentName;
+    private  Integer equipmentNameId;
 
     @ApiModelProperty("装备分类")
-    private  EquipmentClass equipmentClass;
+    private  Integer equipmentClassId;
 
     @ApiModelProperty("装备状态_ 0:正常  1：维修中  2:停用")
     private  Integer state;
@@ -30,10 +30,10 @@ public class EquipmentManagement {
     private  Integer modalities;
 
     @ApiModelProperty("使用单位")
-    private  Useunits useunits;
+    private  Integer useunitsId;
 
     @ApiModelProperty("存放位置")
-    private  StorageLocation storageLocation;
+    private  Integer storageLocationId;
 
     @ApiModelProperty("责任人")
     private  String responsiblePerson;

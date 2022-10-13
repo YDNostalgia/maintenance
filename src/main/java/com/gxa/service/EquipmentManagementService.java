@@ -12,5 +12,7 @@ public interface EquipmentManagementService {
     List<EquipmentName> queryEquipmentName();
     List<Useunits> queryEquiUseunits();
     List<StorageLocation> queryEquipStorageLocation();
-
+    void addEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
+    void updateEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
+    void deleteEquipmentManagement(Integer id);
 }
