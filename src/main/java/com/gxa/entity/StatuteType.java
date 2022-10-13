@@ -21,5 +21,5 @@ public class StatuteType {
     @ApiModelProperty(value = "法规条数",name = "numberOfDocuments")
     private Integer numberOfDocuments;
     @ApiModelProperty(value = "更新时间",name = "updateTime")
-    private Date updateTime;
+    private Date statuteTypeUpdateTime;
 }

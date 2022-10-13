@@ -17,7 +17,7 @@ public class EquipmentManagement {
     private  String equipmentName;
 
     @ApiModelProperty("装备分类")
-    private  String equipmentclassificationName;
+    private  String equipmentClass;
 
     @ApiModelProperty("装备状态")
     private  String state;
@@ -29,26 +29,12 @@ public class EquipmentManagement {
     private  String modalities;
 
     @ApiModelProperty("使用单位")
-    private  String useunitsName;
+    private  String useunits;
 
     @ApiModelProperty("存放位置")
-    private  String storagelocationName;
+    private  String storageLocation;
 
     @ApiModelProperty("责任人")
     private  String responsiblePerson;
 
-    @Override
-    public String toString() {
-        return "EquipmentManagementMapper{" +
-                "id=" + id +
-                ", equipmentName='" + equipmentName + '\'' +
-                ", equipmentclassificationName='" + equipmentclassificationName + '\'' +
-                ", state='" + state + '\'' +
-                ", price='" + price + '\'' +
-                ", modalities='" + modalities + '\'' +
-                ", useunitsName='" + useunitsName + '\'' +
-                ", storagelocationName='" + storagelocationName + '\'' +
-                ", responsiblePerson='" + responsiblePerson + '\'' +
-                '}';
-    }
 }

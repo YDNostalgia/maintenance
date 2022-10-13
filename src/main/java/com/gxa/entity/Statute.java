@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +21,8 @@ public class Statute {
     private StatuteType statuteType;
     @ApiModelProperty (value = "法规详情",name = "details")
     private String details;
+    @ApiModelProperty (value = "更新时间",name = "statuteUpdateTime")
+    private Date statuteUpdateTime;
     @ApiModelProperty (value = "文件地址",name = "fileAddress")
     private String fileAddress;
 }

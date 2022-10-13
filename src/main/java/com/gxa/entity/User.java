@@ -1,20 +1,35 @@
 package com.gxa.entity;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
-@ApiModel("用户实体")
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel("用户管理实体")
 public class User {
-    @ApiModelProperty("编号id")
+    @ApiModelProperty(value = "账号", name = "id")
     private Integer id;
-    @ApiModelProperty("userName")
+    @ApiModelProperty(value = "用户名", name = "userName")
+
     private String userName;
-    @ApiModelProperty("pwd")
+    @ApiModelProperty(value = "手机号码", name = "phoneNumber")
     private String pwd;
-    @ApiModelProperty("salt")
     private String salt;
+    @ApiModelProperty(value = "手机号码", name = "phoneNumber")
+    private String phoneNumber;
+    @ApiModelProperty(value = "添加时间", name = "addTime")
+    private Date addTime;
+    @ApiModelProperty(value = "角色", name = "roleName")
+    private String roleName;
+    @ApiModelProperty(value = "备注", name = "note")
+    private String note;
 
     @Override
     public String toString() {
@@ -26,35 +41,4 @@ public class User {
                 '}';
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 }

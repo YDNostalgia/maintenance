@@ -1,21 +1,15 @@
 package com.gxa.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 @Data
 public class EquipmentManagementDto {
     private Integer id;
-    private Integer equipmentclassification_id;
+    private Integer equipmentclassificationId;
     private String modalities;
-    private Integer state;
+    private String state;
 
-    @Override
-    public String toString() {
-        return "EquipmentManagementDto{" +
-                "id=" + id +
-                ", equipmentclassification_id=" + equipmentclassification_id +
-                ", modalities='" + modalities + '\'' +
-                ", state=" + state +
-                '}';
-    }
+
 }
