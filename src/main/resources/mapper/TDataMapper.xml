@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+使用mybatis动态代理的接口，就需要namespace中的值和需要对应的Mapper接口的全路径一致
+mybatis会通过绑定自动帮你找到对应要执行的sql语句
+-->
+<mapper namespace="com.gxa.mapper.TDataMapper">
+
+<!--
+resultMap标签，它是为了映射select查询出来结果的集合，
+其主要作用是将实体类中的字段与数据表中的字段进行关联映射
+-->
+    <resultMap id="equipmentDataResultMap" type="equipmentData">
+<!--        property对应实体类的属性名称，column为数据库字段名-->
+        <id property="categoryId" column="category_id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="tDataResultMap" type="tData">
+        <id property="dataId" column="data_id"/>
+        <result property="dataName" column="data_name"/>
+        <result property="equipmentModel" column="equipment_model"/>
+        <result property="dataDesc" column="data_desc"/>
+        <result property="fileAddress" column="file_address"/>
+        <result property="fileUploadTime" column="file_upload_time"/>
+        <association property="equipmentData" resultMap="equipmentDataResultMap"/>
+    </resultMap>
+    <select id="queryAllDatas" resultMap="tDataResultMap">
+        SELECT td.data_id,td.data_name,td.equipment_model,td.data_desc,td.file_address,td.file_upload_time,te.category_id,te.category_name,te.update_time
+        FROM t_data td,t_equipment te
+        WHERE td.category_id = te.category_id
+    </select>
+
+</mapper>

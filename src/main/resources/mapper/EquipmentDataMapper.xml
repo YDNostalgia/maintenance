@@ -10,6 +10,17 @@
         <result property="updateTime" column="update_time"></result>
     </resultMap>
 
+    <insert id="add">
+        INSERT INTO t_equipment(category_id,category_name,update_time)
+        VALUES (#{categoryId},#{categoryName},#{updateTime})
+    </insert>
+
+    <update id="update">
+        UPDATE t_equipment
+        SET category_name=#{categoryName},update_time=#{updateTime}
+        WHERE category_id=#{categoryId}
+    </update>
+
     <select id="queryAllEquipmentData" resultMap="equipmentDataMap" >
         SELECT te.category_id,te.category_name,te.update_time,v.total
         FROM t_equipment te,(SELECT td.category_id,count(td.category_id) total
