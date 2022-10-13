@@ -5,15 +5,36 @@
 <mapper namespace="com.gxa.mapper.EquipmentManagementMapper">
     <resultMap id="equipmentManagementMap" type="equipmentManagement">
     <id property="id" column="id"></id>
-    <result property="equipmentName" column="equipment_name"></result>
-    <result property="equipmentClass" column="equipmentclassification_name"></result>
+    <result property="equipmentName.equipName" column="equipment_name"></result>
+    <result property="equipmentClass.equipmentClassName" column="equipmentclassification_name"></result>
     <result property="state" column="state"></result>
     <result property="price" column="price"></result>
     <result property="modalities" column="modalities"></result>
-    <result property="useunits" column="useunits_name"></result>
-    <result property="storageLocation" column="storagelocation_name"></result>
+    <result property="useunits.useunitName" column="useunits_name"></result>
+    <result property="storageLocation.storageLocationName" column="storagelocation_name"></result>
     <result property="responsiblePerson" column="responsible_person"></result>
-</resultMap>
+    </resultMap>
+
+    <resultMap id="EquipmentClassMap" type="equipmentClass">
+        <id property="id" column="id"></id>
+        <result property="equipmentClassName" column="equipmentclassification_name"></result>
+    </resultMap>
+    <resultMap id="EquipmentNameMap" type="equipmentName">
+        <id property="id" column="id"></id>
+        <result property="equipName" column="equipment_name"></result>
+    </resultMap>
+    <resultMap id="EquipmentUseunitsMap" type="useunits">
+        <id property="id" column="id"></id>
+        <result property="useunitName" column="useunits_name"></result>
+    </resultMap>
+    <resultMap id="StorageLocationMap" type="storageLocation">
+        <id property="id" column="id"></id>
+        <result property="storageLocationName" column="storagelocation_name"></result>
+    </resultMap>
+    <delete id="deleteEquipmentManagement" parameterType="integer">
+        DELETE FROM equipment_managment WHERE id=#{id}
+    </delete>
+
     <select id="queryAllEquipmentManagement" resultMap="equipmentManagementMap" parameterType="equipmentManagementDto" >
         SELECT e1.id,e3.equipment_name,e2.equipmentclassification_name,e1.state,e1.price,e1.modalities,u.useunits_name,s.storagelocation_name,e1.responsible_person
         FROM equipment_managment e1,equipmentclassification e2,equipmentname e3,storage_location s,use_units u
@@ -21,8 +42,11 @@
         <if test="id != null and id!=''">
             AND e1.id=#{id}
         </if>
+        <if test="useunitId != null and useunitId !=''">
+            AND u.id=#{useunitId}
+        </if>
         <if test="equipmentclassificationId != null and equipmentclassificationId !=''">
-            AND e2.id=#{${equipmentclassificationId}}
+            AND e2.id=#{equipmentclassificationId}
         </if>
         <if test="modalities != null and modalities!=''">
             AND e1.modalities=#{modalities}
@@ -38,8 +62,11 @@
         <if test="id != null and id!=''">
             AND e1.id=#{id}
         </if>
+        <if test="useunitId != null and useunitId !=''">
+            AND u.id=#{useunitId}
+        </if>
         <if test="equipmentclassificationId != null and equipmentclassificationId!=''">
-            AND e2.id=#{${equipmentclassificationId}}
+            AND e2.id=#{equipmentclassificationId}
         </if>
         <if test="modalities != null and modalities!=''">
             AND e1.modalities=#{modalities}
@@ -48,16 +75,28 @@
             AND e1.state=#{state}
         </if>
     </select>
-    <select id="queryEquipmentClass" resultType="com.gxa.entity.EquipmentClass">
+    <select id="queryEquipmentClass" resultMap="EquipmentClassMap">
          SELECT * FROM equipmentclassification
     </select>
-    <select id="queryEquipmentName" resultType="com.gxa.entity.EquipmentName">
+    <select id="queryEquipmentName" resultMap="EquipmentNameMap">
         SELECT * FROM equipmentname
     </select>
-    <select id="queryEquipmentUseunits" resultType="com.gxa.entity.Useunits">
+    <select id="queryEquipmentUseunits" resultMap="EquipmentUseunitsMap">
         SELECT * FROM use_units
     </select>
-    <select id="queryEquipStorageLocation" resultType="com.gxa.entity.StorageLocation">
+    <select id="queryEquipStorageLocation" resultMap="StorageLocationMap">
         SELECT * FROM storage_location
     </select>
+
+    <insert id="addEquipmentManagement" parameterType="equipmentManagementAU">
+        INSERT INTO equipment_managment(id,equipmentname_id,equipmentclassification_id,state,price,modalities,useunits_id,storagelocation_id,responsible_person)VALUES(#{id},#{equipmentNameId},#{equipmentClassId},#{state},#{price},#{modalities},#{useunitsId},#{storageLocationId},#{responsiblePerson})
+    </insert>
+
+    <update id="updateEquipmentManagement" parameterType="equipmentManagementAU">
+        UPDATE equipment_managment
+        SET modalities=#{modalities},useunits_id=#{useunitsId},storagelocation_id=#{storageLocationId},
+        responsible_person=#{responsiblePerson},equipmentclassification_id=#{equipmentClassId},
+        equipmentname_id=#{equipmentNameId},price=#{price},state=#{state}
+        WHERE id=#{id}
+    </update>
 </mapper>

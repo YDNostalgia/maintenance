@@ -5,20 +5,34 @@
 <mapper namespace="com.gxa.mapper.DequipMapper">
 
     <resultMap id="dequipResultMap" type="dequip">
-        <id property="id" column="id"></id>
         <result property="code" column="code"></result>
         <result property="name" column="name"></result>
         <result property="type" column="type"></result>
         <result property="model" column="model"></result>
-        <result property="price" column="price"></result>
-        <result property="sum" column="sum"></result>
         <result property="company" column="company"></result>
         <result property="saveArea" column="saveArea"></result>
         <result property="goodsId" column="goodsId"></result>
     </resultMap>
 
-    <select id="queryDequips" resultMap="dequipResultMap">
+    <select id="queryList" resultMap="dequipResultMap">
         SELECT code,name,type,model,company,saveArea,goodsId
-        FROM d_equip
+        FROM d_equip WHERE 1=1
+    </select>
+
+    <select id="queryChooseList" resultMap="dequipResultMap" parameterType="com.gxa.dto.DequipDto">
+        SELECT code,name,type,model,company,saveArea,goodsId
+        FROM d_equip WHERE 1=1
+        <if test="code != null &amp;&amp; code != &quot;&quot;">
+            AND code = #{code}
+        </if>
+        <if test="name != null &amp;&amp; name != &quot;&quot;">
+            AND name = #{name}
+        </if>
+        <if test="code != null &amp;&amp; code != &quot;&quot;">
+            AND type = #{type}
+        </if>
+        <if test="code != null &amp;&amp; code != &quot;&quot;">
+            AND saveArea = #{saveArea}
+        </if>
     </select>
 </mapper>
