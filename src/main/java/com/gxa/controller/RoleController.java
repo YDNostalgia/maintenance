@@ -2,10 +2,12 @@ package com.gxa.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.UserDto;
 import com.gxa.entity.Role;
 import com.gxa.entity.User;
-import com.gxa.service.UserService;
+import com.gxa.service.RoleService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +22,21 @@ import java.util.List;
 @Api(value = "角色管理")
 public class RoleController {
     @Autowired
-    private UserService userService;
+    private RoleService roleService;
 
     @ApiOperation("角色列表")
     @GetMapping("/role/list")
     @ResponseBody
-    public R list(Integer page, Integer limit){
-        R r=null;
-        PageHelper.startPage(page, limit);
-        List<User> users = this.userService.queryAll();
-        System.out.println("hgghhh----------"+users.get(1));
-        PageInfo<User> pageInfo = new PageInfo<>(users);
-        int total = (int) pageInfo.getTotal();
+    public Result<List<Role>> list(UserDto userDto, Integer page, Integer limit){
+
+        PageHelper.startPage(page,limit);
+        List<Role> roles = this.roleService.queryAll(userDto);
+        System.out.println("hgghhh----------"+roles.get(0));
+        PageInfo<Role> pageInfo = new PageInfo<>(roles);
+        long total = (int) pageInfo.getTotal();
+        Result<List<Role>> r=Result.success(roles,total);
+//        r.setTotal(total);
         System.out.println(total);
-        r.setCount(total);
-        r = R.ok();
-        r.put("data",users);
         return r;
     }
 

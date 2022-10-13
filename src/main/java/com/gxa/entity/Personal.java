@@ -11,12 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("人员信息")
 public class Personal {
+    @ApiModelProperty(value = "人员id",name = "id")
+    private Integer id;
     @ApiModelProperty(value = "姓名",name = "pname")
     private String pname;
-    @ApiModelProperty(value = "部门",name = "pdept")
-    private String pdept;
-    @ApiModelProperty(value = "工种",name = "pjob")
-    private String pjob;
-    @ApiModelProperty(value = "工种等级",name = "pclass")
-    private String pclass;
+    @ApiModelProperty(value = "部门对象",name = "personalDept")
+    private PersonalDept personalDept;
+    @ApiModelProperty(value = "工种对象",name = "personalJob")
+    private PersonalJob personalJob;
+    @ApiModelProperty(value = "工种等级对象",name = "personalClass")
+    private PersonalClass personalClass;
+
 }

@@ -2,9 +2,11 @@ package com.gxa.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.UserDto;
 import com.gxa.entity.User;
 import com.gxa.service.UserService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -33,12 +35,15 @@ public class UserController {
     public String login(@RequestBody User user, HttpSession session){
         System.out.println(user);
 
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
+//        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
 
         try{
-
-            subject.login(token);
+            User user1 = this.userService.login(user.getUserName(),user.getPwd());
+            if (user1!=null){
+                System.out.println("成功");
+            }
+//            subject.login(token);
             //登录成功
 
             return "redirect:/main.html";
@@ -68,19 +73,16 @@ public class UserController {
      * 用户列表
      */
     @ApiOperation("用户列表")
-    @GetMapping("/user/list")
+    @GetMapping("/user")
     @ResponseBody
-    public R list(){
-        R r=null;
-//        PageHelper.startPage(page, limit);
-        List<User> users = this.userService.queryAll();
-        System.out.println("hgghhh----------"+users.get(1));
+    public Result<List<User>> list(UserDto userDto, Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<User> users = this.userService.queryAll(userDto);
+        System.out.println("hgghhh----------"+users.get(0));
         PageInfo<User> pageInfo = new PageInfo<>(users);
-        int total = (int) pageInfo.getTotal();
+        long total = (int) pageInfo.getTotal();
         System.out.println(total);
-        r.setCount(total);
-        r = R.ok();
-        r.put("data",users);
+        Result<List<User>> r=Result.success(users,total);
         return r;
     }
 
@@ -88,27 +90,33 @@ public class UserController {
      * 用户添加
      */
     @ApiOperation("用户添加")
-    @GetMapping("/user/add")
+    @PostMapping("/user")
     @ResponseBody
-    public R add(@RequestBody User user){
-        return null;
+    public Result<User> add(@RequestBody User user){
+        System.out.println("***********" + user);
+        this.userService.add(user);
+        Result<User> r=Result.success();
+        return r;
     }
 
     /**
      * 用户修改
      */
     @ApiOperation("用户修改")
-    @GetMapping("/user/update")
+    @PutMapping("/user")
     @ResponseBody
-    public R update(@RequestBody User user){
-        return null;
+    public Result<User> update(@RequestBody User user){
+        System.out.println("***********" + user);
+        this.userService.update(user);
+        Result<User> r=Result.success();
+        return r;
     }
 
     /**
      * 用户删除
      */
     @ApiOperation("用户删除")
-    @GetMapping("/user/delete")
+    @DeleteMapping("/user")
     @ResponseBody
     public R delete(@RequestBody List<User> users){
         return null;

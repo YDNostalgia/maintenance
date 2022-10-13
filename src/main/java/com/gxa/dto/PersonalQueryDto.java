@@ -10,8 +10,8 @@ public class PersonalQueryDto {
 
     @ApiModelProperty(value = "姓名",name = "pname")
     private String pname;
-    @ApiModelProperty(value = "部门",name = "pdept")
-    private String pdept;
-    @ApiModelProperty(value = "工种",name = "pjob")
-    private String pjob;
+    @ApiModelProperty(value = "部门id",name = "pdeptId")
+    private String pdeptId;
+    @ApiModelProperty(value = "工种id",name = "pjobId")
+    private String pjobId;
 }

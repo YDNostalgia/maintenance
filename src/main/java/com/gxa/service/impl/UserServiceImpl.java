@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.UserDto;
 import com.gxa.entity.User;
 import com.gxa.mapper.UserMapper;
 import com.gxa.service.UserService;
@@ -20,23 +21,29 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public List<User> queryAll() {
-        List<User> users = this.userMapper.queryAll();
+    public List<User> queryAll(UserDto userDto) {
+        List<User> users = this.userMapper.queryAll(userDto);
         return users;
     }
 
     @Override
     public void add(User user) {
-
+        this.userMapper.add(user);
     }
 
     @Override
     public void update(User user) {
+        this.userMapper.update(user);
+    }
 
+    @Override
+    public User queryById(Integer id) {
+        User user = this.userMapper.queryById(id);
+        return user;
     }
 
     @Override
     public void delete(List<User> users) {
-
+        this.userMapper.delete(users);
     }
 }
