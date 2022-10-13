@@ -1,7 +1,10 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.entity.User;
 import com.gxa.service.UserService;
+import com.gxa.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -11,36 +14,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
-@CrossOrigin
-@Api(value = "用户信息")
+@Api(value = "用户管理")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/user/login")
-    @ApiOperation("用户列表")
+
+    @PostMapping("/user/login")
+    @ApiOperation("用户登录")
+    @ResponseBody
+    /**
+     * 用户登录
+     */
     public String login(@RequestBody User user, HttpSession session){
-
         System.out.println(user);
-//
-////         这里会把生成的jwt返回
-//        String jwt = jwtLoginService.login(user);
-//        //如果jwt为空，说明用户未登录，直接返回个错误
-////        if (jwt==null||"".equals(jwt)){
-////            return R.error();
-////        }
 
-
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
         Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPwd());
 
         try{
-            subject.login(token);
-                return "redirect:/main.html";
 
+            subject.login(token);
+            //登录成功
+
+            return "redirect:/main.html";
         }catch (Exception e){
             e.printStackTrace();
             //登录失败
@@ -48,14 +49,71 @@ public class UserController {
         }
     }
 
+    /**
+     * 用户退出
+     */
 
+    @ApiOperation("用户退出")
     @GetMapping("/user/logout")
+    @ResponseBody
     public String logout(HttpSession session){
         session.invalidate();
 
         return "redirect:/index.html";
 
     }
+
+
+    /**
+     * 用户列表
+     */
+    @ApiOperation("用户列表")
+    @GetMapping("/user/list")
+    @ResponseBody
+    public R list(){
+        R r=null;
+//        PageHelper.startPage(page, limit);
+        List<User> users = this.userService.queryAll();
+        System.out.println("hgghhh----------"+users.get(1));
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        int total = (int) pageInfo.getTotal();
+        System.out.println(total);
+        r.setCount(total);
+        r = R.ok();
+        r.put("data",users);
+        return r;
+    }
+
+    /**
+     * 用户添加
+     */
+    @ApiOperation("用户添加")
+    @GetMapping("/user/add")
+    @ResponseBody
+    public R add(@RequestBody User user){
+        return null;
+    }
+
+    /**
+     * 用户修改
+     */
+    @ApiOperation("用户修改")
+    @GetMapping("/user/update")
+    @ResponseBody
+    public R update(@RequestBody User user){
+        return null;
+    }
+
+    /**
+     * 用户删除
+     */
+    @ApiOperation("用户删除")
+    @GetMapping("/user/delete")
+    @ResponseBody
+    public R delete(@RequestBody List<User> users){
+        return null;
+    }
+
 
 
 

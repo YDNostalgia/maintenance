@@ -9,7 +9,7 @@
         <result property="pjob" column="pjob"/>
         <result property="pclass" column="pclass"/>
     </resultMap>
-    <select id="queryAll" resultMap="personalResultMap">
+    <select id="queryAllPersonal" resultMap="personalResultMap">
         SELECT p.pname,p.pdept,p.pjob,p.pclass FROM p_list p
     </select>
 </mapper>

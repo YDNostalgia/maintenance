@@ -1,11 +1,17 @@
 package com.gxa.mapper;
 
 import com.gxa.dto.EquipmentManagementDto;
-import com.gxa.entity.EquipmentManagement;
+import com.gxa.entity.*;
 
 import java.util.List;
 
 public interface EquipmentManagementMapper {
     List<EquipmentManagement> queryAllEquipmentManagement(EquipmentManagementDto equipmentManagementDto);
     Integer queryConut(EquipmentManagementDto equipmentManagementDto);
+    List<EquipmentClass> queryEquipmentClass();
+    List<EquipmentName> queryEquipmentName();
+    List<Useunits> queryEquipmentUseunits();
+    List<StorageLocation> queryEquipStorageLocation();
+
+
 }

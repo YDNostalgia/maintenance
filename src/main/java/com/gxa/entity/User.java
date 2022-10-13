@@ -1,23 +1,44 @@
 package com.gxa.entity;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
-@ApiModel("用户实体")
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel("用户管理实体")
 public class User {
-    @ApiModelProperty("编号id")
+    @ApiModelProperty(value = "账号", name = "id")
     private Integer id;
-    @ApiModelProperty("用户名userName")
+    @ApiModelProperty(value = "用户名", name = "userName")
+
     private String userName;
-    @ApiModelProperty("密码pwd")
+    @ApiModelProperty(value = "手机号码", name = "phoneNumber")
     private String pwd;
-    @ApiModelProperty("盐值salt")
     private String salt;
-    @ApiModelProperty("电话phoneNumber")
+    @ApiModelProperty(value = "手机号码", name = "phoneNumber")
     private String phoneNumber;
-    @ApiModelProperty("添加时间addTime")
-    private Data addTime;
+    @ApiModelProperty(value = "添加时间", name = "addTime")
+    private Date addTime;
+    @ApiModelProperty(value = "角色", name = "roleName")
+    private String roleName;
+    @ApiModelProperty(value = "备注", name = "note")
+    private String note;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
+    }
 
 }

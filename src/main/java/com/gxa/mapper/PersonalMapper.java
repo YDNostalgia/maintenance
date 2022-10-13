@@ -5,5 +5,5 @@ import com.gxa.entity.Personal;
 import java.util.List;
 
 public interface PersonalMapper {
-    public List<Personal> queryAll();
+    public List<Personal> queryAllPersonal();
 }

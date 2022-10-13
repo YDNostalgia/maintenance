@@ -1,11 +1,12 @@
 package com.gxa.utils;
 
-
-
+import lombok.Data;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+
+@Data
 
 /**
  * 返回数据
@@ -13,6 +14,8 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+
+	private Integer count;
 	
 	public R() {
 		put("code", 0);
