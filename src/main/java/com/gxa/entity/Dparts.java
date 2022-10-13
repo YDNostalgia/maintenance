@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("货位信息")
-public class Dlocaltion {
+public class Dparts {
     @ApiModelProperty(value = "ID",name = "id")
     private Integer id;
     @ApiModelProperty(value = "区域名称",name = "name")

@@ -17,8 +17,22 @@
         <result property="goodsId" column="goodsId"></result>
     </resultMap>
 
-    <select id="queryDequips" resultMap="dequipResultMap">
+    <select id="queryList" resultMap="dequipResultMap" parameterType="dequipDto">
         SELECT code,name,type,model,company,saveArea,goodsId
         FROM d_equip
+        <where>
+            <if test="code != null &amp;&amp; code != &quot;&quot;">
+                AND code = #{code}
+            </if>
+            <if test="name != null &amp;&amp; name != &quot;&quot;">
+                AND name = #{name}
+            </if>
+            <if test="code != null &amp;&amp; code != &quot;&quot;">
+                AND type = #{type}
+            </if>
+            <if test="code != null &amp;&amp; code != &quot;&quot;">
+                AND saveArea = #{saveArea}
+            </if>
+        </where>
     </select>
 </mapper>
