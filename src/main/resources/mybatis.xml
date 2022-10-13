@@ -13,6 +13,8 @@
         <package name="com.gxa.entity"/>
         <package name="com.gxa.dto"/>
     </typeAliases>
-
+    <plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
 
 </configuration>
