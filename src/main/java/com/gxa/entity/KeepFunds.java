@@ -7,26 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ApiModel("维修计划属性对应")
-public class KeepPlan {
+@ApiModel("维修经费属性对应")
+public class KeepFunds {
     @ApiModelProperty(value = "id",name = "维修单号")
     private int id;
     @ApiModelProperty("装备编号")
     private int equipmentNumber;
-    @ApiModelProperty("故障描述")
-    private String desc;
-    @ApiModelProperty("计划时间")
-    private Date planTime;
     @ApiModelProperty("装备实体")
     private Equipment equipment;
-    @ApiModelProperty("装备ID")
-    private int equipmentId;
-//    @ApiModelProperty("开始时间")
-//    private Date startTime;
-//    @ApiModelProperty("结束时间")
-//    private Date endTime;
-
+    @ApiModelProperty("开始时间")
+    private Date startTime;
+    @ApiModelProperty("结束时间")
+    private Date endTime;
+    @ApiModelProperty("维修结果  0:成功 1:待维修")
+    private int testResults;
+    @ApiModelProperty("维修经费")
+    private int keepMoney;
 }
