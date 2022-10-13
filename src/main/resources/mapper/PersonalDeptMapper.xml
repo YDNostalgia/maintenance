@@ -3,7 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.mapper.PersonalDeptMapper">
-    <select id="queryAllPersonalDept" resultType="personalDept">
+    <resultMap id="queryAllPersonalDeptresultMap" type="personalDept">
+        <id property="pdeptId" column="pdept_id"></id>
+        <result property="pdept" column="pdept"></result>
+    </resultMap>
+    <select id="queryAllPersonalDept" resultMap="queryAllPersonalDeptresultMap">
         SELECT * FROM p_dept
     </select>
 </mapper>
