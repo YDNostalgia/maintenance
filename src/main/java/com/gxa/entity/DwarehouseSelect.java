@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("入库管理查询")
+@ApiModel("入库管理条件查询")
 public class DwarehouseSelect {
 
     @ApiModelProperty(value = "入库单号",name = "code")
