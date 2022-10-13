@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface DequipMapper {
     //查询列表页
-    List<Dequip> queryList(DequipDto dequipDto);
+    List<Dequip> queryList();
+    //查询列表页 分页 条件
+    List<Dequip> queryChooseList(DequipDto dequipDto);
 
 }

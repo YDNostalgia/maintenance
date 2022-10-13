@@ -6,6 +6,7 @@ import com.gxa.dto.DequipDto;
 import com.gxa.entity.*;
 import com.gxa.service.DequipService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -24,24 +25,22 @@ public class DequipController {
 
     @GetMapping("/dequip/list")
     @ApiOperation("器材管理列表")
-    public R selectDequip(@RequestBody(required = false)DequipDto dequipDto, @RequestBody DequipSelect dequipSelect,@Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dequip>> selectList(@RequestBody(required = false)DequipDto dequipDto, @Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dequipDto);
         System.out.println("当前页码：" + page +",每页记录数：" + limit);
 
         //实现分页
         PageHelper.startPage(page,limit);
 
-        List<Dequip> dequips = this.dequipService.queryList(dequipDto);
+        List<Dequip> dequips = this.dequipService.queryChooseList(dequipDto);
         System.out.println("查询记录数" + dequips);
 
         //获取总记录数
         PageInfo<Dequip> pageInfo = new PageInfo<>(dequips);
-        Integer total = (int)pageInfo.getTotal();
-        System.out.println(total);
+        Long total = pageInfo.getTotal();
+        System.out.println("total——>" + total);
 
-        R r = new R();
-        r.put("count",total);
-        r.put("data",dequips);
+        Result<List<Dequip>> r = Result.success(dequips,total);
 
         return r;
     }
