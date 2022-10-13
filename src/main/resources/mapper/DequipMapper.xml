@@ -18,7 +18,7 @@
     </resultMap>
 
     <select id="queryDequips" resultMap="dequipResultMap">
-        SELECT id,code,name,type,model,price,sum,company,saveArea,goodsId
+        SELECT code,name,type,model,company,saveArea,goodsId
         FROM d_equip
     </select>
 </mapper>

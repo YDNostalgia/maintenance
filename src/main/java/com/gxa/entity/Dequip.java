@@ -31,4 +31,25 @@ public class Dequip {
     private String saveArea;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
+
+    //list数据 add数据
+    public Dequip(String code, String name, String type, String model, String company, String saveArea, String goodsId) {
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.model = model;
+        this.company = company;
+        this.saveArea = saveArea;
+        this.goodsId = goodsId;
+    }
+
+    //update数据 delete数据
+    public Dequip(String name, String type, String model, String company, String saveArea, String goodsId) {
+        this.name = name;
+        this.type = type;
+        this.model = model;
+        this.company = company;
+        this.saveArea = saveArea;
+        this.goodsId = goodsId;
+    }
 }
