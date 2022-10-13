@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.DequipDto;
 import com.gxa.entity.Dequip;
 import com.gxa.mapper.DequipMapper;
 import com.gxa.service.DequipService;
@@ -16,8 +17,9 @@ public class DequipServiceImpl implements DequipService {
 
 
     @Override
-    public List<Dequip> queryDequips() {
-        List<Dequip> dequips = this.dequipMapper.queryDequips();
+    public List<Dequip> queryList(DequipDto dequipDto) {
+        List<Dequip> dequips = this.dequipMapper.queryList(dequipDto);
         return dequips;
     }
+
 }

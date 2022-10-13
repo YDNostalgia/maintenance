@@ -1,5 +1,7 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.DequipDto;
 import com.gxa.entity.*;
 import com.gxa.service.DequipService;
@@ -26,11 +28,19 @@ public class DequipController {
         System.out.println("查询条件" + dequipDto);
         System.out.println("当前页码：" + page +",每页记录数：" + limit);
 
-        List<Dequip> dequips = this.dequipService.queryDequips();
-        System.out.println(dequips);
+        //实现分页
+        PageHelper.startPage(page,limit);
+
+        List<Dequip> dequips = this.dequipService.queryList(dequipDto);
+        System.out.println("查询记录数" + dequips);
+
+        //获取总记录数
+        PageInfo<Dequip> pageInfo = new PageInfo<>(dequips);
+        Integer total = (int)pageInfo.getTotal();
+        System.out.println(total);
 
         R r = new R();
-        r.put("count",dequips.size());
+        r.put("count",total);
         r.put("data",dequips);
 
         return r;
