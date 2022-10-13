@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("器材删除")
-public class DequipDelete {
-    @ApiModelProperty(value = "器材编号",name = "code")
+@ApiModel("入库管理删除")
+public class DwarehouseDelete {
+    @ApiModelProperty(value = "入库单号",name = "code")
     private String code;
 }

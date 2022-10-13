@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("器材删除")
-public class DequipDelete {
+@ApiModel("器材删除(多个)")
+public class DequipDeletes {
     @ApiModelProperty(value = "器材编号",name = "code")
-    private String code;
+    private List<String> codes;
 }

@@ -1,10 +1,9 @@
-package com.gxa.mapper;
-
+package com.gxa.service;
 
 import com.gxa.entity.Dreview;
 
 import java.util.List;
 
-public interface DreviewMapper {
+public interface DreviewService {
     List<Dreview> queryAll();
 }
