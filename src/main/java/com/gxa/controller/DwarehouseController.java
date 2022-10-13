@@ -21,7 +21,7 @@ public class DwarehouseController {
 
     @GetMapping("/dwarehouse/list")
     @ApiOperation("入库管理列表")
-    public R selectDarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto, @RequestBody DwarehouseSelect dwarehouseSelect,@Param("page") Integer page, @Param("limit") Integer limit){
+    public R selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto, @RequestBody DwarehouseSelect dwarehouseSelect,@Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dwarehouseDto);
         System.out.println("当前页码：" + page +",每页记录数：" + limit);
 
