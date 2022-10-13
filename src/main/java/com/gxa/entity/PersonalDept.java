@@ -9,7 +9,8 @@ import lombok.Data;
 public class PersonalDept {
 
     @ApiModelProperty(value = "部门id",name = "id")
-    private Integer id;
+    private Integer pdeptId;
     @ApiModelProperty(value = "部门",name = "pdept")
     private String pdept;
+
 }
