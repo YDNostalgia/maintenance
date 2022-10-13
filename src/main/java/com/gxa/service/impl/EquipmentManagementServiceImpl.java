@@ -4,6 +4,7 @@ import com.gxa.dto.EquipmentManagementDto;
 import com.gxa.entity.*;
 import com.gxa.mapper.EquipmentManagementMapper;
 import com.gxa.service.EquipmentManagementService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,20 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     public List<StorageLocation> queryEquipStorageLocation() {
         List<StorageLocation> storageLocations=this.equipmentManagementMapper.queryEquipStorageLocation();
         return storageLocations;
+    }
+
+    @Override
+    public void addEquipmentManagement(EquipmentManagementAU equipmentManagementAU) {
+        this.equipmentManagementMapper.addEquipmentManagement(equipmentManagementAU);
+    }
+
+    @Override
+    public void updateEquipmentManagement(EquipmentManagementAU equipmentManagementAU) {
+        this.equipmentManagementMapper.updateEquipmentManagement(equipmentManagementAU);
+    }
+
+    @Override
+    public void deleteEquipmentManagement(Integer id) {
+        this.equipmentManagementMapper.deleteEquipmentManagement(id);
     }
 }

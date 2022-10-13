@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.DcountingMapper">
+    <resultMap id="DcountingResultMap" type="Dcounting">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="model" column="model"/>
+        <result property="type" column="type"/>
+        <result property="company" column="company"/>
+
+        <association property="Dequip" javaType="com.gxa.entity.Dequip">
+            <result property="stock" column="stock"/>
+            <result property="countingsum" column="countingsum"/>
+        </association>
+    </resultMap>
+
+<select id="queryAll" resultMap="DcountingResultMap">
+    SELECT de.id,de.code,de.name,de.model,de.type,de.company,dc.stock,dc.countingsum
+    FROM d_equip de ,d_counting dc
+    WHERE de.sum=dc.countingsum
+</select>
+</mapper>

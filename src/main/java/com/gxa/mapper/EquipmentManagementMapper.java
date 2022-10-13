@@ -12,6 +12,7 @@ public interface EquipmentManagementMapper {
     List<EquipmentName> queryEquipmentName();
     List<Useunits> queryEquipmentUseunits();
     List<StorageLocation> queryEquipStorageLocation();
-
-
+    void addEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
+    void updateEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
+    void deleteEquipmentManagement(Integer id);
 }
