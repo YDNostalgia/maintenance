@@ -50,13 +50,13 @@ public class DreturnController {
 
     @GetMapping("/dreturn/perEdit")
     @ApiOperation("退料修改页")
-    public R toEditPage(DreturnToupdate dreturnToupdate){
+    public R toEditPage(DreturnToUpdate dreturnToupdate){
         R r = new R();
         return r;
     }
     @PutMapping("/dreturn/edit")
     @ApiOperation("退料修改")
-    public R dreturnEdit(@RequestBody DreturnToupdate dreturnToupdate){
+    public R dreturnEdit(@RequestBody DreturnToUpdate dreturnToupdate){
 
         R r = new R();
         return r;

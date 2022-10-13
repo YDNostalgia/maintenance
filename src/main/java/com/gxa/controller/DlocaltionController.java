@@ -2,10 +2,7 @@ package com.gxa.controller;
 
 import com.gxa.dto.DlocaltionEditDto;
 import com.gxa.dto.DlocaltionQueryDto;
-import com.gxa.dto.EquipmentDataEditDto;
-import com.gxa.dto.EquipmentDataQueryDto;
 import com.gxa.entity.Dlocaltion;
-import com.gxa.entity.EquipmentData;
 import com.gxa.service.DlocaltionService;
 import com.gxa.utils.R;
 import io.swagger.annotations.Api;

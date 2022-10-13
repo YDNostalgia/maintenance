@@ -51,13 +51,13 @@ public class DpickingController {
 
     @GetMapping("/dpicking/perEdit")
     @ApiOperation("领料修改页")
-    public R toEditPage(@RequestBody DpickingToupdate dpickingToupdate){
+    public R toEditPage(@RequestBody DpickingToUpdate dpickingToupdate){
         R r = new R();
         return r;
     }
     @PutMapping("/dpicking/edit")
     @ApiOperation("领料修改")
-    public R dpickingEdit(@RequestBody DpickingToupdate dpickingToupdate){
+    public R dpickingEdit(@RequestBody DpickingToUpdate dpickingToupdate){
 
         R r = new R();
         return r;
