@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "添加法规")
+@ApiModel(value = "查询法规")
 public class StatuteQueryDto {
     @ApiModelProperty(value = "当前页", name = "page")
     private Integer page;

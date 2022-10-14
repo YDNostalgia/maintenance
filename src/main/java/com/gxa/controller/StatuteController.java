@@ -20,7 +20,7 @@ public class StatuteController {
     @Autowired
     private StatuteService statuteService;
     @ApiOperation("查询法规")
-    @GetMapping("/statute/list")
+    @GetMapping("/statute")
     public R list(@RequestBody StatuteQueryDto statuteQueryDto){
         R r;
         Integer limit = statuteQueryDto.getLimit();
@@ -48,7 +48,7 @@ public class StatuteController {
 
     @ApiOperation("修改法规")
     @PutMapping("/statute")
-    public R edit(@RequestBody StatuteEditDto statuteEditDto){
+    public R update(@RequestBody StatuteEditDto statuteEditDto){
         R r;
         r = R.error(1,"修改失败");
         r = R.ok("修改成功");
