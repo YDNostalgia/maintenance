@@ -20,9 +20,9 @@ public class KeepQuality {
     @ApiModelProperty("装备实体")
     private Equipment equipment;
     @ApiModelProperty("维修结果  0:成功 1:待维修")
-    private int testResults;
-    @ApiModelProperty("检测状态  0:未检测 1:已检测")
-    private int testStatus;
+    private Integer testResults;
+    @ApiModelProperty("维修状态 _ 2:待维修 1 :成功  0 ：维修中")
+    private Integer testStatus;
     @ApiModelProperty("开始时间")
     private Date startTime;
     @ApiModelProperty("结束时间")

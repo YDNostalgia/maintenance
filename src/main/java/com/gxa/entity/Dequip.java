@@ -31,5 +31,6 @@ public class Dequip {
     private String saveArea;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
-
+    @ApiModelProperty(value = "盘点表id",name = "dcounting")
+    private Dcounting dcounting;
 }

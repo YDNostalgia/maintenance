@@ -1,6 +1,9 @@
 package com.gxa.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.UserDto;
+import com.gxa.dto.UserRoleDto;
 import com.gxa.entity.User;
 import com.gxa.mapper.UserMapper;
 import com.gxa.service.UserService;
@@ -21,14 +24,22 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public List<User> queryAll(UserDto userDto) {
+    public PageInfo<User> queryAll(UserDto userDto, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
         List<User> users = this.userMapper.queryAll(userDto);
-        return users;
+        PageInfo<User> pageInfo=new PageInfo<>(users);
+        return pageInfo;
     }
 
+
     @Override
-    public void add(User user) {
-        this.userMapper.add(user);
+    public Integer add(User user) {
+        Integer userId=this.userMapper.add(user);
+        return userId;
+    }
+
+    public void addUserRoleId(Integer userId,Integer roleId){
+        this.userMapper.addUserRoleId(userId,roleId);
     }
 
     @Override
@@ -37,13 +48,13 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public User queryById(Integer id) {
-        User user = this.userMapper.queryById(id);
-        return user;
+    public Integer queryRoleId(String userName) {
+        Integer roleId = this.userMapper.queryRoleId(userName);
+        return roleId;
     }
 
     @Override
-    public void delete(List<User> users) {
-        this.userMapper.delete(users);
+    public void delete(Integer id) {
+        this.userMapper.delete(id);
     }
 }

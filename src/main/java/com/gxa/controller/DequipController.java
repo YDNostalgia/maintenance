@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "器材管理")
+@Api(tags = "器材管理接口")
 @RestController
 public class DequipController {
 
@@ -23,30 +23,28 @@ public class DequipController {
     private DequipService dequipService;
 
 
-    @GetMapping("/dequip/list")
+    @PostMapping("/dequip/list")
     @ApiOperation("器材管理列表")
-    public Result<List<Dequip>> selectList(@RequestBody(required = false)DequipDto dequipDto, @Param("page") Integer page, @Param("limit") Integer limit){
-        System.out.println("查询条件" + dequipDto);
-        System.out.println("当前页码：" + page +",每页记录数：" + limit);
+    public Result<List<Dequip>> selectList(@RequestBody(required = false) DequipDto dequipDto, @Param("page") Integer page, @Param("limit") Integer limit){
+        System.out.println("查询条件----->" + dequipDto);
+        System.out.println("当前页码----->" + page + ",每页数据---->" + limit);
 
-        //实现分页
         PageHelper.startPage(page,limit);
 
         List<Dequip> dequips = this.dequipService.queryChooseList(dequipDto);
-        System.out.println("查询记录数" + dequips);
+        System.out.println("查询结果----->" + dequips);
 
-        //获取总记录数
         PageInfo<Dequip> pageInfo = new PageInfo<>(dequips);
-        Long total = pageInfo.getTotal();
-        System.out.println("total——>" + total);
+        long total = pageInfo.getTotal();
+        System.out.println("total----->" + total);
 
-        Result<List<Dequip>> r = Result.success(dequips,total);
+        Result<List<Dequip>> r = Result.success(dequips, total);
 
         return r;
     }
 
 
-    @GetMapping("/dequip/perAdd")
+    @PostMapping("/dequip/perAdd")
     @ApiOperation("器材新增页")
     public R toAddPage(@RequestBody DequipToAdd dequipToAdd){
         R r = new R();

@@ -5,21 +5,29 @@
 <mapper namespace="com.gxa.mapper.DwarehouseMapper">
 
     <resultMap id="dwarehouseResultMap" type="dwarehouse">
-        <id property="id" column="id"></id>
         <result property="code" column="code"></result>
         <result property="bill" column="bill"></result>
         <result property="time" column="time"></result>
-        <association property="dreview" javaType="com.gxa.entity.Dreview">
-            <id property="id" column="id"></id>
-            <result property="mperson" column="mperson"></result>
-            <result property="status" column="status"></result>
-            <result property="reviewer" column="reviewer"></result>
-        </association>
+        <result property="dreview.mperson" column="mperson"></result>
+        <result property="dreview.status" column="status"></result>
+        <result property="dreview.reviewer" column="reviewer"></result>
     </resultMap>
 
-    <select id="queryDwarehouse" resultType="com.gxa.entity.Dwarehouse">
+    <select id="queryDwarehouse" resultType="com.gxa.entity.Dwarehouse" parameterType="com.gxa.dto.DwarehouseDto">
         SELECT dw.time,dw.code,dw.bill,dr.mperson,dr.status,dr.reviewer
         FROM d_warehouse dw,d_review dr
         WHERE dw.reviewId=dr.id
+        <if test="bill != null and bill != ''">
+            AND dw.bill=#{bill}
+        </if>
+        <if test="dreview.status != null">
+            AND dr.status=#{dreview.status}
+        </if>
+        <if test="code != null and code !=''">
+            AND dw.code=#{code}
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND dw.time=#{time} BETWEEN startTime AND endTime
+        </if>
     </select>
 </mapper>

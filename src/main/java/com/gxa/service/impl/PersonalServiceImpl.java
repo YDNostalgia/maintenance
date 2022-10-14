@@ -1,14 +1,9 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.PersonalMtorderDto;
 import com.gxa.dto.PersonalQueryDto;
-import com.gxa.entity.Personal;
-import com.gxa.entity.PersonalClass;
-import com.gxa.entity.PersonalDept;
-import com.gxa.entity.PersonalJob;
-import com.gxa.mapper.PersonalClassMapper;
-import com.gxa.mapper.PersonalDeptMapper;
-import com.gxa.mapper.PersonalJobMapper;
-import com.gxa.mapper.PersonalMapper;
+import com.gxa.entity.*;
+import com.gxa.mapper.*;
 import com.gxa.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +24,12 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Autowired
     private PersonalClassMapper personalClassMapper;
+
+    @Autowired
+    private PersonalKeeprecordMapper personalKeeprecordMapper;
+
+    @Autowired
+    private PersonalAttendanceMapper personalAttendanceMapper;
 
     @Override
     public List<Personal> queryAllPersonal() {
@@ -83,5 +84,41 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public void deletePersonal(Integer id) {
         this.personalMapper.deletePersonal(id);
+    }
+
+    @Override
+    public List<KeepRecord> queryAllKeeprecord() {
+        List<KeepRecord> keepRecords = this.personalKeeprecordMapper.queryAllKeeprecord();
+        return keepRecords;
+    }
+
+    @Override
+    public List<KeepRecord> queryAllKeeprecordList(PersonalMtorderDto personalMtorderDto) {
+        List<KeepRecord> keepRecords = this.personalKeeprecordMapper.queryAllKeeprecordList(personalMtorderDto);
+        return keepRecords;
+    }
+
+    @Override
+    public List<PersonalAttendance> queryAllPersonalAttendance() {
+        List<PersonalAttendance> personalAttendances = this.personalAttendanceMapper.queryAllPersonalAttendance();
+//        System.out.println("service层输出考勤信息：" + personalAttendances);
+
+        for(int i = 0;i < personalAttendances.size();i++){
+            PersonalAttendance personalAttendance = personalAttendances.get(i);
+            //获取签到时间的时
+            int signinHours = personalAttendance.getSignin().getHours();
+//            System.out.println(signinHours);
+            //获取签退时间的时
+            int signoutHours = personalAttendance.getSignout().getHours();
+//            System.out.println(signoutHours);
+
+            if(signinHours > 8 || signoutHours < 18){
+                personalAttendance.setPstatus(1);
+            }else {
+                personalAttendance.setPstatus(0);
+            }
+
+        }
+        return personalAttendances;
     }
 }

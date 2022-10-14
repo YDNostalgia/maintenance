@@ -1,5 +1,6 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.KeepPlanDto;
 import com.gxa.entity.KeepPlan;
 import com.gxa.entity.KeepPlanAU;
@@ -21,49 +22,45 @@ public class KeepPlanController {
     private KeepPlanService keepPlanService;
 
     @ApiOperation("维修计划查询")
-    @GetMapping("/keepPlan/queryAllKeepPlan")
-    public Result<List<KeepPlan>> queryAllKeepPlan(KeepPlanDto keepPlanDto){
+    @GetMapping("keepPlan/queryAllKeepPlan")
+    public Result<List<KeepPlan>> queryAllKeepPlan(KeepPlanDto keepPlanDto,Integer page,Integer limit){
+        System.out.println(page+"---------"+limit);
         Result<List<KeepPlan>> r = Result.success();
         try{
             System.out.println("keepPlanlist----------"+keepPlanDto);
-            List<KeepPlan> keepPlans = keepPlanService.queryAllKeepPlan(keepPlanDto);
-            System.out.println("keepPlans---------"+keepPlans);
-            long count = keepPlanService.count(keepPlanDto);
-            r=Result.success(keepPlans,count);
-            return r;
+            PageInfo<KeepPlan> pageInfo = keepPlanService.queryAllKeepPlan(keepPlanDto, page, limit);
+            r = Result.success(pageInfo.getList(),pageInfo.getTotal());
         }catch (Exception e){
             e.printStackTrace();
-            r.setCode("11111");
-            r.setMsg("异常出错");
+            Result.failed();
         }
         return r;
     }
 
     @ApiOperation("维修计划添加")
     @PostMapping("/keepPlan/addKeepPlan")
-    public R addKeepPlan(KeepPlanAU keepPlanAU){
-        R r = new R();
+    public Result<List<KeepPlanAU>> addKeepPlan(KeepPlanAU keepPlanAU){
+        Result<List<KeepPlanAU>> r = Result.success();
         try {
+            System.out.println("keepPlanAUadd-----"+keepPlanAU);
             keepPlanService.addKeepPlan(keepPlanAU);
-            r = R.ok();
         }catch (Exception e){
             e.printStackTrace();
-            r = R.error(1,"添加失败");
+           Result.success();
         }
         return r;
     }
 
     @ApiOperation("维修计划修改")
     @PutMapping("/keepPlan/updateKeepPlan")
-    public R updateKeepPlan(KeepPlanAU keepPlanAU){
-        System.out.println("KeepPlanAU----------"+keepPlanAU);
-        R r = new R();
+    public Result<List<KeepPlanAU>> updateKeepPlan(KeepPlanAU keepPlanAU){
+        System.out.println("KeepPlanAUupdate----------"+keepPlanAU);
+        Result<List<KeepPlanAU>> r = Result.success();
         try {
             keepPlanService.updateKeepPlan(keepPlanAU);
-            r = R.ok();
         }catch (Exception e){
             e.printStackTrace();
-            r = R.error(1,"修改失败");
+            Result.failed();
         }
         return r;
     }
@@ -71,18 +68,15 @@ public class KeepPlanController {
     @ApiOperation("维修计划删除")
     @DeleteMapping("/keepPlan/deleteKeepPlan")
     @ResponseBody
-    public R deleteKeepPlan(@RequestParam("id") int id){
+    public Result<Integer> deleteKeepPlan(@RequestParam("id") int id){
         System.out.println("keepPlan4444id----------"+id);
-        R r = new R();
-        r = R.ok();
+        Result<Integer> r = Result.success();
         try {
             keepPlanService.deleteKeepPlan(id);
         }catch (Exception e){
             e.printStackTrace();
-            r = R.error(1,"删除失败");
+            r = Result.failed();
         }
         return r;
     }
-
-
 }
