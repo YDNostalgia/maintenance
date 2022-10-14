@@ -3,7 +3,11 @@ package com.gxa.service.impl;
 
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.dto.TDataDto;
 import com.gxa.entity.TData;
+import com.gxa.entity.TDataToAdd;
 import com.gxa.mapper.TDataMapper;
 import com.gxa.service.TDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +20,22 @@ public class TDataServiceImpl implements TDataService {
     @Autowired
     private TDataMapper tDataMapper;
 
+
     @Override
-    public List<TData> queryAllDatas() {
-        List<TData> tData = this.tDataMapper.queryAllDatas();
-        return tData;
+    public PageInfo<TData> queryTDatas(Integer page, Integer limit, TDataDto tDataDto) {
+        PageHelper.startPage(page,limit);
+        List<TData> tDatas = tDataMapper.queryTDatas(tDataDto);
+        PageInfo<TData> pageInfo = new PageInfo<>(tDatas);
+        return pageInfo;
+    }
+
+    @Override
+    public void deleteByDataId(Integer dataId) {
+        this.tDataMapper.deleteByDataId(dataId);
+    }
+
+    @Override
+    public void add(TDataToAdd tDataToAdd) {
+        this.tDataMapper.add(tDataToAdd);
     }
 }
