@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.DcountingDto;
 import com.gxa.entity.Dcounting;
 import com.gxa.entity.Dreview;
 import com.gxa.mapper.DcountingMapper;
@@ -16,8 +17,8 @@ public class DcountingServiceImpl implements DcountingService {
     private DreviewMapper dreviewMapper;
 
     @Override
-    public List<Dcounting> queryAll() {
-        List<Dcounting> dcountings=this.dcountingMapper.queryAll();
+    public List<Dcounting> queryAll(DcountingDto dcountingDto) {
+        List<Dcounting> dcountings=this.dcountingMapper.queryAll(dcountingDto);
         return dcountings;
     }
 

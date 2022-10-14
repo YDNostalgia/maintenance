@@ -1,14 +1,11 @@
 package com.gxa.mapper;
 
+import com.gxa.dto.DpickingDto;
 import com.gxa.entity.Dpicking;
 
 import java.util.List;
 
 public interface DpickingMapper {
-    List<Dpicking> queryAll();
-    void save(Dpicking dpicking);
-    Dpicking queryById(Integer id);
+    List<Dpicking> queryAll(DpickingDto dpickingDto);
 
-    void update(Dpicking dpicking);
-    void delete(Integer id);
 }
