@@ -18,10 +18,24 @@
         <result property="fileAddress" column="fileAddress"/>
         <association property="statuteType" resultMap="statuteTypeResultMap"/>
     </resultMap>
+    <insert id="add">
+        INSERT INTO statute (statute_name,details,fileAddress,statute_type_id)
+        VALUES (#{statuteName},#{details},#{fileAddress},#{statuteTypeId})
+    </insert>
+    <update id="update">
+        UPDATE statute SET statute_name = #{statuteName},details = #{details},fileAddress = #{fileAddress},statute_type_id = #{statuteTypeId}
+        WHERE statute_id = #{statuteId}
+    </update>
 
-    <select id="queryAll" resultMap="statuteResultMap">
+    <select id="queryByIdAndName" resultMap="statuteResultMap">
         SELECT s.statute_id,s.statute_name,s.details,s.statute_update_time,s.fileAddress,st.statute_type_id,st.statute_type_name,st.statute_type_update_time
         FROM statute s,statute_type st
         WHERE s.statute_type_id = st.statute_type_id
+        <if test="statuteTypeId != null">
+            AND s.statute_type_id = #{statuteTypeId}
+        </if>
+        <if test="statuteName != null and statuteName != ''">
+            AND statute_name Like #{statuteName}
+        </if>
     </select>
 </mapper>
