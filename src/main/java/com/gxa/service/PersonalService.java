@@ -1,10 +1,8 @@
 package com.gxa.service;
 
+import com.gxa.dto.PersonalMtorderDto;
 import com.gxa.dto.PersonalQueryDto;
-import com.gxa.entity.Personal;
-import com.gxa.entity.PersonalClass;
-import com.gxa.entity.PersonalDept;
-import com.gxa.entity.PersonalJob;
+import com.gxa.entity.*;
 
 import java.util.List;
 
@@ -27,5 +25,11 @@ public interface PersonalService {
     public void updatePersonal(Personal personal);
     //根据接收对象的id删除该条数据
     public void deletePersonal(Integer id);
+    //人员抽组待维修任务，获取所有的待维修的任务
+    public List<KeepRecord> queryAllKeeprecord();
+    //人员抽组待维修任务，根据条件查询待维修任务
+    public List<KeepRecord> queryAllKeeprecordList(PersonalMtorderDto personalMtorderDto);
+    //无条件拉取所有人员考勤信息
+    public List<PersonalAttendance> queryAllPersonalAttendance();
 
 }

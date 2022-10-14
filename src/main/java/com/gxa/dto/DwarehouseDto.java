@@ -7,19 +7,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("入库管理条件")
+@ApiModel("入库管理查询条件")
 public class DwarehouseDto {
-    @ApiModelProperty(value = "入库日期",name = "time")
-    private Date time;
-    @ApiModelProperty(value = "入库日期",name = "bill")
+
+    @ApiModelProperty(value = "开始时间",name = "startTime")
+    private java.sql.Date startTime;
+    @ApiModelProperty(value = "结束时间",name = "endTime")
+    private Date endTime;
+    @ApiModelProperty(value = "单据类型",name = "bill")
     private String bill;
-    @ApiModelProperty(value = "入库日期",name = "dreview")
-    private Dreview dreview;
-    @ApiModelProperty(value = "入库日期",name = "code")
+    @ApiModelProperty(value = "入库单号",name = "code")
     private String code;
+    @ApiModelProperty(value = "审核状态",name = "dreview")
+    private Dreview dreview;
+
 }

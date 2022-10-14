@@ -14,25 +14,22 @@
         <result property="goodsId" column="goodsId"></result>
     </resultMap>
 
-    <select id="queryList" resultMap="dequipResultMap">
-        SELECT code,name,type,model,company,saveArea,goodsId
-        FROM d_equip WHERE 1=1
-    </select>
-
     <select id="queryChooseList" resultMap="dequipResultMap" parameterType="com.gxa.dto.DequipDto">
         SELECT code,name,type,model,company,saveArea,goodsId
-        FROM d_equip WHERE 1=1
-        <if test="code != null &amp;&amp; code != &quot;&quot;">
-            AND code = #{code}
-        </if>
-        <if test="name != null &amp;&amp; name != &quot;&quot;">
-            AND name = #{name}
-        </if>
-        <if test="code != null &amp;&amp; code != &quot;&quot;">
-            AND type = #{type}
-        </if>
-        <if test="code != null &amp;&amp; code != &quot;&quot;">
-            AND saveArea = #{saveArea}
-        </if>
+        FROM d_equip
+        <where>
+            <if test="code !=null &amp;&amp; code !=&quot;&quot;">
+                AND code=#{code}
+            </if>
+            <if test="name !=null &amp;&amp; name !=&quot;&quot;">
+                AND name=#{name}
+            </if>
+            <if test="type !=null &amp;&amp; type !=&quot;&quot;">
+                AND type=#{type}
+            </if>
+            <if test="saveArea !=null &amp;&amp; saveArea !=&quot;&quot;">
+                AND saveArea=#{saveArea}
+            </if>
+        </where>
     </select>
 </mapper>

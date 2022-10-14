@@ -1,5 +1,6 @@
 package com.gxa.dto;
 
+import com.gxa.entity.Equipment;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,8 +15,8 @@ public class PersonalMtorderDto {
 
     @ApiModelProperty(value = "维修单号",name = "id")
     private Integer id;
-    @ApiModelProperty(value = "装备名称",name = "equipmentName")
-    private String equipmentName;
+    @ApiModelProperty(value = "装备对象",name = "equipment")
+    private Equipment equipment;
     @ApiModelProperty(value = "装备编号",name = "equipmentNumber")
     private Integer equipmentNumber;
 }
