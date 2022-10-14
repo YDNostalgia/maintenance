@@ -72,6 +72,11 @@
     </mvc:cors>
 
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"></property> <!--最大上传文件大小，单位：字节-->
+    </bean>
+
+
     <!--配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法-->
 <!--    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
     <!--启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用-->

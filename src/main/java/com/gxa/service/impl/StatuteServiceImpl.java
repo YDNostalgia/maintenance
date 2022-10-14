@@ -1,5 +1,10 @@
 package com.gxa.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.dto.StatuteAddDto;
+import com.gxa.dto.StatuteEditDto;
+import com.gxa.dto.StatuteQueryDto;
 import com.gxa.entity.Statute;
 import com.gxa.mapper.StatuteMapper;
 import com.gxa.service.StatuteService;
@@ -18,8 +23,30 @@ public class StatuteServiceImpl implements StatuteService {
     /**
      * 查询所有法规
      */
-    public List<Statute> queryAll() {
-        List<Statute> statutes = this.statuteMapper.queryAll();
-        return statutes;
+    public PageInfo<Statute> queryByIdAndName(StatuteQueryDto statuteQueryDto){
+
+        PageHelper.startPage(statuteQueryDto.getPage(),statuteQueryDto.getLimit());
+
+        String statuteName = statuteQueryDto.getStatuteName();
+
+        if (statuteName != null && !statuteName.equals("")){
+            statuteName = "%" + statuteQueryDto.getStatuteName() + "%";
+        }
+
+        List<Statute> statutes = statuteMapper.queryByIdAndName(statuteName, statuteQueryDto.getStatuteTypeId());
+
+        PageInfo<Statute> pageInfo = new PageInfo<>(statutes);
+
+        return pageInfo;
+    }
+
+    @Override
+    public void add(StatuteAddDto statuteAddDto) {
+        statuteMapper.add(statuteAddDto);
+    }
+
+    @Override
+    public void update(StatuteEditDto statuteEditDto) {
+        statuteMapper.update(statuteEditDto);
     }
 }

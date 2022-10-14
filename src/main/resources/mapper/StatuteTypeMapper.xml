@@ -11,6 +11,18 @@
         <result property="statuteTypeUpdateTime" column="statute_type_update_time"/>
     </resultMap>
 
+    <insert id="add">
+        INSERT INTO statute_type (statute_type_name) VALUES (#{statuteTypeName})
+    </insert>
+
+    <update id="save" parameterType="statuteEditDto">
+        UPDATE  statute_type SET statute_type_name = #{statuteTypeName} WHERE statute_type_id = #{statuteTypeId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM statute_type WHERE statute_type_id = #{statuteTypeId}
+    </delete>
+
     <select id="queryAll" resultMap="statuteTypeResultMap">
 
         SELECT st.statute_type_id,st.statute_type_name,st.statute_type_update_time,v.total

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "器材分类")
+@Api(tags = "器材分类接口")
 @RestController
 public class DpartsController {
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api("货位信息")
+@Api(tags = "货位信息接口")
 @RestController
 public class DlocaltionController {
 

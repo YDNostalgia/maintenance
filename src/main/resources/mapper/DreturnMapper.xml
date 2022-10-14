@@ -3,23 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.mapper.DreturnMapper">
-    <resultMap id="DreturnResultMap" type="Dreturn">
-        <id property="id" column="id"/>
+    <resultMap id="DreturnResultMap" type="dreturn">
         <result property="code" column="code"/>
-        <result property="departement" column="departement"/>
+        <result property="department" column="department"/>
         <result property="time" column="time"/>
-
-        <association property="Dreview" javaType="com.gxa.entity.Dreview">
-            <id property="id" column="id"/>
-            <result property="mperson" column="mperson"/>
-            <result property="status" column="status"/>
-            <result property="reviewer" column="reviewer"/>
-        </association>
+        <result property="dreview.mperson" column="mperson"></result>
+        <result property="dreview.status" column="status"></result>
+        <result property="dreview.reviewer" column="reviewer"></result>
     </resultMap>
 
-    <select id="queryAll" resultMap="DreturnResultMap">
+    <select id="queryAll" resultMap="DreturnResultMap" parameterType="com.gxa.dto.DreturnDto">
         SELECT da.time,da.code,da.department,dr.mperson,dr.status,dr.reviewer
         FROM d_return da,d_review dr
         WHERE da.reviewId=dr.id
+        <if test="department != null and department !=''">
+            AND da.department=#{department}
+        </if>
+        <if test="dreview.status != null">
+            AND dr.status=#{dreview.status}
+        </if>
+        <if test="code != null and code !=''">
+            AND da.code=#{code}
+        </if>
+        <if test="startTime !=null and startTime !='' and endTime !=null and endTime !=''">
+            AND da.time=#{time} BETWEEN startTime and endTime
+        </if>
     </select>
 </mapper>
