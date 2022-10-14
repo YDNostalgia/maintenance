@@ -1,4 +1,4 @@
-package com.gxa.entity;
+package com.gxa.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,29 +6,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ApiModel("维修记录属性对应")
-public class KeepRecord implements Serializable {
-    @ApiModelProperty(value = "id",name = "维修单号")
-    private int id;
-    @ApiModelProperty("装备编号")
-    private int equipmentNumber;
-    @ApiModelProperty("故障描述")
-    private String desc;
-
-    @ApiModelProperty("装备实体")
-    private Equipment equipment;
-
+@ApiModel("维护记录搜索信息")
+public class KeepRecordDto {
     @ApiModelProperty("开始时间")
     private Date startTime;
     @ApiModelProperty("结束时间")
     private Date endTime;
-
+    @ApiModelProperty("搜索单号")
+    private int id;
     @ApiModelProperty("维修状态 _ 2:待维修 1 :维修完成  0 ：维修中")
-    private Integer testStatus;
+    private int testStatus;
+
+    @Override
+    public String toString() {
+        return "keepRecordDto{" +
+                "startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", id=" + id +
+                ", testStatus=" + testStatus +
+                '}';
+    }
 }

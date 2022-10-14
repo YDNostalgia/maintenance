@@ -1,5 +1,7 @@
 package com.gxa.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.KeepPlanDto;
 import com.gxa.entity.KeepPlan;
 import com.gxa.entity.KeepPlanAU;
@@ -16,16 +18,14 @@ public class KeepPlanServiceImpl implements KeepPlanService {
     @Autowired
     private KeepPlanMapper keepPlanMapper;
     @Override
-    public List<KeepPlan> queryAllKeepPlan(KeepPlanDto keepPlanDto) {
+    public PageInfo<KeepPlan> queryAllKeepPlan(KeepPlanDto keepPlanDto,Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
         List<KeepPlan> keepPlans = keepPlanMapper.queryAllKeepPlan(keepPlanDto);
-        return keepPlans;
+        PageInfo<KeepPlan> pageInfo = new PageInfo<>(keepPlans);
+        return pageInfo;
     }
 
-    @Override
-    public int count(KeepPlanDto keepPlanDto) {
-        int count = keepPlanMapper.count(keepPlanDto);
-        return count;
-    }
+
 
     @Override
     public void addKeepPlan(KeepPlanAU keepPlanAU) {

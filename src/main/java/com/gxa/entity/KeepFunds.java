@@ -24,7 +24,7 @@ public class KeepFunds {
     @ApiModelProperty("结束时间")
     private Date endTime;
     @ApiModelProperty("维修结果  0:成功 1:待维修")
-    private int testResults;
+    private Integer testResults;
     @ApiModelProperty("维修经费")
     private int keepMoney;
 }
