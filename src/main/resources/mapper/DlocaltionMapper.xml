@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.DlocaltionMapper">
+
+    <resultMap id="DlocaltionResultMap" type="dlocaltion">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="count" column="count"></result>
+    </resultMap>
+    <select id="queryList" resultMap="DlocaltionResultMap">
+        SELECT dl.id,dl.name,count(de.id) total
+        FROM d_equip de,d_localtion dl
+        WHERE dl.equipId=de.id
+    </select>
+</mapper>

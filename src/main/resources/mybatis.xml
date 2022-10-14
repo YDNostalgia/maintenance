@@ -14,5 +14,10 @@
         <package name="com.gxa.dto"/>
     </typeAliases>
 
+    <!--分页插件的配置-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+
 
 </configuration>

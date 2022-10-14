@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.Personal;
 import com.gxa.entity.PersonalClass;
 import com.gxa.entity.PersonalDept;
@@ -34,6 +35,11 @@ public class PersonalServiceImpl implements PersonalService {
         List<Personal> personals = this.personalMapper.queryAllPersonal();
         return personals;
     }
+    @Override
+    public List<Personal> queryAllPersonalList(PersonalQueryDto personalQueryDto) {
+        List<Personal> personals = this.personalMapper.queryAllPersonalList(personalQueryDto);
+        return personals;
+    }
 
     @Override
     public List<PersonalDept> queryAllPersonalDept() {
@@ -51,5 +57,31 @@ public class PersonalServiceImpl implements PersonalService {
     public List<PersonalClass> queryAllPersonalClass() {
         List<PersonalClass> personalClasses = this.personalClassMapper.queryAllPersonalClass();
         return personalClasses;
+    }
+
+    @Override
+    public Personal addPersonal(Personal personal) {
+        this.personalMapper.addPersonal(personal);
+        if (personal != null){
+            return personal;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public Personal queryByPersonalId(Integer id) {
+        Personal personal = this.personalMapper.queryByPersonalId(id);
+        return personal;
+    }
+
+    @Override
+    public void updatePersonal(Personal personal) {
+        this.personalMapper.updatePersonal(personal);
+    }
+
+    @Override
+    public void deletePersonal(Integer id) {
+        this.personalMapper.deletePersonal(id);
     }
 }

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("装备分类资料查询条件")
-public class EquipmentDataQueryDto {
+@ApiModel("货位信息查询条件")
+public class DlocaltionQueryDto {
     @ApiModelProperty(value = "当前页",name = "page")
     private Integer page;
 

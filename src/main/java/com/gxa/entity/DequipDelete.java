@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("器材删除和多个删除")
+@ApiModel("器材删除")
 public class DequipDelete {
     @ApiModelProperty(value = "器材编号",name = "code")
     private String code;

@@ -1,6 +1,8 @@
 package com.gxa.service.impl;
 
 import com.gxa.entity.EquipmentData;
+import com.gxa.entity.EquipmentDataToAdd;
+import com.gxa.entity.EquipmentDataToEdit;
 import com.gxa.mapper.EquipmentDataMapper;
 import com.gxa.service.EquipmentDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,16 @@ public class EquipmentDataServiceImpl implements EquipmentDataService {
     public List<EquipmentData> queryAll() {
         List<EquipmentData> equipmentDatas = this.equipmentDataMapper.queryAllEquipmentData();
         return equipmentDatas;
+    }
+
+    @Override
+    public void add(EquipmentDataToAdd equipmentDataToAdd) {
+        this.equipmentDataMapper.add(equipmentDataToAdd);
+    }
+
+    @Override
+    public void update(EquipmentDataToEdit equipmentDataToEdit) {
+        this.equipmentDataMapper.update(equipmentDataToEdit);
     }
 
 }

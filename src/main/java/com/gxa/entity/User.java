@@ -14,12 +14,14 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel("用户管理实体")
 public class User {
-    @ApiModelProperty(value = "账号", name = "id")
+
     private Integer id;
+    @ApiModelProperty(value = "账号", name = "account")
+    private String account;
     @ApiModelProperty(value = "用户名", name = "userName")
 
     private String userName;
-    @ApiModelProperty(value = "手机号码", name = "phoneNumber")
+    @ApiModelProperty(value = "密码", name = "pwd")
     private String pwd;
     private String salt;
     @ApiModelProperty(value = "手机号码", name = "phoneNumber")
@@ -28,6 +30,8 @@ public class User {
     private Date addTime;
     @ApiModelProperty(value = "角色", name = "roleName")
     private String roleName;
+    @ApiModelProperty(value = "状态", name = "state")
+    private String state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
 
@@ -38,7 +42,11 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", salt='" + salt + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", addTime=" + addTime +
+                ", roleName='" + roleName + '\'' +
+                ", state='" + state + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
-
 }

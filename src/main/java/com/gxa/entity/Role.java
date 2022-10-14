@@ -17,12 +17,14 @@ public class Role {
     private Integer id;
     @ApiModelProperty(value = "角色名", name = "roleName")
     private String roleName;
-    @ApiModelProperty(value = "手机号码", name = "describe")
-    private String describe;
-    @ApiModelProperty(value = "手机号码", name = "personnelNumber")
+    @ApiModelProperty(value = "描述", name = "desc")
+    private String desc;
+    @ApiModelProperty(value = "人员数", name = "personnelNumber")
     private String personnelNumber;
     @ApiModelProperty(value = "添加时间", name = "addTime")
     private Date addTime;
+    @ApiModelProperty(value = "状态", name = "state")
+    private String state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
 }
