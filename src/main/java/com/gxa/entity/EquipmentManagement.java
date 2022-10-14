@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("装备实体")
+@ApiModel("返回的装备实体")
 public class EquipmentManagement {
     @ApiModelProperty("装备编号")
     private Integer id;
@@ -26,7 +26,7 @@ public class EquipmentManagement {
     @ApiModelProperty("价格")
     private  String price;
 
-    @ApiModelProperty("筹措方式状态_ 0:全部  1：分配  2:自购")
+    @ApiModelProperty("筹措方式状态_ 0:分配  1：自购 ")
     private  Integer modalities;
 
     @ApiModelProperty("使用单位")
