@@ -15,13 +15,6 @@ public class DequipServiceImpl implements DequipService {
     @Autowired
     private DequipMapper dequipMapper;
 
-
-    @Override
-    public List<Dequip> queryList() {
-        List<Dequip> dequips = this.dequipMapper.queryList();
-        return dequips;
-    }
-
     @Override
     public List<Dequip> queryChooseList(DequipDto dequipDto) {
         List<Dequip> dequips = this.dequipMapper.queryChooseList(dequipDto);

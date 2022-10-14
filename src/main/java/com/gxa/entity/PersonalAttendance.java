@@ -21,16 +21,9 @@ public class PersonalAttendance {
     private Date signin;
     @ApiModelProperty(value = "签退时间",name = "signout")
     private Date signout;
-    @ApiModelProperty(value = "考勤状态",name = "attendancezt")
-    private Integer attendancezt;
+    @ApiModelProperty(value = "考勤状态",name = "pstatus")
+    private Integer pstatus;
     @ApiModelProperty(value = "人员信息",name = "personal")
     private Personal personal;
 
-    public PersonalAttendance(Integer id, String pname, Date signin, Date signout, Personal personal) {
-        this.id = id;
-        this.pname = pname;
-        this.signin = signin;
-        this.signout = signout;
-        this.personal = personal;
-    }
 }

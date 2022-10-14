@@ -13,19 +13,21 @@ import java.sql.Date;
 @NoArgsConstructor
 @ApiModel("部门退料表")
 public class Dreturn {
+
     @ApiModelProperty(value = "退料表id",name = "id")
     private Integer id;
     @ApiModelProperty(value = "退料单号",name = "code")
     private String code;
     @ApiModelProperty(value = "退料部门",name = "department")
     private String department;
+    @ApiModelProperty(value = "内容备份",name = "note")
+    private String note;
     @ApiModelProperty(value = "退料日期",name = "time")
     private Date time;
+
     @ApiModelProperty(value = "审核表id",name = "dreview")
     private Dreview dreview;
-
-    @ApiModelProperty(value = "器材表",name = "dequip")
+    @ApiModelProperty(value = "器材表id",name = "dequip")
     private Dequip dequip;
-    @ApiModelProperty(value = "备份",name = "note")
-    private String note;
+
 }
