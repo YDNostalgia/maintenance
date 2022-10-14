@@ -1,5 +1,7 @@
 package com.gxa.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.UserDto;
 import com.gxa.entity.Role;
 import com.gxa.mapper.RoleMapper;
@@ -16,24 +18,29 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+
     @Override
-    public List<Role> queryAll(UserDto userDto) {
-        List<Role> roles = this.roleMapper.queryAll(userDto);
-        return roles;
+    public PageInfo<Role> queryAll(Role role, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<Role> roles = this.roleMapper.queryAll(role);
+        PageInfo pageInfo=new PageInfo<>(roles);
+        return pageInfo;
     }
 
     @Override
     public void add(Role role) {
-
+        this.roleMapper.add(role);
     }
 
     @Override
     public void update(Role role) {
-
+        this.roleMapper.update(role);
     }
 
     @Override
-    public void delete(List<Role> roles) {
+    public void delete(Integer id) {
+        this.roleMapper.delete(id);
 
     }
 }

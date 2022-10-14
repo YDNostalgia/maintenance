@@ -3,6 +3,7 @@ package com.gxa.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.UserDto;
+import com.gxa.dto.UserRoleDto;
 import com.gxa.entity.User;
 import com.gxa.service.UserService;
 import com.gxa.utils.R;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@Api(value = "用户管理")
+@Api(tags = "用户管理")
 public class UserController {
 
     @Autowired
@@ -76,13 +77,10 @@ public class UserController {
     @GetMapping("/user")
     @ResponseBody
     public Result<List<User>> list(UserDto userDto, Integer page, Integer limit){
-        PageHelper.startPage(page,limit);
-        List<User> users = this.userService.queryAll(userDto);
-        System.out.println("hgghhh----------"+users.get(0));
-        PageInfo<User> pageInfo = new PageInfo<>(users);
-        long total = (int) pageInfo.getTotal();
-        System.out.println(total);
-        Result<List<User>> r=Result.success(users,total);
+
+        PageInfo pageInfo = this.userService.queryAll(userDto,page,limit);
+
+        Result<List<User>> r=Result.success(pageInfo.getList(),pageInfo.getTotal());
         return r;
     }
 
@@ -95,6 +93,9 @@ public class UserController {
     public Result<User> add(@RequestBody User user){
         System.out.println("***********" + user);
         this.userService.add(user);
+        Integer roleId =this.userService.queryRoleId(user.getRoleName());
+        System.out.println(user.getId());
+        this.userService.addUserRoleId(user.getId(), roleId);
         Result<User> r=Result.success();
         return r;
     }
@@ -118,8 +119,10 @@ public class UserController {
     @ApiOperation("用户删除")
     @DeleteMapping("/user")
     @ResponseBody
-    public R delete(@RequestBody List<User> users){
-        return null;
+    public Result<User> delete(@RequestParam("id") Integer id){
+        this.userService.delete(id);
+        Result<User> r=Result.success();
+        return r;
     }
 
 

@@ -6,13 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ApiModel("维修记录属性对应")
-public class KeepRecord {
+public class KeepRecord implements Serializable {
     @ApiModelProperty(value = "id",name = "维修单号")
     private int id;
     @ApiModelProperty("装备编号")
@@ -28,6 +29,6 @@ public class KeepRecord {
     @ApiModelProperty("结束时间")
     private Date endTime;
 
-    @ApiModelProperty("维修状态 _ 1 :成功  0 ：维修中")
-    private int testStatus;
+    @ApiModelProperty("维修状态 _ 2:待维修 1 :维修完成  0 ：维修中")
+    private Integer testStatus;
 }

@@ -15,6 +15,8 @@ public interface EquipmentDataService {
 
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
+    void delete(Integer categoryId);
+
 
 
 }

@@ -19,11 +19,12 @@ public class KeepFile {
     private int equipmentNumber;
     @ApiModelProperty("故障描述")
     private String desc;
-
+    @ApiModelProperty("装备ID")
+    private Integer equipmentId;
     @ApiModelProperty("装备实体")
     private Equipment equipment;
     @ApiModelProperty("维修结果  0:成功 1:待维修")
-    private int testResults;
+    private Integer testResults;
     @ApiModelProperty("开始时间")
     private Date startTime;
     @ApiModelProperty("结束时间")

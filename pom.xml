@@ -107,18 +107,29 @@
       <artifactId>druid</artifactId>
       <version>${druid.version}</version>
     </dependency>
-    <!--mybatis整合Spring-->
+
+    <!--
+    &lt;!&ndash;mybatis整合Spring&ndash;&gt;
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
       <version>${mybatis-spring.version}</version>
     </dependency>
-    <!--mybatis核心依赖-->
+    &lt;!&ndash;mybatis核心依赖&ndash;&gt;
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
       <version>${mybatis.version}</version>
+    </dependency>-->
+
+    <!--mybatis-plus依赖-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>3.5.2</version>
     </dependency>
+
+
     <!--mysql驱动-->
     <dependency>
       <groupId>mysql</groupId>
@@ -238,6 +249,12 @@
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
       <version>5.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.minio</groupId>
+      <artifactId>minio</artifactId>
+      <version>8.2.1</version>
     </dependency>
 
   </dependencies>

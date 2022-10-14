@@ -29,10 +29,29 @@ resultMap标签，它是为了映射select查询出来结果的集合，
         <result property="fileUploadTime" column="file_upload_time"/>
         <association property="equipmentData" resultMap="equipmentDataResultMap"/>
     </resultMap>
-    <select id="queryAllDatas" resultMap="tDataResultMap">
+    <insert id="add">
+        INSERT INTO t_data(data_id,data_name,category_id,equipment_model,data_desc,file_address,file_upload_time)
+        VALUES (#{dataId},#{dataName},#{categoryId},#{equipmentModel},#{dataDesc},#{fileAddress},#{fileUploadTime})
+
+    </insert>
+    <delete id="deleteByDataId">
+        DELETE FROM t_data
+        WHERE data_id=#{dataId}
+    </delete>
+    <select id="queryTDatas" resultMap="tDataResultMap">
         SELECT td.data_id,td.data_name,td.equipment_model,td.data_desc,td.file_address,td.file_upload_time,te.category_id,te.category_name,te.update_time
         FROM t_data td,t_equipment te
         WHERE td.category_id = te.category_id
+        <if test="dataName != null">
+            and data_name=#{dataName}
+        </if>
+
+        <if test="equipmentModel != null">
+            and equipment_model=#{equipmentModel}
+        </if>
+
+
+
     </select>
 
 </mapper>

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @ApiModel("法规类型修改")
 public class StatuteTypeEditDto {
     @ApiModelProperty(value = "法规类型编号", name = "statuteTypeId")
-    private String statuteTypeId;
+    private Integer statuteTypeId;
     @ApiModelProperty(value = "法规类型名称", name = "statuteTypeName")
     private String statuteTypeName;
 }

@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("货位信息")
 public class Dlocaltion {
+
     @ApiModelProperty(value = "ID",name = "id")
     private Integer id;
     @ApiModelProperty(value = "区域名称",name = "name")
     private String name;
-    @ApiModelProperty(value = "数量",name = "count")
-    private Integer count;
-    @ApiModelProperty(value = "器材管理",name = "dequip")
+    @ApiModelProperty(value = "器材表id",name = "dequip")
     private Dequip dequip;
 }

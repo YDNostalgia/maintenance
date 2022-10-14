@@ -15,5 +15,7 @@ public interface EquipmentDataMapper {
 
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
+    void deleteByCategoryId(Integer categoryId);
+
 
 }

@@ -9,7 +9,6 @@
         <result property="pwd" column="pwd"></result>
         <result property="salt" column="salt"></result>
     </resultMap>
-
     <resultMap id="userResultMap1" type="user">
         <id property="id" column="id"></id>
         <result property="account" column="account"></result>
@@ -19,6 +18,8 @@
         <result property="addTime" column="add_time"></result>
         <result property="state" column="state"></result>
     </resultMap>
+
+
     <select id="queryByUserNameAndPwd" resultMap="userResultMap">
         SELECT user_name,pwd,salt FROM t_user WHERE user_name=#{userName} AND pwd=#{pwd}
     </select>
@@ -34,11 +35,10 @@
     </select>
 
     <select id="queryAll" resultMap="userResultMap1">
-        SELECT u.account,u.user_name,u.phone_number,u.role_name,u.add_time,u.state
+        SELECT u.id,u.account,u.user_name,u.phone_number,u.role_name,u.add_time,u.state,u.pwd,u.note
         FROM t_user u
-
         <if test="account != null and account!=''">
-            WHERE u.id=#{id}
+            WHERE u.account=#{account}
         </if>
         <if test="roleName != null and roleName !=''">
             WHERE r.role_name=#{roleName}
@@ -49,9 +49,22 @@
         </if>
     </select>
 
-    <insert id="add">
+
+    <select id="queryRoleId" resultType="integer">
+        SELECT r.id
+        FROM t_role r
+        WHERE r.role_name=#{roleName}
+    </select>
+
+
+    <insert id="add"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(account,role_name,user_name,pwd,phone_number,note)
         VALUES (#{account},#{roleName},#{userName},#{pwd},#{phoneNumber},#{note})
+    </insert>
+
+    <insert id="addUserRoleId">
+        INSERT INTO t_user_role(user_id,role_id)
+        VALUES (#{userId},#{roleId})
     </insert>
 
     <update id="update" parameterType="user">
@@ -59,10 +72,7 @@
         WHERE id=#{id}
     </update>
 
-    <delete id="delete">
-        DELETE FROM t_user WHERE id in
-        <foreach collection="list" item="emp" separator="," open="(" close=")">
-               #{user.id}
-        </foreach>
+    <delete id="delete" parameterType="integer">
+        DELETE FROM t_user WHERE id=#{id}
     </delete>
 </mapper>
