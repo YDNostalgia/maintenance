@@ -1,9 +1,12 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.DwarehouseDto;
 import com.gxa.entity.*;
 import com.gxa.service.DwarehouseService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "入库管理")
+@Api(tags = "入库管理接口")
 @RestController
 public class DwarehouseController {
 
@@ -21,17 +24,20 @@ public class DwarehouseController {
 
     @GetMapping("/dwarehouse/list")
     @ApiOperation("入库管理列表")
-    public R selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto, @RequestBody DwarehouseSelect dwarehouseSelect,@Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dwarehouse>> selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto,@Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dwarehouseDto);
         System.out.println("当前页码：" + page +",每页记录数：" + limit);
 
-        List<Dwarehouse> dwarehouses = this.dwarehouseService.queryDwarehouse();
-        System.out.println(dwarehouses);
+        PageHelper.startPage(page,limit);
 
-        R r = new R();
-        r.put("count",dwarehouses.size());
-        r.put("data",dwarehouses);
+        List<Dwarehouse> dwarehouses = this.dwarehouseService.queryDwarehouse(dwarehouseDto);
+        System.out.println("查询结果----->" + dwarehouses);
 
+        PageInfo<Dwarehouse> pageInfo = new PageInfo<>(dwarehouses);
+        long total = pageInfo.getTotal();
+        System.out.println("total---->" + total);
+
+        Result<List<Dwarehouse>> r = Result.success(dwarehouses, total);
         return r;
     }
 

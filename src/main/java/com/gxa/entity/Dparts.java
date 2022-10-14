@@ -17,6 +17,6 @@ public class Dparts {
     private String name;
     @ApiModelProperty(value = "数量",name = "count")
     private Integer count;
-    @ApiModelProperty(value = "器材管理",name = "dequip")
+    @ApiModelProperty(value = "器材表id",name = "dequip")
     private Dequip dequip;
 }

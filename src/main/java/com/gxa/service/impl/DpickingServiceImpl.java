@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.DpickingDto;
 import com.gxa.entity.Dpicking;
 import com.gxa.entity.Dreview;
 import com.gxa.mapper.DpickingMapper;
@@ -17,35 +18,10 @@ public class DpickingServiceImpl implements DpickingService {
     private DreviewMapper dreviewMapper;
 
     @Override
-    public List<Dpicking> queryAll() {
-        List<Dpicking> dpickings=this.dpickingMapper.queryAll();
+    public List<Dpicking> queryAll(DpickingDto dpickingDto) {
+        List<Dpicking> dpickings=this.dpickingMapper.queryAll(dpickingDto);
         return dpickings;
     }
 
-    @Override
-    public List<Dreview> queryDreviews() {
-        List<Dreview> dreviews=this.dreviewMapper.queryAll();
-        return dreviews;
-    }
 
-    @Override
-    public void add(Dpicking dpicking) {
-        this.dpickingMapper.save(dpicking);
-    }
-
-    @Override
-    public Dpicking queryById(Integer id) {
-        Dpicking dpicking=this.dpickingMapper.queryById(id);
-        return dpicking;
-    }
-
-    @Override
-    public void update(Dpicking dpicking) {
-        this.dpickingMapper.update(dpicking);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        this.dpickingMapper.delete(id);
-    }
 }

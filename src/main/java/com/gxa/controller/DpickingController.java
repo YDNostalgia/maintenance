@@ -1,8 +1,12 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.dto.DpickingDto;
 import com.gxa.entity.*;
 import com.gxa.service.DpickingService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Api(value = "部门领料表")
+@Api(tags = "部门领料接口")
 @RestController
 public class DpickingController {
 
@@ -18,23 +22,27 @@ public class DpickingController {
     private DpickingService dpickingService;
 
     @ApiOperation(value = "部门领料表")
-    @GetMapping("/dpicking/list")
-    public R selectDpicking(@RequestBody(required = false) Dpicking dpickingDto,@RequestBody DpickingSelect dpickingSelect, @Param("page") Integer page, @Param("limit") Integer limit){
+    @PostMapping("/dpicking/list")
+    public Result<List<Dpicking>> selectDpicking(@RequestBody(required = false) DpickingDto dpickingDto, @Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dpickingDto);
         System.out.println("当前页码：" + page +",每页记录数：" + limit);
 
-        List<Dpicking> dpickings = this.dpickingService.queryAll();
-        System.out.println(dpickings);
+        PageHelper.startPage(page,limit);
 
-        R r = new R();
-        r.put("count",dpickings.size());
-        r.put("data",dpickings);
+        List<Dpicking> dpickings = this.dpickingService.queryAll(dpickingDto);
+        System.out.println("查询结果----->" + dpickings);
+
+        PageInfo<Dpicking> pageInfo = new PageInfo<>(dpickings);
+        long total = pageInfo.getTotal();
+        System.out.println("total----->" + total);
+
+        Result<List<Dpicking>> r = Result.success(dpickings, total);
 
         return r;
     }
 
 
-    @GetMapping("/dpicking/perAdd")
+    @PostMapping("/dpicking/perAdd")
     @ApiOperation("部门领料新增页")
     public R toAddPage(@RequestBody DpickingToAdd dpickingToAdd){
         R r = new R();
@@ -49,13 +57,13 @@ public class DpickingController {
     }
 
 
-    @GetMapping("/dpicking/perEdit")
+    @PostMapping("/dpicking/perEdit")
     @ApiOperation("领料修改页")
     public R toEditPage(@RequestBody DpickingToUpdate dpickingToupdate){
         R r = new R();
         return r;
     }
-    @PutMapping("/dpicking/edit")
+    @PostMapping("/dpicking/edit")
     @ApiOperation("领料修改")
     public R dpickingEdit(@RequestBody DpickingToUpdate dpickingToupdate){
 

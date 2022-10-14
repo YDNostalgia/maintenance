@@ -18,17 +18,19 @@ public class Dpicking {
     private Integer id;
     @ApiModelProperty(value = "领料单号",name = "code")
     private String code;
+    @ApiModelProperty(value = "领料部门",name = "department")
+    private String department;
+    @ApiModelProperty(value = "备份内容",name = "note")
+    private String note;
     @ApiModelProperty(value = "领料时间",name = "time")
     private Date time;
+
     @ApiModelProperty(value = "审核表id",name = "dreview")
     private Dreview dreview;
-
-
-    @ApiModelProperty(value = "器材名称",name = "dequip")
+    @ApiModelProperty(value = "器材表id",name = "dequip")
     private Dequip dequip;
 
-    @ApiModelProperty(value = "备份",name = "note")
-    private String note;
+
 
 
 }

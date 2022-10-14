@@ -1,15 +1,11 @@
 package com.gxa.mapper;
 
+import com.gxa.dto.DreturnDto;
 import com.gxa.entity.Dreturn;
 
 import java.util.List;
 
 public interface DreturnMapper {
-    List<Dreturn> queryAll();
+    List<Dreturn> queryAll(DreturnDto dreturnDto);
 
-    void save(Dreturn dreturn);
-    Dreturn queryById(Integer id);
-
-    void update(Dreturn dreturn);
-    void delete(Integer id);
 }
