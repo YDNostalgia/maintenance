@@ -2,7 +2,6 @@ package com.gxa.utils;
 
 
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.gxa.minioConfig.MinioPropConfig;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
@@ -10,12 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -39,19 +36,34 @@ import java.util.concurrent.TimeUnit;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 public class MinioUtil {
+    /**
+     * 连接url
+     */
+    private String endpoint;
+    /**
+     * 用户名
+     */
+    private String accesskey;
+    /**
+     * 密码
+     */
+    private String secretKey;
+    /**
+     * 文件桶的名称
+     */
+    private String bucketName;
 
-   /* @Autowired
-    private MinioPropConfig minioPropConfig;*/
-
-    private MinioPropConfig minioPropConfig = new MinioPropConfig("http://192.168.10.120:9001","MSSY5TA7W6F590OOFMOB","M4Hcai1Oo3UAQb4G6WQlW04VV7ljLGaQ97KGhECU","files");
-   /* @Autowired
-    private MinioClient minioClient;*/
-    private MinioClient minioClient = MinioClient.builder()
-            .endpoint(minioPropConfig.getEndpoint())
-            .credentials(minioPropConfig.getAccesskey(), minioPropConfig.getSecretKey())
-            .build();
+    /**
+     * 创建minio连接
+     * @return 返回minio连接
+     */
+    public MinioClient getMinioClient(){
+        return MinioClient.builder()
+                .endpoint(this.endpoint)
+                .credentials(this.accesskey, this.secretKey)
+                .build();
+    }
 
     /**
      * description: 判断bucket是否存在，不存在则创建
@@ -60,7 +72,7 @@ public class MinioUtil {
      * @author: weirx
      * @time: 2021/8/25 10:20
      */
-    public void existBucket(String name) {
+    public void existBucket(MinioClient minioClient,String name) {
         try {
             boolean exists = minioClient.bucketExists(BucketExistsArgs.builder().bucket(name).build());
             if (!exists) {
@@ -79,7 +91,7 @@ public class MinioUtil {
      * @author: weirx
      * @time: 2021/8/25 10:44
      */
-    public List<String> upload(MultipartFile[] multipartFile) {
+    public List<String> upload(MinioClient minioClient,MultipartFile[] multipartFile) {
         List<String> names = new ArrayList<>(multipartFile.length);
         for (MultipartFile file : multipartFile) {
             String fileName = file.getOriginalFilename();
@@ -93,7 +105,7 @@ public class MinioUtil {
             try {
                 in = file.getInputStream();
                 minioClient.putObject(PutObjectArgs.builder()
-                        .bucket(minioPropConfig.getBucketName())
+                        .bucket(bucketName)
                         .object(fileName)
                         .stream(in, in.available(), -1)
                         .contentType(file.getContentType())
@@ -121,13 +133,11 @@ public class MinioUtil {
      * @param fileName 文件名
      * @return
      */
-    public String getFileUrl(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String getFileUrl(MinioClient minioClient,String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
         /**
          * 文件桶名称
          */
-        String bucketName = minioPropConfig.getBucketName();
-
 
         String presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
@@ -145,12 +155,12 @@ public class MinioUtil {
      * @author: weirx
      * @time: 2021/8/25 10:34
      */
-    public ResponseEntity<byte[]> download(String fileName) {
+    public ResponseEntity<byte[]> download(MinioClient minioClient,String fileName) {
         ResponseEntity<byte[]> responseEntity = null;
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            in = minioClient.getObject(GetObjectArgs.builder().bucket(minioPropConfig.getBucketName()).object(fileName).build());
+            in = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build());
             out = new ByteArrayOutputStream();
             IOUtils.copy(in, out);
             //封装返回值

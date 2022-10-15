@@ -15,18 +15,11 @@
         <property name="password" value="${jdbc.password}"></property>
     </bean>
 
-
- <!--   <bean  class="com.gxa.minioConfig.MinioPropConfig">
-        <property name="endpoint" value="192.168.10.120:9001"></property>
-        <property name="accesskey" value="1U1TETSKX8QQUE76OAI0"></property>
-        <property name="secretKey" value="8xrSuojnJdlADdTyUrKvVLlkyUMGita1Cxa2uEbi"></property>
-        <property name="bucketName" value="files"></property>
-    </bean>-->
-
-<!--    <context:component-scan base-package="com.gxa.minioConfig"/>-->
-
-    <bean  class="com.gxa.utils.MinioUtil">
-
+    <bean class="com.gxa.utils.MinioUtil">
+        <property name="endpoint" value="${minio.endpoint}"/>
+        <property name="accesskey" value="${minio.accesskey}"/>
+        <property name="secretKey" value="${minio.secretKey}"/>
+        <property name="bucketName" value="${minio.bucketName}"/>
     </bean>
 
 <!--    将sqlSessionFactory交给spring管理-->
