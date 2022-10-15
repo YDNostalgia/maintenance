@@ -4,6 +4,8 @@ package com.gxa.utils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.gxa.minioConfig.MinioPropConfig;
 import io.minio.*;
+import io.minio.errors.*;
+import io.minio.http.Method;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description： minio工具类
@@ -40,7 +45,7 @@ public class MinioUtil {
    /* @Autowired
     private MinioPropConfig minioPropConfig;*/
 
-    private MinioPropConfig minioPropConfig = new MinioPropConfig("http://192.168.10.120:9001","1U1TETSKX8QQUE76OAI0","8xrSuojnJdlADdTyUrKvVLlkyUMGita1Cxa2uEbi","files");
+    private MinioPropConfig minioPropConfig = new MinioPropConfig("http://192.168.10.120:9001","MSSY5TA7W6F590OOFMOB","M4Hcai1Oo3UAQb4G6WQlW04VV7ljLGaQ97KGhECU","files");
    /* @Autowired
     private MinioClient minioClient;*/
     private MinioClient minioClient = MinioClient.builder()
@@ -109,6 +114,27 @@ public class MinioUtil {
             names.add(fileName);
         }
         return names;
+    }
+
+    /**
+     * 返回文件地址
+     * @param fileName 文件名
+     * @return
+     */
+    public String getFileUrl(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        /**
+         * 文件桶名称
+         */
+        String bucketName = minioPropConfig.getBucketName();
+
+
+        String presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .method(Method.GET)
+                .expiry(7, TimeUnit.DAYS).build());
+        return presignedObjectUrl;
     }
 
     /**

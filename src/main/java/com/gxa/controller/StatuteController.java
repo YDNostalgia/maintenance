@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api("法规")
+@Api(tags = "法规")
 public class StatuteController {
 
     @Autowired
