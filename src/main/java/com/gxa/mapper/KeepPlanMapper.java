@@ -11,7 +11,6 @@ import java.util.List;
 public interface KeepPlanMapper {
     List<KeepPlan> queryAllKeepPlan(KeepPlanDto keepPlanDto);
 
-    int count(KeepPlanDto keepPlanDto);
 
     void addKeepPlan(KeepPlanAU keepPlanAU);
 

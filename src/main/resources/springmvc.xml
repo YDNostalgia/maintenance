@@ -65,7 +65,10 @@
         allowed-origins：允许源(http://domain2.com)
 -->
     <mvc:cors>
-        <mvc:mapping path="/**" />
+        <mvc:mapping path="/**"
+                     allowed-origins="*"
+                     allowed-methods="GET,POST,PUT,POST,DELETE"
+                     max-age="3600" />
     </mvc:cors>
 
 

@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api(value = "装备接口")
+@Api(tags = "装备管理接口")
 public class EquipmentManagementController {
 
     @Autowired
     private EquipmentManagementService equipmentManagementService;
-    @ResponseBody
     @GetMapping("/equipment/list")
-    @ApiOperation("装备查询")
-    public Result<List<EquipmentManagement>> listEquipment(EquipmentManagementDto equipmentManagementDto, Integer page, Integer limit){
+    @ApiOperation("装备查询_带条件的查询（不传条件就是查询全部）")
+    public Result<List<EquipmentManagement>> listEquipment(@RequestBody(required = false)  EquipmentManagementDto equipmentManagementDto, Integer page, Integer limit){
         Result<List<EquipmentManagement>> r=Result.success();
         try {
             PageHelper.startPage(page,limit);
@@ -40,7 +39,57 @@ public class EquipmentManagementController {
         }
         return r;
     }
-
+    @GetMapping("/equipment/list/equipmentlist")
+    @ApiOperation("查询某个装备——器材清单")
+    public Result<List<EquipmentList>> listEquipmentOne( Integer page, Integer limit){
+        Result<List<EquipmentList>> r=Result.success();
+        try {
+            PageHelper.startPage(page,limit);
+            List<EquipmentList> equipmentLists=this.equipmentManagementService.querylistEquipmentone();
+            PageInfo<EquipmentList> pageInfo = new PageInfo<>(equipmentLists);
+            long total = (int) pageInfo.getTotal();
+            r=Result.success(equipmentLists,total);
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
+            e.printStackTrace();
+        }
+        return r;
+    }
+    @GetMapping("/equipment/list/maintenancerecords")
+    @ApiOperation("查询某个装备——维修记录")
+    public Result<List<MaintenanceRecords>> listEquipmentTwo( Integer page, Integer limit){
+        Result<List<MaintenanceRecords>> r=Result.success();
+        try {
+            PageHelper.startPage(page,limit);
+            List<MaintenanceRecords> maintenanceRecords=this.equipmentManagementService.querylistMaintenanceRecords();
+            PageInfo<MaintenanceRecords> pageInfo = new PageInfo<>(maintenanceRecords);
+            long total = (int) pageInfo.getTotal();
+            r=Result.success(maintenanceRecords,total);
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
+            e.printStackTrace();
+        }
+        return r;
+    }
+    @GetMapping("/equipment/list/technicalData")
+    @ApiOperation("查询某个装备——技术资料")
+    public Result<List<TechnicalData>> listEquipmentThree( Integer page, Integer limit){
+        Result<List<TechnicalData>> r=Result.success();
+        try {
+            PageHelper.startPage(page,limit);
+            List<TechnicalData> technicalData=this.equipmentManagementService.querylistTechnicalData();
+            PageInfo<TechnicalData> pageInfo = new PageInfo<>(technicalData);
+            long total = (int) pageInfo.getTotal();
+            r=Result.success(technicalData,total);
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
+            e.printStackTrace();
+        }
+        return r;
+    }
     @GetMapping("/equipment/preselect")
     @ApiOperation("查询下拉列表信息 1.装备名称(equipmentNames) 2.装备种类名称(equipmentClasses) 3.存放仓库名称(storageLocationName)" +
             "4.使用单位名称(useunits) ")
@@ -54,19 +103,19 @@ public class EquipmentManagementController {
             System.out.println(equipmentClasses);
             r.put("equipmentClasses",equipmentClasses);//装备种类名字集合
             r.put("equipmentNames",equipmentNames);//装备名称集合
-            r.put("useunits",useunits);//装备名称集合
+            r.put("useunits",useunits);//使用单位集合
             r.put("storageLocations",storageLocations);//存放仓库名称
         return r;
     }
 
     @PostMapping("/equipment/add")
     @ApiOperation("装备添加")
-    public Result<EquipmentManagementAU> equipmentAdd(EquipmentManagementAU equipmentManagementAU){
+    public Result<EquipmentManagementAU> equipmentAdd(@RequestBody EquipmentManagementAU equipmentManagementAU){
         //R r=new R();
         Result<EquipmentManagementAU> r=Result.success();
         try {
             this.equipmentManagementService.addEquipmentManagement(equipmentManagementAU);
-             r=Result.success();
+            r=Result.success();
         }catch (Exception e){
             r.setCode("1");
             r.setMsg("error");
@@ -77,7 +126,7 @@ public class EquipmentManagementController {
 
     @PutMapping("/equipment/update")
     @ApiOperation("装备修改")
-    public Result<EquipmentManagementAU> equipmentUpdate(EquipmentManagementAU equipmentManagementAU){
+    public Result<EquipmentManagementAU> equipmentUpdate(@RequestBody EquipmentManagementAU equipmentManagementAU){
         //System.out.println(equipmentManagementAU);
         Result<EquipmentManagementAU> r=Result.success();
         try {
@@ -93,7 +142,7 @@ public class EquipmentManagementController {
 
     @DeleteMapping("/equipment/delete")
     @ApiOperation("装备删除")
-    public R equipmentDelete(@RequestParam("id") Integer id){
+    public R equipmentDelete(Integer id){
         R r=new R();
         try{
             this.equipmentManagementService.deleteEquipmentManagement(id);

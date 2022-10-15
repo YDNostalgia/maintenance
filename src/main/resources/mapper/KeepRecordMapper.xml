@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.KeepRecordMapper">
+    <resultMap id="keepRecordResultMap" type="keepRecord">
+        <id property="id" column="id"></id>
+        <result property="equipmentNumber" column="equipment_number"></result>
+        <result property="equipment.equipmentName" column="equipment_name"></result>
+        <result property="equipment.id" column="equipment_id"></result>
+        <result property="desc" column="desc"></result>
+        <result property="equipmentNumber" column="equipment_number"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="testStatus" column="test_status"></result>
+    </resultMap>
+    <insert id="addKeepRecord">
+        INSERT INTO t_keep(id,equipment_number,equipment_id,`desc`,start_time,test_status)
+        VALUES (#{id},#{equipmentNumber},#{equipment.id},#{desc},#{startTime},#{testStatus})
+    </insert>
+    <update id="updateKeepRecord" parameterType="keepRecord">
+        update t_keep
+        set equipment_number=#{equipmentNumber},equipment_id=#{equipment.id},`desc`=#{desc},start_time=#{startTime},test_status=#{testStatus}
+        where id=#{id}
+    </update>
+    <delete id="deleteKeepRecord" parameterType="int">
+        DELETE FROM t_keep WHERE id=#{id}
+    </delete>
+
+    <select id="queryAllKeepRecord" resultMap="keepRecordResultMap">
+        SELECT k.id,e.equipment_name,k.equipment_number,k.desc,k.start_time,K.test_status
+        FROM t_keep k,equipmentname e
+        WHERE k.equipment_id=e.id
+
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(k.end_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+        </if>
+        <if test="id != null and id !=''">
+            and k.id=#{id}
+        </if>
+        <if test="testStatus != null and testStatus !=''">
+            and k.test_status=#{testStatus}
+        </if>
+    </select>
+
+</mapper>

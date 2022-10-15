@@ -1,42 +1,30 @@
 package com.gxa.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.UserDto;
 import com.gxa.entity.Role;
-import com.gxa.entity.User;
 import com.gxa.service.RoleService;
-import com.gxa.utils.R;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Api(value = "角色管理")
+@Api(tags = "角色管理")
 public class RoleController {
     @Autowired
     private RoleService roleService;
 
     @ApiOperation("角色列表")
-    @GetMapping("/role/list")
+    @GetMapping("/role")
     @ResponseBody
-    public Result<List<Role>> list(UserDto userDto, Integer page, Integer limit){
+    public Result<List<Role>> list(Role role, Integer page, Integer limit){
+        PageInfo pageInfo= this.roleService.queryAll(role,page,limit);
+        Result<List<Role>> r=Result.success(pageInfo.getList(),pageInfo.getTotal());
 
-        PageHelper.startPage(page,limit);
-        List<Role> roles = this.roleService.queryAll(userDto);
-        System.out.println("hgghhh----------"+roles.get(0));
-        PageInfo<Role> pageInfo = new PageInfo<>(roles);
-        long total = (int) pageInfo.getTotal();
-        Result<List<Role>> r=Result.success(roles,total);
-//        r.setTotal(total);
-        System.out.println(total);
         return r;
     }
 
@@ -44,30 +32,38 @@ public class RoleController {
      * 用户添加
      */
     @ApiOperation("角色添加")
-    @GetMapping("/role/add")
+    @PostMapping("/role")
     @ResponseBody
-    public R add(@RequestBody Role role){
-        return null;
+    public Result<Role> add(@RequestBody Role role){
+        System.out.println("***********" + role);
+        this.roleService.add(role);
+        Result<Role> r=Result.success();
+        return r;
     }
 
     /**
      * 用户修改
      */
     @ApiOperation("角色修改")
-    @GetMapping("/role/update")
+    @PutMapping("/role")
     @ResponseBody
-    public R update(@RequestBody Role role){
-        return null;
+    public Result<Role> update(@RequestBody Role role){
+        System.out.println("***********" + role);
+        this.roleService.update(role);
+        Result<Role> r=Result.success();
+        return r;
     }
 
     /**
      * 用户删除
      */
     @ApiOperation("角色删除")
-    @GetMapping("/role/delete")
+    @DeleteMapping("/role")
     @ResponseBody
-    public R delete(@RequestBody List<Role> roles){
-        return null;
+    public Result<Role> delete(@RequestParam("id") Integer id){
+        this.roleService.delete(id);
+        Result<Role> r=Result.success();
+        return r;
     }
 
 }

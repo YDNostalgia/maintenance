@@ -1,15 +1,20 @@
 package com.gxa.service;
 
+import com.github.pagehelper.PageInfo;
 import com.gxa.dto.UserDto;
+import com.gxa.dto.UserRoleDto;
 import com.gxa.entity.User;
+import com.gxa.entity.UserRole;
 
 import java.util.List;
 
 public interface UserService {
     User login(String userName, String pwd);
-    List<User> queryAll(UserDto userDto);
-    void add(User user);
+    PageInfo<User> queryAll(UserDto userDto,Integer page,Integer limit);
+    Integer add(User user);
+
+    void addUserRoleId(Integer userId,Integer roleId);
     void update(User user);
-    User queryById(Integer id);
-    void delete(List<User> users);
+    Integer queryRoleId(String roleName);
+    void delete(Integer id);
 }

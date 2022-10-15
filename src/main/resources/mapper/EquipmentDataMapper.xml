@@ -21,6 +21,10 @@
         WHERE category_id=#{categoryId}
     </update>
 
+    <delete id="deleteByCategoryId" parameterType="int">
+        DELETE FROM t_equipment WHERE category_id=#{categoryId}
+    </delete>
+
     <select id="queryAllEquipmentData" resultMap="equipmentDataMap" >
         SELECT te.category_id,te.category_name,te.update_time,v.total
         FROM t_equipment te,(SELECT td.category_id,count(td.category_id) total
