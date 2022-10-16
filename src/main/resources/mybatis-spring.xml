@@ -14,13 +14,10 @@
         <property name="username" value="${jdbc.username}"></property>
         <property name="password" value="${jdbc.password}"></property>
     </bean>
-
-    <bean class="com.gxa.utils.MinioUtil">
-        <property name="endpoint" value="${minio.endpoint}"/>
-        <property name="accesskey" value="${minio.accesskey}"/>
-        <property name="secretKey" value="${minio.secretKey}"/>
-        <property name="bucketName" value="${minio.bucketName}"/>
-    </bean>
+<!--    将minio的配置类交给spring管理-->
+    <context:component-scan base-package="com.gxa.minioConfig"/>
+<!--    将minio的工具类交给spring管理-->
+    <bean class="com.gxa.utils.MinioUtil"/>
 
 <!--    将sqlSessionFactory交给spring管理-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
