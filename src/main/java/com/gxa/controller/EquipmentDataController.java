@@ -5,6 +5,7 @@ import com.gxa.entity.EquipmentDataToAdd;
 import com.gxa.entity.EquipmentDataToEdit;
 import com.gxa.service.EquipmentDataService;
 import com.gxa.utils.R;
+import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,40 +16,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api("装备分类资料")
+@Api(tags = "资料类型接口")
 public class EquipmentDataController {
     @Autowired
     private EquipmentDataService equipmentDataService;
 
-    @ApiOperation("查询装备分类资料")
+    @ApiOperation("查询资料分类")
     @GetMapping("/equipmentData/list")
-    public R list(){
-        R r;
+    public Result<List<EquipmentData>> list(){
+
         List<EquipmentData> equipmentDatas = equipmentDataService.queryAll();
         if (equipmentDatas != null){
-            r = R.ok();
-            r.put("data",equipmentDatas);
-            return r;
+
+            return Result.success(equipmentDatas);
         }
-        r = R.error(1,"查询失败");
-        return r;
+        return Result.failed();
     }
 
-    @ApiOperation("添加装备分类")
+    @ApiOperation("添加资料分类")
     @PostMapping("/equipmentData/add")
-    public R add(@Param("categoryName")@ApiParam(value = "分类名称",name ="categoryName",required = true ) EquipmentDataToAdd equipmentDataToAdd){
-        R r;
+    public Result add(EquipmentDataToAdd equipmentDataToAdd){
 
         if (equipmentDataToAdd != null){
             this.equipmentDataService.add(equipmentDataToAdd);
-            r = R.ok();
-            r.put("data",equipmentDataToAdd);
-            System.out.println(equipmentDataToAdd);
-            return r;
-
+            return Result.success();
         }else {
-            r = R.error(1,"添加失败");
-            return r;
+            return Result.failed();
         }
 
 
@@ -56,30 +49,26 @@ public class EquipmentDataController {
     }
 
 
-    @ApiOperation("修改装备分类")
+    @ApiOperation("修改资料分类")
     @PutMapping("/equipmentData/edit")
-    public R edit(EquipmentDataToEdit equipmentDataToEdit){
-        R r;
+    public Result update(EquipmentDataToEdit equipmentDataToEdit){
         if (equipmentDataToEdit != null){
             this.equipmentDataService.update(equipmentDataToEdit);
-            r = R.ok("修改成功");
-            r.put("data",equipmentDataToEdit);
-            System.out.println(equipmentDataToEdit);
-            return r;
+            return Result.success();
         }else {
-            r = R.error(1,"修改失败");
-
-            return r;
+            return Result.failed();
         }
 
     }
 
-    @ApiOperation("删除装备分类")
+    @ApiOperation("删除资料分类")
     @DeleteMapping("/equipmentData/delete")
-    public R delete(@Param("categoryId")@ApiParam(value ="分类名称",name = "categoryId",required = true) Integer categoryId ){
+    public R delete(@Param("categoryId")@ApiParam(value ="资料类型id",name = "categoryId",required = true) Integer categoryId ){
         R r;
-        r = R.error(1,"删除失败");
+        this.equipmentDataService.delete(categoryId);
         r = R.ok("删除成功");
         return r;
+        }
+
     }
-}
+

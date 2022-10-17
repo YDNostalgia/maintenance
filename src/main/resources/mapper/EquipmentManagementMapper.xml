@@ -31,8 +31,33 @@
         <id property="id" column="id"></id>
         <result property="storageLocationName" column="storagelocation_name"></result>
     </resultMap>
+    <resultMap id="equipmentListMap" type="equipmentList">
+        <id property="id" column="code"></id>
+        <result property="equipmentName" column="name"></result>
+        <result property="equipmentClass" column="type"></result>
+        <result property="state" column="test_results"></result>
+    </resultMap>
+    <resultMap id="maintenanceRecordsMap" type="maintenanceRecords">
+        <id property="id" column="id"></id>
+        <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="desc" column="desc"></result>
+    </resultMap>
+    <resultMap id="technicalDataMap" type="technicalData">
+        <id property="id" column="data_id"></id>
+        <result property="profileName" column="data_name"></result>
+        <result property="equipmentModel" column="equipment_model"></result>
+        <result property="dataDesc" column="data_desc"></result>
+    </resultMap>
+    <resultMap id="equipmentClassificationMap" type="equipmentClassification">
+        <result property="equipmentClassificationName" column="equipmentclassification_name"></result>
+        <result property="num" column="num"></result>
+    </resultMap>
     <delete id="deleteEquipmentManagement" parameterType="integer">
         DELETE FROM equipment_managment WHERE id=#{id}
+    </delete>
+    <delete id="deleteEquipmentClassification" parameterType="integer">
+        DELETE FROM equipmentclassification WHERE id=#{id}
     </delete>
 
     <select id="queryAllEquipmentManagement" resultMap="equipmentManagementMap" parameterType="equipmentManagementDto" >
@@ -87,9 +112,29 @@
     <select id="queryEquipStorageLocation" resultMap="StorageLocationMap">
         SELECT * FROM storage_location
     </select>
+    <select id="querylistEquipmentone" resultMap="equipmentListMap">
+        SELECT d.code,d.name,d.type,t.test_results
+        FROM d_equip d,t_keep t
+        WHERE d.code=t.equip_code
+    </select>
+    <select id="querylistMaintenanceRecords" resultMap="maintenanceRecordsMap">
+        SELECT t.id,t.start_time,t.end_time,t.desc FROM t_keep t
+    </select>
+    <select id="querylistTechnicalData" resultMap="technicalDataMap">
+        SELECT t.data_id,t.data_name,t.equipment_model,t.data_desc FROM t_data t
+    </select>
+    <select id="queryAllEquipmentClassifications" resultMap="equipmentClassificationMap">
+       		SELECT equipmentclassification_name,count(*) num
+			FROM equipment_managment e1,equipmentclassification e2
+			WHERE e1.equipmentclassification_id=e2.id
+			GROUP BY equipmentclassification_name
+    </select>
 
     <insert id="addEquipmentManagement" parameterType="equipmentManagementAU">
         INSERT INTO equipment_managment(id,equipmentname_id,equipmentclassification_id,state,price,modalities,useunits_id,storagelocation_id,responsible_person)VALUES(#{id},#{equipmentNameId},#{equipmentClassId},#{state},#{price},#{modalities},#{useunitsId},#{storageLocationId},#{responsiblePerson})
+    </insert>
+    <insert id="addEquipmentClassifications" parameterType="equipmentClass">
+        INSERT INTO equipmentclassification(equipmentclassification_name)VALUES(#{equipmentClassName})
     </insert>
 
     <update id="updateEquipmentManagement" parameterType="equipmentManagementAU">
@@ -97,6 +142,11 @@
         SET modalities=#{modalities},useunits_id=#{useunitsId},storagelocation_id=#{storageLocationId},
         responsible_person=#{responsiblePerson},equipmentclassification_id=#{equipmentClassId},
         equipmentname_id=#{equipmentNameId},price=#{price},state=#{state}
+        WHERE id=#{id}
+    </update>
+    <update id="updateEquipmentClassification" parameterType="equipmentClass">
+        UPDATE equipmentclassification
+        SET equipmentclassification_name=#{equipmentClassName}
         WHERE id=#{id}
     </update>
 </mapper>

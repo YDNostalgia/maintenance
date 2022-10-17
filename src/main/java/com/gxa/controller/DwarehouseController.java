@@ -22,7 +22,7 @@ public class DwarehouseController {
     @Autowired
     private DwarehouseService dwarehouseService;
 
-    @GetMapping("/dwarehouse/list")
+    @PostMapping("/dwarehouse/list")
     @ApiOperation("入库管理列表")
     public Result<List<Dwarehouse>> selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto,@Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dwarehouseDto);
