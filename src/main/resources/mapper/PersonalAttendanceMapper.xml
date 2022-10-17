@@ -11,10 +11,29 @@
         <result property="personal.id" column="pid"/>
         <result property="personal.personalDept.pdept" column="pdept"/>
         <result property="personal.personalJob.pjob" column="pjob"/>
+        <result property="pstatus" column="pstatus"/>
     </resultMap>
     <select id="queryAllPersonalAttendance" resultMap="queryAllPersonalAttendanceresultMap">
-        SELECT ps.id,ps.pname,pd.pdept,pj.pjob,ps.signin,ps.signout,ps.pid
+        SELECT ps.id,ps.pname,pd.pdept,pj.pjob,ps.signin,ps.signout,ps.pid,ps.pstatus
         FROM p_sign ps,p_list pl,p_dept pd,p_job pj
         WHERE ps.pid=pl.id AND pl.pdept_id=pd.pdept_id AND pl.pjob_id=pj.pjob_id
+    </select>
+
+    <select id="queryAllPersonalAttendanceList" resultMap="queryAllPersonalAttendanceresultMap" parameterType="com.gxa.dto.PersonalAttendanceDto">
+        SELECT ps.id,ps.pname,pd.pdept,pj.pjob,ps.signin,ps.signout,ps.pid,ps.pstatus
+        FROM p_sign ps,p_list pl,p_dept pd,p_job pj
+        WHERE ps.pid=pl.id AND pl.pdept_id=pd.pdept_id AND pl.pjob_id=pj.pjob_id
+            <if test="queryTime != null">
+                <![CDATA[ AND DATE_FORMAT(ps.signin,'%Y-%m-%d')=DATE_FORMAT(#{queryTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="pname != null and pname != '' ">
+                AND ps.pname=#{pname}
+            </if>
+            <if test="personalDept.pdeptId != null and personalDept.pdeptId != ''">
+                AND pd.pdept_id=#{personalDept.pdeptId}
+            </if>
+            <if test="pstatus != null and pstatus != '' ">
+                AND ps.pstatus=#{pstatus}
+            </if>
     </select>
 </mapper>
