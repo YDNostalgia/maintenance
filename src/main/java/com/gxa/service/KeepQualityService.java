@@ -11,4 +11,6 @@ public interface KeepQualityService {
 
     void updateKeepQuality(KeepQualityAU keepQualityAU);
 
+    void deleteKeepQuality(Integer id);
+
 }
