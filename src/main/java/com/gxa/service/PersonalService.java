@@ -1,5 +1,6 @@
 package com.gxa.service;
 
+import com.gxa.dto.PersonalAttendanceDto;
 import com.gxa.dto.PersonalMtorderDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.*;
@@ -31,5 +32,7 @@ public interface PersonalService {
     public List<KeepRecord> queryAllKeeprecordList(PersonalMtorderDto personalMtorderDto);
     //无条件拉取所有人员考勤信息
     public List<PersonalAttendance> queryAllPersonalAttendance();
+    //按条件查询人员的考勤信息
+    public List<PersonalAttendance> queryAllPersonalAttendanceList(PersonalAttendanceDto personalAttendanceDto);
 
 }

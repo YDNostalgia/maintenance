@@ -20,6 +20,6 @@ public class PersonalAttendanceDto {
     private String pname;
     @ApiModelProperty(value = "部门对象",name = "personalDept")
     private PersonalDept personalDept;
-    @ApiModelProperty(value = "考勤状态  0-正常，1-异常(迟到或早退)",name = "pstatus")
+    @ApiModelProperty(value = "考勤状态  1-正常，2-异常(迟到或早退)",name = "pstatus")
     private Integer pstatus;
 }
