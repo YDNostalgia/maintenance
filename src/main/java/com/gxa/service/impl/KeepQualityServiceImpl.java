@@ -34,4 +34,9 @@ public class KeepQualityServiceImpl implements KeepQualityService {
     public void updateKeepQuality(KeepQualityAU keepQualityAU) {
         keepQualityMapper.updateKeepQuality(keepQualityAU);
     }
+
+    @Override
+    public void deleteKeepQuality(Integer id) {
+        keepQualityMapper.deleteKeepQuality(id);
+    }
 }
