@@ -24,6 +24,9 @@ public class KeepRecord implements Serializable {
     @ApiModelProperty("装备实体")
     private Equipment equipment;
 
+    @ApiModelProperty("装备ID")
+    private Integer equipmentId;
+
     @ApiModelProperty("开始时间")
     private Date startTime;
     @ApiModelProperty("结束时间")

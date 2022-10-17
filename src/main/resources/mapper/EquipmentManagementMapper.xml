@@ -53,6 +53,10 @@
         <result property="equipmentClassificationName" column="equipmentclassification_name"></result>
         <result property="num" column="num"></result>
     </resultMap>
+    <resultMap id="equipmentclassificationDropListMap" type="equipmentNameNum">
+        <result property="equipName" column="equipment_name"></result>
+        <result property="num" column="num"></result>
+    </resultMap>
     <delete id="deleteEquipmentManagement" parameterType="integer">
         DELETE FROM equipment_managment WHERE id=#{id}
     </delete>
@@ -129,6 +133,12 @@
 			WHERE e1.equipmentclassification_id=e2.id
 			GROUP BY equipmentclassification_name
     </select>
+    <select id="queryquipmentclassificationDropList" resultMap="equipmentclassificationDropListMap" parameterType="string">
+			SELECT e3.equipmentclassification_name,e2.equipment_name,count(*) num
+            FROM equipment_managment e1,equipmentname e2,equipmentclassification e3
+            WHERE e1.equipmentname_id=e2.id and e1.equipmentclassification_id=e3.id and e3.equipmentclassification_name=#{equipmentClassificationName}
+            GROUP BY equipmentclassification_id,equipmentname_id
+    </select>
 
     <insert id="addEquipmentManagement" parameterType="equipmentManagementAU">
         INSERT INTO equipment_managment(id,equipmentname_id,equipmentclassification_id,state,price,modalities,useunits_id,storagelocation_id,responsible_person)VALUES(#{id},#{equipmentNameId},#{equipmentClassId},#{state},#{price},#{modalities},#{useunitsId},#{storageLocationId},#{responsiblePerson})
@@ -147,6 +157,11 @@
     <update id="updateEquipmentClassification" parameterType="equipmentClass">
         UPDATE equipmentclassification
         SET equipmentclassification_name=#{equipmentClassName}
+        WHERE id=#{id}
+    </update>
+    <update id="updateEquipmentclassification" parameterType="equipmentName">
+        UPDATE equipmentname
+        SET equipment_name=#{equipName}
         WHERE id=#{id}
     </update>
 </mapper>

@@ -41,7 +41,7 @@
             WHERE u.account=#{account}
         </if>
         <if test="roleName != null and roleName !=''">
-            WHERE r.role_name=#{roleName}
+            WHERE u.role_name=#{roleName}
         </if>
 
         <if test="state != null and state!=''">

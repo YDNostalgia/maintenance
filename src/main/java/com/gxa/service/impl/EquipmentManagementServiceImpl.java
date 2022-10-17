@@ -104,4 +104,16 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     public void deleteEquipmentClassification(Integer id) {
         this.equipmentManagementMapper.deleteEquipmentClassification(id);
     }
+
+    @Override
+    public List<EquipmentName> equipmentclassificationDropList(String equipmentClassificationName) {
+        List<EquipmentName> equipmentNames=this.equipmentManagementMapper.queryquipmentclassificationDropList(equipmentClassificationName);
+        return equipmentNames;
+    }
+
+    @Override
+    public void updateEquipmentclassification(EquipmentName equipmentName) {
+        this.equipmentManagementMapper.updateEquipmentclassification(equipmentName);
+
+    }
 }

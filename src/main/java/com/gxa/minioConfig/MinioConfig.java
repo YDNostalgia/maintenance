@@ -4,30 +4,42 @@ import io.minio.MinioClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
+@Configuration
 public class MinioConfig {
-
-    @Autowired
-    private MinioPropConfig minioPropConfig;
-
     /**
-     * 初始化 MinIO 客户端
+     * 连接url
      */
-    @Bean
-    public MinioClient minioClient() {
-        MinioClient minioClient = MinioClient.builder()
-                .endpoint(minioPropConfig.getEndpoint())
-                .credentials(minioPropConfig.getAccesskey(), minioPropConfig.getSecretKey())
-                .build();
-        return minioClient;
-    }
+    @Value("${minio.endpoint}")
+    private String endpoint;
+    /**
+     * 用户名
+     */
+    @Value("${minio.accesskey}")
+    private String accesskey;
+    /**
+     * 密码
+     */
+    @Value("${minio.secretKey}")
+    private String secretKey;
+    /**
+     * 文件桶的名称
+     */
+    @Value("${minio.bucketName}")
+    private String bucketName;
 
+    @Bean
+    public MinioClient getMinioClient(){
+        return MinioClient.builder()
+                .endpoint(endpoint)
+                .credentials(accesskey, secretKey)
+                .build();
+    }
 }
+

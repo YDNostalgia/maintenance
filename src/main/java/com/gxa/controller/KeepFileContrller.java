@@ -22,8 +22,8 @@ public class KeepFileContrller {
     @Autowired
     private KeepFileService keepFileService;
     @ApiOperation("维修档案查询")
-    @GetMapping("keepFile/queryAllkeepFile")
-    public Result<List<KeepFile>> queryAllkeepFile(KeepPlanDto keepPlanDto,Integer page,Integer limit){
+    @PostMapping("keepFile/queryAllkeepFile")
+    public Result<List<KeepFile>> queryAllkeepFile(@RequestBody(required = false) KeepPlanDto keepPlanDto,Integer page,Integer limit){
         System.out.println("select--------"+keepPlanDto);
         System.out.println(page+"----页面----"+limit);
         Result<List<KeepFile>> r = Result.success();
@@ -38,7 +38,7 @@ public class KeepFileContrller {
     }
     @ApiOperation("维修档案添加")
     @PostMapping("keepFile/addkeepFile")
-    public Result<Integer> addkeepFile(KeepFileAU keepFileAU){
+    public Result<Integer> addkeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){
         System.out.println("add"+keepFileAU);
         Result<Integer> r = Result.success();
         try {
@@ -51,7 +51,7 @@ public class KeepFileContrller {
     }
     @ApiOperation("维修档案修改")
     @PutMapping("keepFile/updatekeepFile")
-    public Result<Integer> updatekeepFile(KeepFileAU keepFileAU){
+    public Result<Integer> updatekeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){
         System.out.println("update---------"+keepFileAU);
         Result<Integer> r = Result.success();
         try {
@@ -64,7 +64,7 @@ public class KeepFileContrller {
     }
     @ApiOperation("维修档案删除")
     @DeleteMapping("keepFile/deletekeepFile")
-    public Result<Integer> deletekeepFile(Integer id){
+    public Result<Integer> deletekeepFile(@RequestParam("id") Integer id){
             System.out.println("delete---------"+id);
             Result<Integer> r = Result.success();
             try {

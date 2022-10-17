@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.PersonalAttendanceDto;
 import com.gxa.dto.PersonalMtorderDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.*;
@@ -8,6 +9,7 @@ import com.gxa.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -30,6 +32,9 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Autowired
     private PersonalAttendanceMapper personalAttendanceMapper;
+
+    @Autowired
+    private PersonalSubmitMapper personalSubmitMapper;
 
     @Override
     public List<Personal> queryAllPersonal() {
@@ -112,13 +117,61 @@ public class PersonalServiceImpl implements PersonalService {
             int signoutHours = personalAttendance.getSignout().getHours();
 //            System.out.println(signoutHours);
 
-            if(signinHours > 8 || signoutHours < 18){
-                personalAttendance.setPstatus(1);
-            }else {
+            if(signinHours < 9 && signoutHours > 17){
                 personalAttendance.setPstatus(0);
+            }else if(signinHours > 8 || signoutHours < 18){
+                personalAttendance.setPstatus(1);
             }
 
         }
         return personalAttendances;
+    }
+
+    @Override
+    public List<PersonalAttendance> queryAllPersonalAttendanceList(PersonalAttendanceDto personalAttendanceDto) {
+        List<PersonalAttendance> personalAttendances = this.personalAttendanceMapper.queryAllPersonalAttendanceList(personalAttendanceDto);
+
+        //根据考勤状态查询
+//        if(personalAttendanceDto.getPstatus() == 0){
+//            for (int i = 0;i < personalAttendances.size();i++){
+//                PersonalAttendance personalAttendance = personalAttendances.get(i);
+//                if(personalAttendance.getPstatus() != 0){
+//                    personalAttendances.remove(i);
+//                    i--;
+//                }
+//            }
+//        }else {
+//            for (int i = 0;i < personalAttendances.size();i++){
+//                PersonalAttendance personalAttendance = personalAttendances.get(i);
+//                if(personalAttendance.getPstatus() == 0){
+//                    personalAttendances.remove(i);
+//                    i--;
+//                }
+//            }
+//        }
+
+        return personalAttendances;
+    }
+
+    @Override
+    public void addPersonalSubmit(List<Integer> personalIds, List<Integer> keepRecordIds) {
+
+        if(personalIds.size() == 1 && keepRecordIds.size() == 1){
+            Integer personalId = personalIds.get(0);
+            Integer keepRecordId = keepRecordIds.get(0);
+            this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+        }else if(personalIds.size() == 1 && keepRecordIds.size() > 1){
+            Integer personalId = personalIds.get(0);
+            for (int i = 0;i < keepRecordIds.size();i++){
+                Integer keepRecordId = keepRecordIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }else if(personalIds.size() > 1 && keepRecordIds.size() == 1){
+            Integer keepRecordId = keepRecordIds.get(0);
+            for(int i = 0;i < personalIds.size();i++){
+                Integer personalId = personalIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }
     }
 }

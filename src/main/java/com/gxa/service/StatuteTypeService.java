@@ -5,9 +5,12 @@ import com.gxa.dto.StatuteTypeEditDto;
 import com.gxa.dto.StatuteTypeQueryDto;
 import com.gxa.entity.StatuteType;
 
+import java.util.List;
+
 
 public interface StatuteTypeService {
-    PageInfo<StatuteType> queryAll(StatuteTypeQueryDto statuteTypeQueryDto);
+    List<StatuteType> queryAll();
+    PageInfo<StatuteType> queryByCondition(StatuteTypeQueryDto statuteTypeQueryDto);
     void add(String statuteTypeName);
     void update(StatuteTypeEditDto statuteTypeEditDto);
     void delete(Integer statuteTypeId);
