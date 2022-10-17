@@ -2,8 +2,10 @@ package com.gxa.utils;
 
 
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.gxa.minioConfig.MinioPropConfig;
+import com.gxa.minioConfig.MinioConfig;
 import io.minio.*;
+import io.minio.errors.*;
+import io.minio.http.Method;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -21,9 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description： minio工具类
@@ -34,20 +38,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 public class MinioUtil {
 
-   /* @Autowired
-    private MinioPropConfig minioPropConfig;*/
+    @Autowired
+    private MinioConfig minioConfig;
 
-    private MinioPropConfig minioPropConfig = new MinioPropConfig("http://192.168.10.120:9001","1U1TETSKX8QQUE76OAI0","8xrSuojnJdlADdTyUrKvVLlkyUMGita1Cxa2uEbi","files");
-   /* @Autowired
-    private MinioClient minioClient;*/
-    private MinioClient minioClient = MinioClient.builder()
-            .endpoint(minioPropConfig.getEndpoint())
-            .credentials(minioPropConfig.getAccesskey(), minioPropConfig.getSecretKey())
-            .build();
-
+    @Autowired
+    private MinioClient minioClient;
     /**
      * description: 判断bucket是否存在，不存在则创建
      *
@@ -88,7 +85,7 @@ public class MinioUtil {
             try {
                 in = file.getInputStream();
                 minioClient.putObject(PutObjectArgs.builder()
-                        .bucket(minioPropConfig.getBucketName())
+                        .bucket(minioConfig.getBucketName())
                         .object(fileName)
                         .stream(in, in.available(), -1)
                         .contentType(file.getContentType())
@@ -112,6 +109,25 @@ public class MinioUtil {
     }
 
     /**
+     * 返回文件地址
+     * @param fileName 文件名
+     * @return
+     */
+    public String getFileUrl(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        /**
+         * 文件桶名称
+         */
+
+        String presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .bucket(minioConfig.getBucketName())
+                .object(fileName)
+                .method(Method.GET)
+                .expiry(7, TimeUnit.DAYS).build());
+        return presignedObjectUrl;
+    }
+
+    /**
      * description: 下载文件
      *
      * @param fileName
@@ -124,7 +140,7 @@ public class MinioUtil {
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
-            in = minioClient.getObject(GetObjectArgs.builder().bucket(minioPropConfig.getBucketName()).object(fileName).build());
+            in = minioClient.getObject(GetObjectArgs.builder().bucket(minioConfig.getBucketName()).object(fileName).build());
             out = new ByteArrayOutputStream();
             IOUtils.copy(in, out);
             //封装返回值

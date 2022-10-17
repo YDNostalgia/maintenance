@@ -1,5 +1,6 @@
 package com.gxa.service.impl;
 
+import com.gxa.dto.PersonalAttendanceDto;
 import com.gxa.dto.PersonalMtorderDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.*;
@@ -8,6 +9,7 @@ import com.gxa.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -112,13 +114,39 @@ public class PersonalServiceImpl implements PersonalService {
             int signoutHours = personalAttendance.getSignout().getHours();
 //            System.out.println(signoutHours);
 
-            if(signinHours > 8 || signoutHours < 18){
-                personalAttendance.setPstatus(1);
-            }else {
+            if(signinHours < 9 && signoutHours > 17){
                 personalAttendance.setPstatus(0);
+            }else if(signinHours > 8 || signoutHours < 18){
+                personalAttendance.setPstatus(1);
             }
 
         }
+        return personalAttendances;
+    }
+
+    @Override
+    public List<PersonalAttendance> queryAllPersonalAttendanceList(PersonalAttendanceDto personalAttendanceDto) {
+        List<PersonalAttendance> personalAttendances = this.personalAttendanceMapper.queryAllPersonalAttendanceList(personalAttendanceDto);
+
+        //根据考勤状态查询
+//        if(personalAttendanceDto.getPstatus() == 0){
+//            for (int i = 0;i < personalAttendances.size();i++){
+//                PersonalAttendance personalAttendance = personalAttendances.get(i);
+//                if(personalAttendance.getPstatus() != 0){
+//                    personalAttendances.remove(i);
+//                    i--;
+//                }
+//            }
+//        }else {
+//            for (int i = 0;i < personalAttendances.size();i++){
+//                PersonalAttendance personalAttendance = personalAttendances.get(i);
+//                if(personalAttendance.getPstatus() == 0){
+//                    personalAttendances.remove(i);
+//                    i--;
+//                }
+//            }
+//        }
+
         return personalAttendances;
     }
 }
