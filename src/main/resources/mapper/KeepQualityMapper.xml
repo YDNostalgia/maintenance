@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.KeepQualityMapper">
+    <resultMap id="keepQualityResultMap" type="keepQuality">
+        <id property="id" column="id"></id>
+        <result property="equipmentNumber" column="equipment_number"></result>
+        <result property="equipment.equipmentName" column="equipment_name"></result>
+        <result property="equipment.id" column="eid"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="testResults" column="test_results"></result>
+        <result property="testStatus" column="test_status"></result>
+
+        <result property="equipmentId" column="equipment_id"></result>
+
+
+    </resultMap>
+    <insert id="addKeepQuality" parameterType="keepQuality">
+        insert into t_keep(id,equipment_id,equipment_number,start_time,end_time,test_status,test_results)
+        values (#{id},#{equipmentId},#{equipmentNumber},#{startTime},#{endTime},#{testStatus},#{testResults})
+    </insert>
+    <update id="updateKeepQuality">
+        update t_keep
+        set equipment_id=#{equipmentId},equipment_number=#{equipmentNumber},start_time=#{startTime}
+          ,end_time=#{endTime},test_status=#{testStatus},test_results={testResults}
+        where id=#{id}
+    </update>
+    <select id="queryAllKeepQuality" resultMap="keepQualityResultMap">
+        SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.start_time,k.end_time,k.test_status,k.test_results
+        FROM t_keep k,equipmentname e
+        WHERE k.equipment_id=e.id
+
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(k.end_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+        </if>
+        <if test="id != null and id !=''">
+            and k.id=#{id}
+        </if>
+    </select>
+
+
+</mapper>

@@ -47,7 +47,7 @@ public class KeepRecordController {
             keepRecordService.addKeepRecord(keepRecord);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
@@ -60,7 +60,7 @@ public class KeepRecordController {
             keepRecordService.updateKeepRecord(keepRecord);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
@@ -73,7 +73,7 @@ public class KeepRecordController {
             keepRecordService.deleteKeepRecord(id);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
