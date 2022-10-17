@@ -19,13 +19,18 @@ public class StatuteTypeServiceImpl implements StatuteTypeService {
     private StatuteTypeMapper statuteTypeMapper;
 
     @Override
+    public List<StatuteType> queryAll() {
+        return statuteTypeMapper.queryAll();
+    }
+
+    @Override
     /**
      * 查询所有法规类型
      */
-    public PageInfo<StatuteType> queryAll(StatuteTypeQueryDto statuteTypeQueryDto) {
+    public PageInfo<StatuteType> queryByCondition(StatuteTypeQueryDto statuteTypeQueryDto) {
 
         PageHelper.startPage(statuteTypeQueryDto.getPage(), statuteTypeQueryDto.getLimit());
-        List<StatuteType> statuteTypes = this.statuteTypeMapper.queryAll();
+        List<StatuteType> statuteTypes = this.statuteTypeMapper.queryByCondition();
         PageInfo<StatuteType> pageInfo = new PageInfo<>(statuteTypes);
         return pageInfo;
     }

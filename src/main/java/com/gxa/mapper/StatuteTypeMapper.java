@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface StatuteTypeMapper {
     List<StatuteType>  queryAll();
+    List<StatuteType>  queryByCondition();
     void add(String statuteTypeName);
     void save(StatuteTypeEditDto statuteTypeEditDto);
     void delete(Integer statuteTypeId);
