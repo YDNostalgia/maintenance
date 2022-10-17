@@ -8,9 +8,8 @@
         <result property="equipmentNumber" column="equipment_number"></result>
         <result property="desc" column="desc"></result>
         <result property="planTime" column="plan_time"></result>
-<!--        <result property="startTime" column="start_time"></result>-->
-<!--        <result property="endTime" column="end_time"></result>-->
         <result property="equipment.equipmentName" column="equipment_name"></result>
+        <result property="equipment.id" column="eid"></result>
         <result property="equipmentId" column="equipment_id"></result>
     </resultMap>
 
@@ -30,33 +29,19 @@
     </delete>
 
     <select id="queryAllKeepPlan"  resultMap="keepPlanResultMap">
-        SELECT k.id,e.equipment_name,k.equipment_number,k.desc,k.plan_time
+        SELECT k.id,e.equipment_name,k.equipment_number,k.desc,k.plan_time,e.id as eid
         FROM t_keep k,equipmentname e
         WHERE k.equipment_id=e.id
-        <if test="startTime != null">
-            and k.start_time &gt; =${startTime}
-        </if>
-        <if test="endTime != null ">
-            and k.end_time &lt;= #{endTime}
-        </if>
-        <if test="id != null and id !=''">
-            and k.id=#{id}
-        </if>
-    </select>
-    <select id="count" resultType="java.lang.Integer" parameterType="keepPlanDto">
-        SELECT COUNT(k.id) AS total
-        FROM t_keep k,equipmentname e
-        WHERE k.equipment_id=e.id
-        <if test="startTime != null">
-            and k.start_time &gt; =${startTime}
-        </if>
-        <if test="endTime != null ">
-            and k.end_time &lt;= #{endTime}
-        </if>
-        <if test="id != null and id !=''">
-            and k.id=#{id}
-        </if>
-    </select>
 
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(k.end_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+        </if>
+        <if test="id != null and id !=''">
+            and k.id=#{id}
+        </if>
+    </select>
 
 </mapper>

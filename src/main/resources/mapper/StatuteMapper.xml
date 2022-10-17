@@ -23,7 +23,21 @@
         VALUES (#{statuteName},#{details},#{fileAddress},#{statuteTypeId})
     </insert>
     <update id="update">
-        UPDATE statute SET statute_name = #{statuteName},details = #{details},fileAddress = #{fileAddress},statute_type_id = #{statuteTypeId}
+        UPDATE statute
+        <set>
+            <if test= "statuteName != null and statuteName != '' ">
+                statute_name = #{statuteName},
+            </if>
+            <if test= "details != null and details != '' ">
+                details = #{details},
+            </if>
+            <if test= "fileAddress != null and fileAddress != '' ">
+                   fileAddress = #{fileAddress}
+            </if>
+            <if test= "statuteTypeId != null">
+                 statute_type_id = #{statuteTypeId}
+            </if>
+        </set>
         WHERE statute_id = #{statuteId}
     </update>
 

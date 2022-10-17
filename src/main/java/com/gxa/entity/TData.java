@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "资料")
+@ApiModel(value = "资料管理")
 public class TData {
 
     @ApiModelProperty(value = "资料id",name = "dataId")

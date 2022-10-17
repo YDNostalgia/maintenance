@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @Data
 @ApiModel("装备查询的dto")
 public class EquipmentManagementDto {
-    @ApiModelProperty("装备查询_装备编号")
+    @ApiModelProperty("条件查询_装备编号")
     private Integer id;
-    @ApiModelProperty("装备查询_使用仓库编号")
+    @ApiModelProperty("条件查询_使用单位编号")
     private Integer useunitId;
-    @ApiModelProperty("装备类别编号")
+    @ApiModelProperty("条件查询_装备分类编号")
     private Integer equipmentclassificationId;
-    @ApiModelProperty("装备筹措方式")
+    @ApiModelProperty("条件查询_筹措方式  0:分配 1:自购")
     private String modalities;
-    @ApiModelProperty("装备状态")
-    private String state;
+    @ApiModelProperty("条件查询_装备状态 0：正常 1:维修 2:停用")
+    private Integer state;
 
 
 }

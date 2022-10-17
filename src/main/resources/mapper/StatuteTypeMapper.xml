@@ -25,11 +25,11 @@
 
     <select id="queryAll" resultMap="statuteTypeResultMap">
 
-        SELECT st.statute_type_id,st.statute_type_name,st.statute_type_update_time,v.total
-        FROM statute_type st,(SELECT s.statute_type_id,count(s.statute_type_id) total
+        SELECT st.statute_type_id,st.statute_type_name,st.statute_type_update_time,IFNULL(v.total,0) total
+        FROM statute_type st LEFT JOIN (SELECT s.statute_type_id,count(s.statute_type_id) total
                               FROM statute s
                               GROUP BY s.statute_type_id) v
-        WHERE st.statute_type_id = v.statute_type_id
+        ON st.statute_type_id = v.statute_type_id
 
     </select>
 

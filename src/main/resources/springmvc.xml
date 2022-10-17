@@ -17,6 +17,9 @@
     </bean>
 
     <context:component-scan base-package="com.gxa.controller,com.gxa.exceptionhandler,com.gxa.config"/>
+
+<!--    <bean class="com.gxa.utils.MinioUtil"/>-->
+
     <mvc:annotation-driven conversion-service="conversionService"/>
 
 

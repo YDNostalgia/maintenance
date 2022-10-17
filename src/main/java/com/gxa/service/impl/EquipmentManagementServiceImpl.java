@@ -65,4 +65,43 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     public void deleteEquipmentManagement(Integer id) {
         this.equipmentManagementMapper.deleteEquipmentManagement(id);
     }
+
+    @Override
+    public List<EquipmentList> querylistEquipmentone() {
+        List<EquipmentList> equipmentLists=this.equipmentManagementMapper.querylistEquipmentone();
+        return equipmentLists;
+    }
+
+    @Override
+    public List<MaintenanceRecords> querylistMaintenanceRecords() {
+        List<MaintenanceRecords> maintenanceRecords=this.equipmentManagementMapper.querylistMaintenanceRecords();
+        return maintenanceRecords;
+    }
+
+    @Override
+    public List<TechnicalData> querylistTechnicalData() {
+        List<TechnicalData> technicalData=this.equipmentManagementMapper.querylistTechnicalData();
+        return technicalData;
+    }
+
+    @Override
+    public List<EquipmentClassification> queryAllEquipmentClassifications() {
+        List<EquipmentClassification> equipmentClassifications=this.equipmentManagementMapper.queryAllEquipmentClassifications();
+        return equipmentClassifications;
+    }
+
+    @Override
+    public void addEquipmentClassification(EquipmentClass equipmentClassName) {
+        this.equipmentManagementMapper.addEquipmentClassifications(equipmentClassName);
+    }
+
+    @Override
+    public void updateEquipmentClassification(EquipmentClass equipmentClassName) {
+        this.equipmentManagementMapper.updateEquipmentClassification(equipmentClassName);
+    }
+
+    @Override
+    public void deleteEquipmentClassification(Integer id) {
+        this.equipmentManagementMapper.deleteEquipmentClassification(id);
+    }
 }

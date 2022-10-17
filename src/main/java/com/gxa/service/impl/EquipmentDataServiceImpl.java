@@ -32,4 +32,9 @@ public class EquipmentDataServiceImpl implements EquipmentDataService {
         this.equipmentDataMapper.update(equipmentDataToEdit);
     }
 
+    @Override
+    public void delete(Integer categoryId) {
+        this.equipmentDataMapper.deleteByCategoryId(categoryId);
+    }
+
 }
