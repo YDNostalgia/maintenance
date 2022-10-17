@@ -73,18 +73,35 @@ public class DequipController {
         return r;
     }
 
-    @PostMapping("/dequip/perAdd")
-    @ApiOperation("器材新增页")
-    public R toAddPage(@RequestBody DequipToAdd dequipToAdd){
-        R r = new R();
+    @GetMapping("/dequip/dcompany")
+    @ApiOperation("单位 下拉列表")
+    public Result<List<Decompany>> delectCompanyList(){
+        List<Decompany> decompanies = this.dequipService.queryCompany();
+        System.out.println("查询结果----->" + decompanies);
+
+        Integer size = decompanies.size();
+        long total = size.longValue();
+        System.out.println("total-->" + total);
+
+        Result<List<Decompany>> r = Result.success(decompanies, total);
         return r;
     }
+
+
     @PostMapping("/dequip/add")
     @ApiOperation("器材新增")
-    public R dequipAdd(@RequestBody DequipToAdd dequipToAdd){
+    public R addDequip(@RequestBody DequipToAdd dequipToAdd){
+        System.out.println("添加数据——>" + dequipToAdd);
 
-        R r = new R();
-        return r;
+        DequipToAdd queryAdd = this.dequipService.addDequip(dequipToAdd);
+
+        if(queryAdd != null){
+            R r = R.ok("添加成功");
+            return r;
+        } else {
+            R r = R.error(1,"添加失败,请重新添加");
+            return r;
+        }
     }
 
 
