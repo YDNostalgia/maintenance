@@ -8,12 +8,14 @@ import com.github.pagehelper.PageInfo;
 import com.gxa.dto.TDataDto;
 import com.gxa.entity.TData;
 import com.gxa.entity.TDataToAdd;
+import com.gxa.entity.TDataToUpdate;
 import com.gxa.mapper.TDataMapper;
 import com.gxa.service.TDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class TDataServiceImpl implements TDataService {
 
@@ -37,5 +39,10 @@ public class TDataServiceImpl implements TDataService {
     @Override
     public void add(TDataToAdd tDataToAdd) {
         this.tDataMapper.add(tDataToAdd);
+    }
+
+    @Override
+    public void update(TDataToUpdate tDataToUpdate) {
+        this.tDataMapper.update(tDataToUpdate);
     }
 }

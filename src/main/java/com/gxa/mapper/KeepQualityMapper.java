@@ -12,4 +12,6 @@ public interface KeepQualityMapper {
     void addKeepQuality(KeepQualityAU keepQualityAU);
 
     void updateKeepQuality(KeepQualityAU keepQualityAU);
+
+    void deleteKeepQuality(Integer id);
 }

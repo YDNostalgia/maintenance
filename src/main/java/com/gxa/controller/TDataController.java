@@ -2,9 +2,9 @@ package com.gxa.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.TDataDto;
-import com.gxa.dto.TDataEditDto;
 import com.gxa.entity.TData;
 import com.gxa.entity.TDataToAdd;
+import com.gxa.entity.TDataToUpdate;
 import com.gxa.service.TDataService;
 import com.gxa.utils.R;
 import com.gxa.utils.Result;
@@ -24,7 +24,7 @@ public class TDataController {
 
     @ApiOperation("查询资料")
     @GetMapping("/data/list")
-    public Result<List<TData>> queryAllTData( Integer page, Integer limit, TDataDto tDataDto){
+    public Result<List<TData>> queryAllTData( Integer page, Integer limit,@RequestBody(required = false) TDataDto tDataDto){
         System.out.println("tDataDto-->" +tDataDto);
         System.out.println(page + "----" + limit);
         Result<List<TData>> r = new Result<>();
@@ -46,7 +46,7 @@ public class TDataController {
 
     @ApiOperation("删除资料")
     @DeleteMapping("/data/delete")
-    public R delete(TData tData){
+    public R delete(@RequestBody TData tData){
         R r;
         this.tDataService.deleteByDataId(tData.getDataId());
         r = R.ok("删除成功");
@@ -56,13 +56,26 @@ public class TDataController {
 
     @ApiOperation("添加资料")
     @PostMapping("/data/add")
-    public Result add(TDataToAdd tDataToAdd){
+    public Result add(@RequestBody TDataToAdd tDataToAdd){
         if (tDataToAdd != null){
             this.tDataService.add(tDataToAdd);
             return Result.success();
         }else {
             return Result.failed();
         }
+    }
+
+    @ApiOperation("更新资料")
+    @PutMapping("/data/update")
+    public Result<List<TDataToUpdate>> update(@RequestBody TDataToUpdate tDataToUpdate){
+        Result<List<TDataToUpdate>> r = Result.success();
+        try {
+            tDataService.update(tDataToUpdate);
+        }catch (Exception e){
+            e.printStackTrace();
+            Result.failed();
+        }
+        return r;
     }
 
 

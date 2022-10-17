@@ -1,5 +1,6 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.gxa.entity.EquipmentData;
 import com.gxa.entity.EquipmentDataToAdd;
 import com.gxa.entity.EquipmentDataToEdit;
@@ -23,20 +24,24 @@ public class EquipmentDataController {
 
     @ApiOperation("查询资料分类")
     @GetMapping("/equipmentData/list")
-    public Result<List<EquipmentData>> list(){
-
-        List<EquipmentData> equipmentDatas = equipmentDataService.queryAll();
-        if (equipmentDatas != null){
-
-            return Result.success(equipmentDatas);
+    public Result<List<EquipmentData>> queryAllEquipmentData(Integer page,Integer limit){
+        System.out.println(page+"------"+limit);
+        Result<List<EquipmentData>> r = Result.success();
+        try {
+            PageInfo<EquipmentData> pageInfo = equipmentDataService.queryAll(page, limit);
+            r = Result.success(pageInfo.getList(),pageInfo.getTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            Result.failed();
         }
-        return Result.failed();
+        return r;
     }
 
     @ApiOperation("添加资料分类")
     @PostMapping("/equipmentData/add")
-    public Result add(EquipmentDataToAdd equipmentDataToAdd){
-
+    public Result add(@RequestBody EquipmentDataToAdd equipmentDataToAdd){
+        System.out.println(equipmentDataToAdd.getCategoryId());
+        System.out.println(equipmentDataToAdd.getCategoryName());
         if (equipmentDataToAdd != null){
             this.equipmentDataService.add(equipmentDataToAdd);
             return Result.success();
@@ -51,7 +56,7 @@ public class EquipmentDataController {
 
     @ApiOperation("修改资料分类")
     @PutMapping("/equipmentData/edit")
-    public Result update(EquipmentDataToEdit equipmentDataToEdit){
+    public Result update(@RequestBody EquipmentDataToEdit equipmentDataToEdit){
         if (equipmentDataToEdit != null){
             this.equipmentDataService.update(equipmentDataToEdit);
             return Result.success();
