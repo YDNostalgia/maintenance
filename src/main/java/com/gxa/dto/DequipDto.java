@@ -11,8 +11,8 @@ public class DequipDto {
     private String code;
     @ApiModelProperty(value = "器材名称",name = "name")
     private String name;
-    @ApiModelProperty(value = "器材类型",name = "type")
-    private String type;
-    @ApiModelProperty(value = "存放区域",name = "saveArea")
-    private String saveArea;
+    @ApiModelProperty(value = "器材类型",name = "typeId")
+    private Integer typeId;
+    @ApiModelProperty(value = "货区信息",name = "saveId")
+    private Integer saveId;
 }

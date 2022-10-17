@@ -29,20 +29,49 @@ public class DequipController {
         System.out.println("查询条件----->" + dequipDto);
         System.out.println("当前页码----->" + page + ",每页数据---->" + limit);
 
+        //实现分页
         PageHelper.startPage(page,limit);
 
         List<Dequip> dequips = this.dequipService.queryChooseList(dequipDto);
         System.out.println("查询结果----->" + dequips);
 
+        //获取总记录数
         PageInfo<Dequip> pageInfo = new PageInfo<>(dequips);
-        long total = pageInfo.getTotal();
+        Long total = pageInfo.getTotal();
         System.out.println("total----->" + total);
 
         Result<List<Dequip>> r = Result.success(dequips, total);
 
         return r;
     }
+    @GetMapping("/dequip/dtype")
+    @ApiOperation("器材分类 下拉列表")
+    public Result<List<Detype>> selectTypeList(){
+        List<Detype> detypes = this.dequipService.queryType();
+        System.out.println("查询结果----->" + detypes);
 
+        //查询总记录数
+        Integer size = detypes.size();
+        Long total = size.longValue();
+        System.out.println("total-->" + total);
+
+        Result<List<Detype>> r = Result.success(detypes, total);
+
+        return r;
+    }
+    @GetMapping("/dequip/dsave")
+    @ApiOperation("存放区域 下拉列表")
+    public Result<List<Desave>> delectSaveList(){
+        List<Desave> desaves = this.dequipService.querySave();
+        System.out.println("查询结果----->" + desaves);
+
+        Integer size = desaves.size();
+        long total = size.longValue();
+        System.out.println("total-->" + total);
+
+        Result<List<Desave>> r = Result.success(desaves, total);
+        return r;
+    }
 
     @PostMapping("/dequip/perAdd")
     @ApiOperation("器材新增页")

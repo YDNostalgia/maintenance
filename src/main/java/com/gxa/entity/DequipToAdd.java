@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("器材添加页和添加")
 public class DequipToAdd {
+
     @ApiModelProperty(value = "器材编号",name = "code")
     private String code;
     @ApiModelProperty(value = "器材名称",name = "name")

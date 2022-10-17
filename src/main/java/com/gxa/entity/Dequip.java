@@ -17,20 +17,20 @@ public class Dequip {
     private String code;
     @ApiModelProperty(value = "器材名称",name = "name")
     private String name;
-    @ApiModelProperty(value = "器材分类",name = "type")
-    private String type;
     @ApiModelProperty(value = "规格型号",name = "model")
     private String model;
     @ApiModelProperty(value = "单价",name = "price")
     private Double price;
     @ApiModelProperty(value = "数量",name = "sum")
     private Integer sum;
-    @ApiModelProperty(value = "单位",name = "company")
-    private String company;
-    @ApiModelProperty(value = "存放区域",name = "saveArea")
-    private String saveArea;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
-    @ApiModelProperty(value = "盘点表id",name = "dcounting")
-    private Dcounting dcounting;
+
+    @ApiModelProperty(value = "器材分类id",name = "detype")
+    private Detype detype;
+    @ApiModelProperty(value = "货位信息id",name = "desave")
+    private Desave desave;
+    @ApiModelProperty(value = "单位表id",name = "decompany")
+    private Decompany decompany;
+
 }
