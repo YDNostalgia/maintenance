@@ -10,13 +10,15 @@ import com.gxa.utils.R;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController //等同于@Controller（表面这个类是一个控制器类）+@ResponseBody（方法的返回值以指定格式写入http response body中）
-@Api("资料")
+@Api(tags = "资料管理接口")
 public class TDataController {
 
     @Autowired
@@ -46,9 +48,9 @@ public class TDataController {
 
     @ApiOperation("删除资料")
     @DeleteMapping("/data/delete")
-    public R delete(@RequestBody TData tData){
+    public R delete(@Param ("dataId")@ApiParam(value = "资料id",name = "dataId",required = true) Integer dataId){
         R r;
-        this.tDataService.deleteByDataId(tData.getDataId());
+        this.tDataService.deleteByDataId(dataId);
         r = R.ok("删除成功");
         return r;
     }
