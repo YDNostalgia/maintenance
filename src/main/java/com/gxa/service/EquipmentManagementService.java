@@ -22,4 +22,7 @@ public interface EquipmentManagementService {
     void addEquipmentClassification(EquipmentClass equipmentClassName);
     void updateEquipmentClassification(EquipmentClass equipmentClassName);
     void deleteEquipmentClassification(Integer id);
+    List<EquipmentName> equipmentclassificationDropList(String equipmentClassificationName);
+    void updateEquipmentclassification(EquipmentName equipmentName);
+
 }
