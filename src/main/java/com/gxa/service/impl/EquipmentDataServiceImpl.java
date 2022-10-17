@@ -1,5 +1,7 @@
 package com.gxa.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gxa.entity.EquipmentData;
 import com.gxa.entity.EquipmentDataToAdd;
 import com.gxa.entity.EquipmentDataToEdit;
@@ -17,9 +19,11 @@ public class EquipmentDataServiceImpl implements EquipmentDataService {
     private EquipmentDataMapper equipmentDataMapper;
 
     @Override
-    public List<EquipmentData> queryAll() {
-        List<EquipmentData> equipmentDatas = this.equipmentDataMapper.queryAllEquipmentData();
-        return equipmentDatas;
+    public PageInfo<EquipmentData> queryAll(Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<EquipmentData> equipmentDatas = equipmentDataMapper.queryAllEquipmentData();
+        PageInfo<EquipmentData> pageInfo = new PageInfo<>(equipmentDatas);
+        return pageInfo;
     }
 
     @Override

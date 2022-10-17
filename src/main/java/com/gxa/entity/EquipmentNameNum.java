@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("装备分类_数量实体")
-public class EquipmentClassification {
-    @ApiModelProperty("装备分类的名称")
-    private String equipmentClassificationName;
-    @ApiModelProperty("装备分类的数量")
+@ApiModel("装备分类_具体种类的下拉查询实体")
+public class EquipmentNameNum {
+ @ApiModelProperty("装备分类_具体种类的下拉查询名称")
+    private String equipName;
+    @ApiModelProperty("装备分类_具体种类的下拉查询数量")
     private Integer num;
 }

@@ -10,7 +10,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@ApiModel("人员抽组数据类型")
+@ApiModel("人员抽组提交数据类型")
 public class PersonSubmitMtorderDto {
     @ApiModelProperty(value = "已选维修人员id",name = "personalId")
     private List<Integer> personalId;

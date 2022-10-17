@@ -34,6 +34,11 @@ resultMap标签，它是为了映射select查询出来结果的集合，
         VALUES (#{dataId},#{dataName},#{categoryId},#{equipmentModel},#{dataDesc},#{fileAddress},#{fileUploadTime})
 
     </insert>
+    <update id="update" parameterType="java.util.List">
+        UPDATE t_data
+        SET data_name=#{dataName},category_id=#{categoryId},equipment_model=#{equipmentModel},data_desc=#{dataDesc},file_address=#{fileAddress},file_upload_time=#{fileUploadTime}
+        WHERE data_id = #{dataId}
+    </update>
     <delete id="deleteByDataId">
         DELETE FROM t_data
         WHERE data_id=#{dataId}
