@@ -33,6 +33,9 @@ public class PersonalServiceImpl implements PersonalService {
     @Autowired
     private PersonalAttendanceMapper personalAttendanceMapper;
 
+    @Autowired
+    private PersonalSubmitMapper personalSubmitMapper;
+
     @Override
     public List<Personal> queryAllPersonal() {
         List<Personal> personals = this.personalMapper.queryAllPersonal();
@@ -148,5 +151,27 @@ public class PersonalServiceImpl implements PersonalService {
 //        }
 
         return personalAttendances;
+    }
+
+    @Override
+    public void addPersonalSubmit(List<Integer> personalIds, List<Integer> keepRecordIds) {
+
+        if(personalIds.size() == 1 && keepRecordIds.size() == 1){
+            Integer personalId = personalIds.get(0);
+            Integer keepRecordId = keepRecordIds.get(0);
+            this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+        }else if(personalIds.size() == 1 && keepRecordIds.size() > 1){
+            Integer personalId = personalIds.get(0);
+            for (int i = 0;i < keepRecordIds.size();i++){
+                Integer keepRecordId = keepRecordIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }else if(personalIds.size() > 1 && keepRecordIds.size() == 1){
+            Integer keepRecordId = keepRecordIds.get(0);
+            for(int i = 0;i < personalIds.size();i++){
+                Integer personalId = personalIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }
     }
 }
