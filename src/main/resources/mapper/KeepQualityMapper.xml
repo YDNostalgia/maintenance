@@ -27,6 +27,9 @@
           ,end_time=#{endTime},test_status=#{testStatus},test_results={testResults}
         where id=#{id}
     </update>
+    <delete id="deleteKeepQuality">
+        delete from t_keep where  id=#{id}
+    </delete>
     <select id="queryAllKeepQuality" resultMap="keepQualityResultMap">
         SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.start_time,k.end_time,k.test_status,k.test_results
         FROM t_keep k,equipmentname e
