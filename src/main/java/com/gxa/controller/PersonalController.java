@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -200,48 +202,63 @@ public class PersonalController {
     @PostMapping(value = "/personalTransfer/save")
     @ApiOperation(value = "人员抽组提交")
     public R personalTransferSave(@RequestBody(required = false) PersonSubmitMtorderDto personSubmitMtorderDto){
-        System.out.println(personSubmitMtorderDto);
-
+        System.out.println("维修人员和待维修任务" + personSubmitMtorderDto);
 
         //获取维修人员id
-        List<Integer> personalId = personSubmitMtorderDto.getPersonalId();
+        List<Integer> personalIds = personSubmitMtorderDto.getPersonalId();
         //获取待维修任务任务编号
-        List<Integer> keepRecordId = personSubmitMtorderDto.getKeepRecordId();
+        List<Integer> keepRecordIds = personSubmitMtorderDto.getKeepRecordId();
 
         //判断业务逻辑，是否是一人多任务或者多人一任务，如果是多人多任务返回错误任务安排
-        if((personalId.size() > 1)  && (keepRecordId.size() > 1) ){
+        if((personalIds.size() > 1)  && (keepRecordIds.size() > 1) ){
             R r = R.error(1, "任务分配不符合业务逻辑，请选择一人完成多个任务，或者多人完成一个任务");
             return r;
-        }
+        }else {
+            this.personalService.addPersonalSubmit(personalIds,keepRecordIds);
 
-        R r = new R();
-        return r;
+            R r = new R();
+            return r;
+        }
     }
 
     @PostMapping(value = "/attendance/list")
     @ApiOperation(value = "考勤管理列表")
-    public R attendanceList(@RequestBody(required = false) PersonalAttendanceDto personalAttendanceDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<PersonalAttendance>> attendanceList(@RequestBody(required = false) PersonalAttendanceDto personalAttendanceDto){
         System.out.println("条件查询信息：" + personalAttendanceDto);
-        System.out.println("当前的时间为：" + personalAttendanceDto.getQueryTime());
+        //获取当前查询的时间
+        Date queryTime = personalAttendanceDto.getQueryTime();
+        Integer page = personalAttendanceDto.getPage();
+        Integer limit = personalAttendanceDto.getLimit();
+        System.out.println("当前的时间为：" + queryTime);
         System.out.println("page:" + page + ",limit:" + limit);
 
-        List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendance();
+
+        //实现分页
+        PageHelper.startPage(page,limit);
+//        List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendance();
+        List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendanceList(personalAttendanceDto);
+
         System.out.println("人员考勤信息：" + personalAttendances);
 
-        R r = new R();
-        r.put("count",personalAttendances.size());
-        r.put("data",personalAttendances);
-        return r;
+        //获取条件查询总记录条数
+        PageInfo<PersonalAttendance> pageInfo = new PageInfo<>(personalAttendances);
+        long total = pageInfo.getTotal();
+
+        Result<List<PersonalAttendance>> resultPersonalAttendance = Result.success(personalAttendances,total);
+
+        return resultPersonalAttendance;
     }
 
     @PostMapping(value = "/mtorder/list")
     @ApiOperation(value = "维修工单")
-    public R mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto,@Param("page") Integer page,@Param("limit") Integer limit){
+    public Result<List<PersonalOrder>> mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto,@Param("page") Integer page,@Param("limit") Integer limit){
         System.out.println(personalMtorderListDto);
         System.out.println("page:" + page + ",limit:" + limit);
 
-        R r = new R();
-        return r;
+        Result<List<PersonalOrder>> resultPersonalOrder = Result.success();
+
+
+        return resultPersonalOrder;
     }
 
 

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("用户条件查询")
+@ApiModel("用户查询条件")
 public class UserDto {
     @ApiModelProperty(value = "账号", name = "account")
     private String account;

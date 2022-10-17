@@ -1,5 +1,6 @@
 package com.gxa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,12 @@ public class KeepQuality {
     @ApiModelProperty(value = "id",name = "维修单号")
     private int id;
     @ApiModelProperty("装备编号")
-    private int equipmentNumber;
+    private Integer equipmentNumber;
+
+    @JsonIgnore
+    @ApiModelProperty("装备ID")
+    private Integer equipmentId;
+
     @ApiModelProperty("装备实体")
     private Equipment equipment;
     @ApiModelProperty("维修结果  0:成功 1:待维修")

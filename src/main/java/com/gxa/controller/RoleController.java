@@ -1,6 +1,7 @@
 package com.gxa.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.RoleDto;
 import com.gxa.dto.UserDto;
 import com.gxa.entity.Role;
 import com.gxa.service.RoleService;
@@ -21,8 +22,8 @@ public class RoleController {
     @ApiOperation("角色列表")
     @GetMapping("/role")
     @ResponseBody
-    public Result<List<Role>> list(Role role, Integer page, Integer limit){
-        PageInfo pageInfo= this.roleService.queryAll(role,page,limit);
+    public Result<List<Role>> list(RoleDto roleDto, Integer page, Integer limit){
+        PageInfo pageInfo= this.roleService.queryAll(roleDto,page,limit);
         Result<List<Role>> r=Result.success(pageInfo.getList(),pageInfo.getTotal());
 
         return r;

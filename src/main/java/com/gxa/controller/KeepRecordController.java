@@ -23,12 +23,13 @@ public class KeepRecordController {
     private KeepRecordService keepRecordService;
     @ApiOperation("维修记录查询")
     @PostMapping("keepRecord/queryAllRecord")
-    public Result<List<KeepRecord>> queryAllkeepRecord(KeepRecordDto keepRecordDto,Integer page,Integer limit){
+    public Result<List<KeepRecord>> queryAllkeepRecord(@RequestBody(required = false) KeepRecordDto keepRecordDto, Integer page, Integer limit){
         System.out.println("keepRecordDto-->" + keepRecordDto);
         System.out.println(page+  "----"+ limit);
         Result<List<KeepRecord>> r = Result.success();
             try{
-               PageInfo pageInfo = keepRecordService.queryAllKeepRecord(keepRecordDto,page,limit);
+                System.out.println("111111111111111");
+               PageInfo<KeepRecord> pageInfo = keepRecordService.queryAllKeepRecord(keepRecordDto,page,limit);
                 System.out.println("查询出的数据:" + pageInfo.getList());
                 r = Result.success(pageInfo.getList(), pageInfo.getTotal());
                 System.out.println("total---------"+pageInfo.getTotal());
@@ -40,27 +41,27 @@ public class KeepRecordController {
         }
     @ApiOperation("维修记录添加")
     @PostMapping("keepRecord/addRecord")
-    public Result<List<KeepRecord>> addkeepRecord(KeepRecord keepRecord){
+    public Result<List<KeepRecord>> addkeepRecord(@RequestBody(required = false) KeepRecord keepRecord){
         System.out.println("add-----------"+keepRecord);
         Result<List<KeepRecord>> r = Result.success();
         try {
             keepRecordService.addKeepRecord(keepRecord);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
     @ApiOperation("维修记录修改")
     @PutMapping("keepRecord/updateRecord")
-    public Result<Integer> updatekeepRecord(KeepRecord keepRecord){
+    public Result<Integer> updatekeepRecord(@RequestBody(required = false) KeepRecord keepRecord){
         System.out.println("update---------"+keepRecord);
         Result<Integer> r = Result.success();
         try {
             keepRecordService.updateKeepRecord(keepRecord);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
@@ -73,7 +74,7 @@ public class KeepRecordController {
             keepRecordService.deleteKeepRecord(id);
         }catch (Exception e){
             e.printStackTrace();
-            Result.failed();
+            r = Result.failed();
         }
         return r;
     }
