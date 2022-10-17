@@ -22,7 +22,7 @@ public class DwarehouseController {
     @Autowired
     private DwarehouseService dwarehouseService;
 
-    @GetMapping("/dwarehouse/list")
+    @PostMapping("/dwarehouse/list")
     @ApiOperation("入库管理列表")
     public Result<List<Dwarehouse>> selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto,@Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + dwarehouseDto);
@@ -41,47 +41,76 @@ public class DwarehouseController {
         return r;
     }
 
-    @GetMapping("/dwarehouse/perAdd")
-    @ApiOperation("入库新增页")
-    public R toAddPage(@RequestBody DwarehouseToAdd dwarehouseToAdd){
-        R r = new R();
-        return r;
-    }
+//    @GetMapping("/dwarehouse/perAdd")
+//    @ApiOperation("入库新增页")//添加前的查询
+//    public R toAddPage(){
+//        R r = new R();
+//        return r;
+//    }
     @PostMapping("/dwarehouse/add")
     @ApiOperation("入库新增")
-    public R dequipAdd(@RequestBody DwarehouseToAdd dwarehouseToAdd){
+    public R dequipAdd(@RequestBody Dwarehouse dwarehouse){
+        System.out.println(dwarehouse);
 
-        R r = new R();
-        return r;
+       Dwarehouse dwarehouse1=this.dwarehouseService.addDwarehouse(dwarehouse);
+        if (dwarehouse1!=null){
+            R r=R.ok("入库添加成功！");
+            return r;
+        }else {
+            R r=R.error("入库添加失败！");
+            return r;
+        }
     }
 
 
-    @GetMapping("/dwarehouse/perEdit")
+    @PostMapping("/dwarehouse/perEdit")
     @ApiOperation("入库修改页")
-    public R toEditPage(@RequestBody DwarehouseToUpdate dwarehouseToUpdate){
+    public R toEditPage(@RequestBody Dwarehouse dwarehouse){
+        System.out.println("入库修改查询");
+
         R r = new R();
         return r;
     }
     @PutMapping("/dwarehouse/edit")
     @ApiOperation("入库修改")
-    public R dequipEdit(@RequestBody DwarehouseToUpdate dwarehouseToUpdate){
+    public R dequipEdit(@RequestBody Dwarehouse dwarehouse){
+        System.out.println(dwarehouse);
+        this.dwarehouseService.updateDwarehouse(dwarehouse);
 
-        R r = new R();
-        return r;
+        if (dwarehouse!=null){
+            R r=R.ok("入库修改成功！");
+            return r;
+        }else {
+            R r=R.error("入库修改失败！");
+            return r;
+        }
     }
 
     @DeleteMapping("/dwarehouse/delete")
     @ApiOperation("入库删除")
-    public R dequipDelete(@RequestBody DwarehouseDelete dwarehouseDelete){
-
-        R r = new R();
-        return r;
+    public R dequipDelete(Integer id){
+        System.out.println(id);
+        this.dwarehouseService.deleteDwarehouse(id);
+        if (id!=null){
+            R r=R.ok("入库删除失败！");
+            return r;
+        }else {
+            R r=R.error("入库删除失败！");
+            return r;
+        }
     }
     @DeleteMapping("/dwarehouse/deletes")
     @ApiOperation("入库删除(大量删除)")
-    public R dequipDeletes(@RequestBody DwarehouseDeletes dwarehouseDeletes){
+    public R dequipDeletes(Integer id){
 
-        R r = new R();
-        return r;
+        System.out.println(id);
+        this.dwarehouseService.deleteDwarehouse(id);
+        if (id!=null){
+            R r=R.ok("入库删除失败！");
+            return r;
+        }else {
+            R r=R.error("入库删除失败！");
+            return r;
+        }
     }
 }
