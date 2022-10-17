@@ -22,4 +22,6 @@ public interface EquipmentManagementMapper {
     void addEquipmentClassifications(EquipmentClass equipmentClassName);
     void updateEquipmentClassification(EquipmentClass equipmentClassName);
     void deleteEquipmentClassification(Integer id);
+    List<EquipmentName> queryquipmentclassificationDropList(String equipmentClassificationName);
+    void updateEquipmentclassification(EquipmentName equipmentName);
 }

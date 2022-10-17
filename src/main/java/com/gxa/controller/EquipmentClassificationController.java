@@ -3,10 +3,7 @@ package com.gxa.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.EquipmentManagementDto;
-import com.gxa.entity.EquipmentClass;
-import com.gxa.entity.EquipmentClassification;
-import com.gxa.entity.EquipmentManagement;
-import com.gxa.entity.EquipmentManagementAU;
+import com.gxa.entity.*;
 import com.gxa.service.EquipmentManagementService;
 import com.gxa.utils.R;
 import com.gxa.utils.Result;
@@ -80,6 +77,37 @@ public class EquipmentClassificationController {
         }catch (Exception e){
             r.put("code",1);
             r.put("msg","error");
+            e.printStackTrace();
+        }
+        return r;
+    }
+
+    @GetMapping("/equipmentclassification/list/droplist")
+    @ApiOperation("装备分类_具体种类的下拉查询")
+    public Result<List<EquipmentName>> equipmentclassificationDropList(@RequestBody String equipmentClassificationName){
+        Result<List<EquipmentName>> r=Result.success();
+        try {
+            List<EquipmentName> equipmentNames=this.equipmentManagementService.equipmentclassificationDropList(equipmentClassificationName);
+            r=Result.success(equipmentNames);
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
+            e.printStackTrace();
+        }
+        return r;
+    }
+
+    @PutMapping("/equipmentclassification/droplist/update")
+    @ApiOperation("装备分类_下拉名称修改")
+    public Result<EquipmentName> equipmentclassificationUpdate(@RequestBody EquipmentName equipmentName){
+        //System.out.println(equipmentManagementAU);
+        Result<EquipmentName> r=Result.success();
+        try {
+            this.equipmentManagementService.updateEquipmentclassification(equipmentName);
+            r=Result.success();
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
             e.printStackTrace();
         }
         return r;
