@@ -11,7 +11,7 @@
         <result property="reviewer" column="reviewer"></result>
     </resultMap>
 
-    <select id="queryDreivews" resultMap="dreviewResultMap">
+    <select id="queryAll" resultMap="dreviewResultMap">
         SELECT id,mperson,status,reviewer FROM d_review
     </select>
 </mapper>

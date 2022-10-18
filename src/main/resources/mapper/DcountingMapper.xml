@@ -10,6 +10,9 @@
         <result property="dreview.status" column="status"></result>
         <result property="dreview.reviewer" column="reviewer"></result>
     </resultMap>
+    <insert id="addCounting" parameterType="dcounting">
+        INSERT INTO d_counting()
+    </insert>
 
 
     <select id="queryAll" resultMap="DcountingResultMap" parameterType="com.gxa.dto.DcountingDto">

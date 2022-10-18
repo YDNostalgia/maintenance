@@ -23,6 +23,12 @@ public class DcountingServiceImpl implements DcountingService {
     }
 
     @Override
+    public List<Dreview> queryAll() {
+        List<Dreview> dreviews = this.dreviewMapper.queryAll();
+        return dreviews;
+    }
+
+    @Override
     public List<Dreview> queryDreviews() {
         List<Dreview> dreviews=this.dreviewMapper.queryAll();
         return dreviews;
@@ -30,7 +36,7 @@ public class DcountingServiceImpl implements DcountingService {
 
     @Override
     public void add(Dcounting dcounting) {
-        this.dcountingMapper.save(dcounting);
+        this.dcountingMapper.addCounting(dcounting);
     }
 
     @Override

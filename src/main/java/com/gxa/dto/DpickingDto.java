@@ -22,4 +22,8 @@ public class DpickingDto {
     private String code;
     @ApiModelProperty(value = "审核表状态",name = "dreview")
     private Dreview dreview;
+    @ApiModelProperty(value ="当前页码" ,name ="page" )
+    private Integer page;
+    @ApiModelProperty(value ="每页记录数" ,name ="limit" )
+    private Integer limit;
 }
