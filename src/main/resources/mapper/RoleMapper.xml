@@ -31,12 +31,17 @@
     </select>
 
     <insert id="add">
-        INSERT INTO t_role(role_name,role_desc,role_state)
-        VALUES (#{roleName},#{desc},#{state})
+        INSERT INTO t_role(role_name,role_desc,add_time,role_state)
+        VALUES (#{roleName},#{desc},#{addTime},#{state})
     </insert>
 
     <update id="update">
         UPDATE t_role SET role_name=#{roleName},role_desc=#{desc},role_state=#{state}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateRoleState" parameterType="integer">
+        UPDATE t_role SET role_state=#{state}
         WHERE id=#{id}
     </update>
 

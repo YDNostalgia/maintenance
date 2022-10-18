@@ -24,7 +24,7 @@ public class DequipController {
     private DequipService dequipService;
 
 
-    @PostMapping("/dequip/list")
+    @PostMapping("D")
     @ApiOperation("器材管理列表")
     public Result<List<Dequip>> selectList(@RequestBody(required = false) DequipDto dequipDto){
         System.out.println("查询条件----->" + dequipDto);
