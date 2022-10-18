@@ -22,11 +22,11 @@ public class DcountingController {
 
     @ApiOperation(value = "盘点库存表")
     @PostMapping("/dcounting/list")
-    public Result<List<Dcounting>> selectDcounting(@RequestBody(required = false) DcountingDto dcountingDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dcounting>> selectDcounting(@RequestBody(required = false) DcountingDto dcountingDto){
         System.out.println("查询条件" + dcountingDto);
-        System.out.println("当前页码：" + page +",每页记录数：" + limit);
+        System.out.println("当前页码：" + dcountingDto.getPage() +",每页记录数：" + dcountingDto.getLimit());
 
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(dcountingDto.getPage(),dcountingDto.getLimit());
 
         List<Dcounting> dcountings = this.dcountingService.queryAll(dcountingDto);
         System.out.println("查询结果----->" + dcountings);
@@ -39,6 +39,21 @@ public class DcountingController {
 
         return r;
     }
+
+    @GetMapping("/dcounting/dreview")
+    @ApiOperation("审核状态 下拉列表")
+    public Result<List<Dreview>> selectDreviewList(){
+        List<Dreview> dreviews = this.dcountingService.queryAll();
+        System.out.println("查询结果----->" + dreviews);
+
+        Integer size = dreviews.size();
+        long total = size.longValue();
+        System.out.println("total-->" + total);
+
+        Result<List<Dreview>> r = Result.success(dreviews, total);
+        return r;
+    }
+
 
 
     @PostMapping("/dcounting/perAdd")
