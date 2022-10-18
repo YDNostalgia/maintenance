@@ -31,6 +31,12 @@ public class UserServiceImpl  implements UserService {
         return pageInfo;
     }
 
+    @Override
+    public List<String> queryRoleName() {
+        List<String> name=this.userMapper.queryRoleName();
+        return name;
+    }
+
 
     @Override
     public Integer add(User user) {

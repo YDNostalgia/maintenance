@@ -56,6 +56,12 @@
         WHERE r.role_name=#{roleName}
     </select>
 
+    <select id="queryRoleName" resultType="java.lang.String">
+        SELECT r.role_name
+        FROM t_role r
+    </select>
+
+
 
     <insert id="add"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(account,role_name,user_name,pwd,phone_number,note)
