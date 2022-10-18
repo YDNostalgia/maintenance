@@ -6,12 +6,10 @@
 
     <resultMap id="dreviewResultMap" type="dreview">
         <id property="id" column="id"></id>
-        <result property="mperson" column="mperson"></result>
         <result property="status" column="status"></result>
-        <result property="reviewer" column="reviewer"></result>
     </resultMap>
 
     <select id="queryAll" resultMap="dreviewResultMap">
-        SELECT id,mperson,status,reviewer FROM d_review
+        SELECT id,status FROM d_review
     </select>
 </mapper>
