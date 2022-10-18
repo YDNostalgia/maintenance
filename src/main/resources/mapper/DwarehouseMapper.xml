@@ -30,10 +30,10 @@
             AND dw.time=#{time} BETWEEN startTime AND endTime
         </if>
     </select>
-
-    <insert id="addDwarehouse" parameterType="Dwarehouse">
-        INSERT INTO d_warehouse(code,time,bill,note,dequip_sum,dequip_price)
-        VALUES(#{code},#{time},#{bill},#{note},#{dequip_sum},#{dequip_price})
+<!--新增操作  dequip也做同样操作进行添加-->
+    <insert id="addDwarehouse">
+        INSERT INTO d_warehouse(code,time,bill,note)
+        VALUES(#{code},#{time},#{bill},#{note})
     </insert>
 
     <delete id="deleteDwarehouse" parameterType="int">

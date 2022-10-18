@@ -51,7 +51,7 @@ public class DequipServiceImpl implements DequipService {
 
     @Override
     public DequipToAdd addDequip(DequipToAdd dequipToAdd) {
-        this.dequipMapper.addDequip(dequipToAdd);
+        this.dequipMapper.addDequips(dequipToAdd);
 
         if(dequipToAdd != null){
             return dequipToAdd;
@@ -59,6 +59,4 @@ public class DequipServiceImpl implements DequipService {
             return null;
         }
     }
-
-
 }

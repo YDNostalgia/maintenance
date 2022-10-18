@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.mapper.DequipMapper">
 
-    <resultMap id="dequipResultMap" type="dequip">
+    <resultMap id="dequipResultMap" type="com.gxa.entity.Dequip">
         <result property="code" column="code"></result>
         <result property="name" column="name"></result>
         <result property="detype.id" column="typeId"></result>
@@ -12,7 +12,7 @@
         <result property="model" column="model"></result>
         <result property="decompany.id" column="compantId"></result>
         <result property="decompany.company" column="company"></result>
-        <result property="desave.id" column="typeId"></result>
+        <result property="desave.id" column="saveId"></result>
         <result property="desave.saveArea" column="saveArea"></result>
         <result property="goodsId" column="goodsId"></result>
     </resultMap>
@@ -21,6 +21,15 @@
         VALUES(#{code},#{name},#{companyId},#{goodsId},#{typeId},#{model},#{saveId})
     </insert>
 
+    <!--dwarehouse新增需要联合添加的部分-->
+    <insert id="addDequips" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO d_equip(code,model,companyId,desum,price)
+        VALUES(#{code},#{model},#{companyId},#{desum},#{prive})
+    </insert>
+    <insert id="insertDequip" parameterType="dequip" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO d_equip(code,`name`,model,companyId,desum,price)
+        VALUES(#{code},#{name},#{model},#{decompany.id},#{desum},#{price})
+    </insert>
 
     <select id="queryChooseList" resultMap="dequipResultMap" parameterType="com.gxa.dto.DequipDto">
         SELECT de.code,de.name,dt.type,de.model,dc.company,ds.saveArea,de.goodsId

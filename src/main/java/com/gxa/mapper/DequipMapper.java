@@ -2,6 +2,7 @@ package com.gxa.mapper;
 
 import com.gxa.entity.Dequip;
 import com.gxa.entity.DequipToAdd;
+import com.gxa.entity.DwarehouseToAdd;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface DequipMapper {
 //    void updateDequip(Integer id);
 
     //添加
-    void addDequip(DequipToAdd dequipToAdd);
+    void addDequips(DequipToAdd dequipToAdd);
+
+    void insertDequip(DwarehouseToAdd dwarehouseToAdd);
 }

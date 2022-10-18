@@ -49,17 +49,17 @@ public class DwarehouseController {
 //    }
     @PostMapping("/dwarehouse/add")
     @ApiOperation("入库新增")
-    public R dequipAdd(@RequestBody Dwarehouse dwarehouse){
-        System.out.println(dwarehouse);
+    public R dequipAdd(@RequestBody DwarehouseToAdd dwarehouseToAdd){
+        System.out.println("添加数据"+dwarehouseToAdd);
 
-       Dwarehouse dwarehouse1=this.dwarehouseService.addDwarehouse(dwarehouse);
-        if (dwarehouse1!=null){
+        this.dwarehouseService.addDequip(dwarehouseToAdd);
+//        if (dwarehouseToAdd1!=null){
             R r=R.ok("入库添加成功！");
             return r;
-        }else {
-            R r=R.error("入库添加失败！");
-            return r;
-        }
+//        }else {
+//            R r=R.error("入库添加失败！");
+//            return r;
+//        }
     }
 
 

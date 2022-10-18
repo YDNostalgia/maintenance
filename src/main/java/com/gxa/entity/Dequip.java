@@ -21,16 +21,18 @@ public class Dequip {
     private String model;
     @ApiModelProperty(value = "单价",name = "price")
     private Double price;
-    @ApiModelProperty(value = "数量",name = "sum")
-    private Integer sum;
+    @ApiModelProperty(value = "数量",name = "desum")//已经更改
+    private Integer desum;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
 
     @ApiModelProperty(value = "器材分类id",name = "detype")
     private Detype detype;
+
     @ApiModelProperty(value = "货位信息id",name = "desave")
     private Desave desave;
     @ApiModelProperty(value = "单位表id",name = "decompany")
     private Decompany decompany;
+
 
 }
