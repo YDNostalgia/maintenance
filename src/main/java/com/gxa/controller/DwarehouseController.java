@@ -24,11 +24,11 @@ public class DwarehouseController {
 
     @PostMapping("/dwarehouse/list")
     @ApiOperation("入库管理列表")
-    public Result<List<Dwarehouse>> selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto,@Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dwarehouse>> selectDwarehouses(@RequestBody(required = false)DwarehouseDto dwarehouseDto){
         System.out.println("查询条件" + dwarehouseDto);
-        System.out.println("当前页码：" + page +",每页记录数：" + limit);
+        System.out.println("当前页码：" + dwarehouseDto.getPage() +",每页记录数：" + dwarehouseDto.getLimit());
 
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(dwarehouseDto.getPage(),dwarehouseDto.getLimit());
 
         List<Dwarehouse> dwarehouses = this.dwarehouseService.queryDwarehouse(dwarehouseDto);
         System.out.println("查询结果----->" + dwarehouses);

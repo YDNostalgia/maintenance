@@ -10,6 +10,8 @@ public interface DcountingService {
 
     List<Dcounting> queryAll(DcountingDto dcountingDto);
 
+    List<Dreview> queryAll();
+
     List<Dreview> queryDreviews();
     void add(Dcounting dcounting);
 

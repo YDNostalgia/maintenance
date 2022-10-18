@@ -8,7 +8,7 @@ import java.util.List;
 public interface DcountingMapper {
     List<Dcounting> queryAll(DcountingDto dcountingDto);
 
-    void save(Dcounting dcounting);
+    void addCounting(Dcounting dcounting);
     Dcounting queryById(Integer id);
 
     void update(Dcounting dcounting);

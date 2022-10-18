@@ -50,15 +50,35 @@ public class DequipServiceImpl implements DequipService {
     }
 
     @Override
-    public DequipToAdd addDequip(DequipToAdd dequipToAdd) {
-        this.dequipMapper.addDequip(dequipToAdd);
+    public Dequip addDequip(Dequip dequip) {
+        this.dequipMapper.addDequip(dequip);
 
-        if(dequipToAdd != null){
-            return dequipToAdd;
+        if(dequip != null){
+            return dequip;
         } else {
             return null;
         }
     }
 
+    @Override
+    public Dequip queryByCode(String code) {
+        Dequip queryByCode = this.dequipMapper.queryByCode(code);
+        return queryByCode;
+    }
 
+    @Override
+    public void updateDequip(Dequip dequip) {
+        this.dequipMapper.updateDequip(dequip);
+    }
+
+    @Override
+    public void deleteByCode(String code) {
+        this.dequipMapper.deleteByCode(code);
+    }
+
+    @Override
+    public int deleteManyCode(String[] code) {
+        int byManyCode = this.dequipMapper.deleteByManyCode(code);
+        return byManyCode;
+    }
 }

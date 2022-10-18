@@ -15,4 +15,8 @@ public class DequipDto {
     private Integer typeId;
     @ApiModelProperty(value = "货区信息",name = "saveId")
     private Integer saveId;
+    @ApiModelProperty(value ="当前页码" ,name ="page" )
+    private Integer page;
+    @ApiModelProperty(value ="每页记录数" ,name ="limit" )
+    private Integer limit;
 }
