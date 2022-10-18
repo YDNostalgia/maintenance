@@ -34,34 +34,46 @@ public class PersonalController {
     public Result<List<Personal>> personalList(@RequestBody(required = false) PersonalQueryDto personalQueryDto, @Param("page") Integer page, @Param("limit") Integer limit){
         System.out.println("查询条件" + personalQueryDto);
         System.out.println("当前页码-->" + page + ",每页记录数-->" + limit);
-        //实现分页
-        PageHelper.startPage(page,limit);
 
-//        List<Personal> personals = this.personalService.queryAllPersonal();
-        List<Personal> personals = this.personalService.queryAllPersonalList(personalQueryDto);
-        System.out.println("查询记录数" + personals);
+        Result<List<Personal>> resultPersonal = Result.failed("人员信息查询失败！");
 
-        //获取总记录条数
-        PageInfo<Personal> pageInfo = new PageInfo<>(personals);
-        Long total = pageInfo.getTotal();
-        System.out.println("total-->" + total);
+        try {
+            //实现分页
+            PageHelper.startPage(page,limit);
 
-        Result<List<Personal>> resultPersonal = Result.success(personals,total);
+            List<Personal> personals = this.personalService.queryAllPersonalList(personalQueryDto);
+            System.out.println("查询记录数" + personals);
 
+            //获取总记录条数
+            PageInfo<Personal> pageInfo = new PageInfo<>(personals);
+            Long total = pageInfo.getTotal();
+            System.out.println("total-->" + total);
+            resultPersonal = Result.success(personals,total);
+            return resultPersonal;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return resultPersonal;
+
     }
     @ApiOperation(value = "部门下拉列表")
     @GetMapping(value = "/personal/pdept")
     public Result<List<PersonalDept>> personalDeptlist(){
-        List<PersonalDept> personalDepts = this.personalService.queryAllPersonalDept();
-        System.out.println(personalDepts);
 
-        Integer size = personalDepts.size();
-        Long total = size.longValue();
+        Result<List<PersonalDept>> resultPersonalDept = Result.failed("部门信息拉取失败！");
+        try {
+            List<PersonalDept> personalDepts = this.personalService.queryAllPersonalDept();
+            System.out.println(personalDepts);
 
-        System.out.println("total-->" + total);
+            Integer size = personalDepts.size();
+            Long total = size.longValue();
 
-        Result<List<PersonalDept>> resultPersonalDept = Result.success(personalDepts,total);
+            System.out.println("total-->" + total);
+
+            resultPersonalDept = Result.success(personalDepts,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return resultPersonalDept;
     }
@@ -69,14 +81,19 @@ public class PersonalController {
     @ApiOperation(value = "工种下拉列表")
     @GetMapping(value = "/personal/pjob")
     public Result<List<PersonalJob>> personalJobList(){
-        List<PersonalJob> personalJobs = this.personalService.queryAllPersonalJob();
-        System.out.println(personalJobs);
 
-        Integer size = personalJobs.size();
-        Long total = size.longValue();
+        Result<List<PersonalJob>> resultPersonalJob = Result.failed("工种信息拉取失败！");
+        try {
+            List<PersonalJob> personalJobs = this.personalService.queryAllPersonalJob();
+            System.out.println(personalJobs);
 
-        Result<List<PersonalJob>> resultPersonalJob = Result.success(personalJobs,total);
+            Integer size = personalJobs.size();
+            Long total = size.longValue();
 
+            resultPersonalJob = Result.success(personalJobs,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return resultPersonalJob;
     }
 
@@ -84,72 +101,82 @@ public class PersonalController {
     @GetMapping(value = "/personal/pclass")
     @ApiOperation(value = "工种等级下拉列表")
     public Result<List<PersonalClass>> personClassList(){
-        List<PersonalClass> personalClasses = this.personalService.queryAllPersonalClass();
-        System.out.println(personalClasses);
 
-        Integer size = personalClasses.size();
-        Long total = size.longValue();
+        Result<List<PersonalClass>> resultPersonalClass = Result.failed("工种等级信息拉取失败！");
+        try {
+            List<PersonalClass> personalClasses = this.personalService.queryAllPersonalClass();
+            System.out.println(personalClasses);
 
-        Result<List<PersonalClass>> resultPersonalClass = Result.success(personalClasses,total);
+            Integer size = personalClasses.size();
+            Long total = size.longValue();
 
+            resultPersonalClass = Result.success(personalClasses,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return resultPersonalClass;
     }
 
     @PostMapping(value = "/personal/add")
     @ApiOperation(value = "添加人员")
-    public R personalAdd(@RequestBody Personal personal){
+    public Result personalAdd(@RequestBody Personal personal){
         System.out.println(personal);
 
-        Personal person = this.personalService.addPersonal(personal);
-
-        if(person != null){
-            R r = R.ok("人员信息添加成功！");
-            return r;
-        } else {
-            R r = R.error(1, "人员信息添加失败,请重新发起请求！");
-            return r;
+        Result resultPerson = Result.failed("人员信息添加失败！");
+        try {
+            Personal person = this.personalService.addPersonal(personal);
+            resultPerson.success();
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return resultPerson;
     }
 
     @GetMapping(value = "/personal/updatepre")
     @ApiOperation(value = "人员信息修改前数据回显")
     public R personalUpdatePre(Integer id){
         System.out.println(id);
-        Personal personal = this.personalService.queryByPersonalId(id);
 
         R r = new R();
-        r.put("data",personal);
+        R.error(1,"人员信息修改前，数据回显失败！");
+        try {
+            Personal personal = this.personalService.queryByPersonalId(id);
+
+            r.put("data",personal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return r;
     }
 
     @PostMapping(value = "/personal/update")
     @ApiOperation(value = "人员信息修改提交")
-    public R personalUpdate(@RequestBody Personal personal){
+    public Result personalUpdate(@RequestBody Personal personal){
         System.out.println(personal);
 
-        this.personalService.updatePersonal(personal);
-        if(personal != null){
-            R r = R.ok("人员信息修改成功！");
-            return r;
-        } else {
-            R r = R.error(1, "人员信息修改失败,请重新发起请求！");
-            return r;
+        Result result = Result.failed("人员信息修改失败！");
+        try {
+            this.personalService.updatePersonal(personal);
+            result = Result.success();
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return result;
     }
 
     @GetMapping(value = "/personal/delete")
     @ApiOperation(value = "人员信息删除")
-    public R personalDelete(Integer id){
+    public Result personalDelete(Integer id){
         System.out.println(id);
 
-        this.personalService.deletePersonal(id);
-        if(id != null){
-            R r = R.ok("人员信息删除成功！");
-            return r;
-        } else {
-            R r = R.error(1, "人员信息删除失败,请重新发起请求！");
-            return r;
+        Result result = Result.failed("人员信息删除失败！");
+        try {
+            this.personalService.deletePersonal(id);
+            result.success();
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return result;
     }
 
     @PostMapping(value = "/personal/transfer")
@@ -252,8 +279,17 @@ public class PersonalController {
     @PostMapping(value = "/mtorder/list")
     @ApiOperation(value = "维修工单")
     public Result<List<PersonalOrder>> mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto,@Param("page") Integer page,@Param("limit") Integer limit){
-        System.out.println(personalMtorderListDto);
+        System.out.println("维修工单查询条件：" + personalMtorderListDto);
         System.out.println("page:" + page + ",limit:" + limit);
+        //实现分页
+        PageHelper.startPage(page,limit);
+
+//        List<PersonalOrder> personalOrders = this.personalService.queryAllPersonalOrder();
+        List<PersonalOrder> personalOrders = this.personalService.queryAllPersonalOrderList(personalMtorderListDto);
+        System.out.println("：维修工单列表：" + personalOrders);
+
+        PageInfo<PersonalOrder> pageInfo = new PageInfo<>(personalOrders);
+        long total = pageInfo.getTotal();
 
         Result<List<PersonalOrder>> resultPersonalOrder = Result.success();
 
