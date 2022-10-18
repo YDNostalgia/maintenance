@@ -153,4 +153,19 @@ public class EquipmentManagementController {
         }
         return r;
     }
+
+    @DeleteMapping("/equipment/deleteids")
+    @ApiOperation("装备多选删除")
+    public R equipmentDelete(@RequestBody List<EquipmentManagement> equipmentManagements){
+        System.out.println(equipmentManagements);
+        R r=new R();
+        try{
+            this.equipmentManagementService.deleteEquipmentManagementByIds(equipmentManagements);
+        }catch (Exception e){
+            r.put("code",1);
+            r.put("msg","error");
+            e.printStackTrace();
+        }
+        return r;
+    }
 }

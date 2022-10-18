@@ -12,22 +12,22 @@
         <result property="state" column="role_state"></result>
     </resultMap>
     <select id="queryAll" resultMap="roleResultMap">
-        SELECT r.id,r.role_name,r.role_desc,count(ur.id) AS personnel_number,r.add_time,r.role_state
-        FROM t_user u,t_role r,t_user_role ur
-        WHERE u.id=ur.user_id AND ur.role_id=r.id
+        SELECT r.id,r.role_name,r.role_desc,IFNULL(v.personnel_number,0) personnel_number,r.add_time,r.role_state
+        FROM t_role r LEFT JOIN (SELECT role_id,count(role_id) AS personnel_number
+        FROM t_user_role ur
+        GROUP BY role_id) v
+        ON r.id	= v.role_id
 
         <if test="id != null and id!=''">
-            AND r.id=#{id}
+            WHERE r.id=#{id}
         </if>
         <if test="roleName != null and roleName !=''">
-            AND r.role_name=#{roleName}
+            WHERE r.role_name=#{roleName}
         </if>
 
         <if test="state != null and state!=''">
-            AND r.state=#{state}
+            WHERE r.state=#{state}
         </if>
-
-        GROUP BY r.role_name
     </select>
 
     <insert id="add">
