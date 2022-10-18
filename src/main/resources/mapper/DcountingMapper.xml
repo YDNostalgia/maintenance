@@ -20,13 +20,16 @@
         SELECT de.id,de.code,de.name,de.model,dcm.company,de.desum,dco.countingsum,abs(de.desum-dco.countingsum) as counting
         FROM d_equip de,d_company dcm,d_counting dco
         WHERE dco.equipId=de.id AND de.companyId=dcm.id
-        <if test="equipId !=null and equipId !=''">
-            AND de.name=#{dequip.name} AND de.desum=#{dequip.desum}
+        <if test="name != null and name != ''">
+            AND de.name=#{dequip.name}
+        </if>
+        <if test="desum != null">
+            AND de.desum=#{dequip.desum}
         </if>
         <if test="countingsum !=null and countingsum !=''">
             AND dco.countingsum=#{countingsum}
         </if>
-        <if test="equipId !=null and equipId !='' and countingsum !=null and countingsum !=''">
+        <if test="desum != null and countingsum !=null and countingsum !=''">
             AND counting=#{counting}
         </if>
     </select>

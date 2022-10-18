@@ -38,11 +38,11 @@ public class DwarehouseServiceImpl implements DwarehouseService {
         return dreviews;
     }
 
-    @Override
-    public List<Dequip> queryDequip(Dequip dequip) {
-        List<Dequip> dequips=this.dequipMapper.queryChooseList();
-        return dequips;
-    }
+//    @Override
+//    public List<Dequip> queryDequip(Dequip dequip) {
+//        List<Dequip> dequips=this.dequipMapper.queryChooseList();
+//        return ;
+//    }
 
     @Override
     public DwarehouseToAdd addDwarehouse(DwarehouseToAdd dwarehouseToAdd) {
@@ -70,7 +70,7 @@ public class DwarehouseServiceImpl implements DwarehouseService {
     @Transactional(rollbackFor = Throwable.class)
     public void addDequip(DwarehouseToAdd dwarehouseToAdd) {
         System.out.println("_----------------------->"+dwarehouseToAdd.getDequip().getDecompany());
-        this.dequipMapper.insertDequip(dwarehouseToAdd);
+//        this.dequipMapper.insertDequip(dwarehouseToAdd);
         this.dwarehouseMapper.addDwarehouse(dwarehouseToAdd);
     }
 }

@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("器材管理")
 public class Dequip {
-    @ApiModelProperty(value = "id",name = "id")
-    private Integer id;
+//    @ApiModelProperty(value = "id",name = "id")
+//    private Integer id;
     @ApiModelProperty(value = "器材编号",name = "code")
     private String code;
     @ApiModelProperty(value = "器材名称",name = "name")
     private String name;
     @ApiModelProperty(value = "规格型号",name = "model")
     private String model;
-    @ApiModelProperty(value = "单价",name = "price")
-    private Double price;
-    @ApiModelProperty(value = "数量",name = "desum")
-    private Integer desum;
+//    @ApiModelProperty(value = "单价",name = "price")
+//    private Double price;
+//    @ApiModelProperty(value = "数量",name = "desum")
+//    private Integer desum;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
 

@@ -11,6 +11,7 @@ public interface DcountingMapper {
 
     List<Dcounting> queryByEquip(DcountingSelect dcountingSelect);
     void addCounting(Dcounting dcounting);
+
     Dcounting queryById(Integer id);
 
     void update(Dcounting dcounting);

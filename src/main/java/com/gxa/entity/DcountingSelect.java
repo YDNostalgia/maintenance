@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 @ApiModel("库存盘点查询")
 public class DcountingSelect {
 
-    @ApiModelProperty(value = "数量",name = "equipId")
-    private Integer equipId;
+    @ApiModelProperty(value = "器械名称",name = "name")
+    private String name;
+    @ApiModelProperty(value = "数量",name = "desum")
+    private Integer desum;
 
-    @ApiModelProperty(value = "盘点数量",name = "countingsum")
+    @ApiModelProperty(value = "盘点数",name = "countingsum")
     private Integer countingsum;
     @ApiModelProperty(value = "盘盈盘亏",name = "counting")
     private Integer counting;

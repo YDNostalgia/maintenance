@@ -60,10 +60,8 @@ public class DcountingController {
         return resultList;
     }
 
-
-
     @PostMapping("/dcounting/perAdd")
-    @ApiOperation("盘点库存新增页")
+    @ApiOperation("盘点库存新增前的查询")
     public R toAddPage(@RequestBody DcountingToAdd dcountingToAdd){
         R r = new R();
         return r;
