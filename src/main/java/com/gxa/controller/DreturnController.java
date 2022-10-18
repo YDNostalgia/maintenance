@@ -23,11 +23,11 @@ public class DreturnController {
 
     @ApiOperation(value = "部门退料表")
     @PostMapping("/dreturn/list")
-    public Result<List<Dreturn>> selectDreturn(@RequestBody(required = false) DreturnDto dreturnDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dreturn>> selectDreturn(@RequestBody(required = false) DreturnDto dreturnDto){
         System.out.println("查询条件" + dreturnDto);
-        System.out.println("当前页码：" + page +",每页记录数：" + limit);
+        System.out.println("当前页码：" + dreturnDto.getPage() +",每页记录数：" + dreturnDto.getLimit());
 
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(dreturnDto.getPage(),dreturnDto.getLimit());
 
         List<Dreturn> dreturns = this.dreturnService.queryAll(dreturnDto);
         System.out.println("查询结果----->" + dreturns);

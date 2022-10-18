@@ -17,6 +17,10 @@ public class KeepFunds {
     private int id;
     @ApiModelProperty("装备编号")
     private int equipmentNumber;
+
+    @ApiModelProperty("装备ID")
+    private Integer equipmentId;
+
     @ApiModelProperty("装备实体")
     private Equipment equipment;
     @ApiModelProperty("开始时间")

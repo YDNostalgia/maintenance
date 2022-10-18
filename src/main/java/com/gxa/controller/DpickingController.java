@@ -23,11 +23,11 @@ public class DpickingController {
 
     @ApiOperation(value = "部门领料表")
     @PostMapping("/dpicking/list")
-    public Result<List<Dpicking>> selectDpicking(@RequestBody(required = false) DpickingDto dpickingDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dpicking>> selectDpicking(@RequestBody(required = false) DpickingDto dpickingDto){
         System.out.println("查询条件" + dpickingDto);
-        System.out.println("当前页码：" + page +",每页记录数：" + limit);
+        System.out.println("当前页码：" + dpickingDto.getPage() +",每页记录数：" + dpickingDto.getLimit());
 
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(dpickingDto.getPage(),dpickingDto.getLimit());
 
         List<Dpicking> dpickings = this.dpickingService.queryAll(dpickingDto);
         System.out.println("查询结果----->" + dpickings);
@@ -80,10 +80,16 @@ public class DpickingController {
     }
     @DeleteMapping("/dpicking/deletes")
     @ApiOperation("领料删除")
-    public R dpickingDeletes(@RequestBody DpickingDeletes dpickingDeletes){
+    public R dpickingDeletes(Integer id){
+        System.out.println(id);
 
-        R r = new R();
-        return r;
+        if(id!=null){
+            R r=R.ok("领料删除成功！");
+            return r;
+        }else {
+            R r=R.error("领料删除失败！");
+            return r;
+        }
     }
 
 }

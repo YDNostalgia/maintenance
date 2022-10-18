@@ -16,14 +16,18 @@ public class DequipToAdd {
     private String code;
     @ApiModelProperty(value = "器材名称",name = "name")
     private String name;
-    @ApiModelProperty(value = "器材分类",name = "type")
-    private String type;
-    @ApiModelProperty(value = "规格型号",name = "model")
-    private String model;
-    @ApiModelProperty(value = "单位",name = "company")
-    private String company;
-    @ApiModelProperty(value = "存放区域",name = "saveArea")
-    private String saveArea;
+    @ApiModelProperty(value = "单位",name = "companyId")
+    private Integer companyId;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
+
+    @ApiModelProperty(value = "单价",name = "price")
+    private Double prive;
+    @ApiModelProperty(value = "器材分类",name = "typeId")
+    private Integer typeId;
+    @ApiModelProperty(value = "规格型号",name = "model")
+    private String model;
+    @ApiModelProperty(value = "存放区域",name = "saveId")
+    private Integer saveId;
+
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.RepairProcesslistMapper">
+
+    <resultMap id="repairProcessMap" type="repairProcess">
+        <result property="state" column="test_status"></result>
+        <result property="username" column="pname"></result>
+        <result property="date" column="plan_time"></result>
+        <result property="desc" column="desc"></result>
+        <result property="imgsrc" column="img_src"></result>
+    </resultMap>
+    <resultMap id="personnelDrawGroupMap" type="personnelDrawGroup">
+        <result property="username" column="pname"></result>
+        <result property="dept" column="pdept"></result>
+        <result property="job" column="pjob"></result>
+        <result property="pclass" column="pclass"></result>
+    </resultMap>
+    <resultMap id="equipmentCallMap" type="equipmentCall">
+        <result property="id" column="id"></result>
+        <result property="code" column="code"></result>
+        <result property="name" column="name"></result>
+        <result property="model" column="model"></result>
+        <result property="company" column="company"></result>
+        <result property="desum" column="desum"></result>
+        <result property="type" column="type"></result>
+    </resultMap>
+    <resultMap id="maintenanceProgramsMap" type="maintenanceProgram">
+        <result property="id" column="id"></result>
+        <result property="desc" column="desc"></result>
+
+    </resultMap>
+    <select id="repairProcesslist" resultMap="repairProcessMap">
+         SELECT t.test_status,p.pname,t.plan_time,t.desc,t.img_src
+        FROM t_keep t,p_list p
+        WHERE t.person_id=p.id
+    </select>
+    <select id="personnelDrawGroup" resultMap="personnelDrawGroupMap">
+         SELECT pname,pdept,pjob,pclass
+        FROM p_list p1,p_dept p2,p_class p3,p_job p4
+        WHERE  p1.pdept_id=p2.pdept_id and p1.pclass_id=p3.pclass_id and p1.pjob_id=p4.pjob_id
+    </select>
+    <select id="equipmentCall" resultMap="equipmentCallMap">
+        SELECT d1.id,code,name,model,d3.company,desum,d2.type
+        FROM d_equip d1,d_type d2,d_company d3
+        WHERE  d1.typeId=d2.id and d1.companyId=d3.id
+    </select>
+    <select id="maintenancePrograms" resultMap="maintenanceProgramsMap">
+        SELECT id,t.desc FROM t_desc t
+    </select>
+</mapper>

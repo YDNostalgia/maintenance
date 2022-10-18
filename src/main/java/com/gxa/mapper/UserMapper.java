@@ -14,6 +14,7 @@ public interface UserMapper {
 
     Set<String> queryPermsByUserName(String userName);
     List<User> queryAll(UserDto userDto);
+    List<String> queryRoleName();
     Integer add(User user);
     Integer addUserRoleId(@Param("userId") Integer userId,@Param("roleId") Integer roleId);
     void update(User user);

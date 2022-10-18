@@ -31,7 +31,7 @@ public class User {
     @ApiModelProperty(value = "角色", name = "roleName")
     private String roleName;
     @ApiModelProperty(value = "状态", name = "state")
-    private String state;
+    private boolean state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
 

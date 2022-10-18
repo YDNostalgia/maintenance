@@ -1,9 +1,7 @@
 package com.gxa.service;
 
 import com.gxa.dto.DequipDto;
-import com.gxa.entity.Dequip;
-import com.gxa.entity.Desave;
-import com.gxa.entity.Detype;
+import com.gxa.entity.*;
 
 import java.util.List;
 
@@ -15,5 +13,15 @@ public interface DequipService {
     List<Detype> queryType();
     //存放区域 下拉列表
     List<Desave> querySave();
+    List<Decompany> queryCompany();
 
+
+    Dequip addDequip(Dequip dequip);
+
+
+    Dequip queryByCode(String code);
+    void updateDequip(Dequip dequip);
+
+    void deleteByCode(String code);
+    int deleteManyCode(String[] code);
 }

@@ -30,4 +30,19 @@
             AND dw.time=#{time} BETWEEN startTime AND endTime
         </if>
     </select>
+<!--新增操作  dequip也做同样操作进行添加-->
+    <insert id="addDwarehouse">
+        INSERT INTO d_warehouse(code,time,bill,note)
+        VALUES(#{code},#{time},#{bill},#{note})
+    </insert>
+
+    <delete id="deleteDwarehouse" parameterType="int">
+        DELETE FROM d_warehouse WHERE id=#{id}
+    </delete>
+
+    <update id="updateDwarehouse" parameterType="Dwarehouse">
+        UPDATE d_warehouse
+            SET code=#{code},time=#{time},bill=#{bill},dr.mperson=#{dreview.mperson},dr.status=#{dreview.status},dr.reviewer=#{dreview.reviewer}
+            WHERE id=#{reviewId}
+    </update>
 </mapper>

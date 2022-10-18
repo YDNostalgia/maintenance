@@ -22,8 +22,8 @@ public class KeepPlanController {
     private KeepPlanService keepPlanService;
 
     @ApiOperation("维修计划查询")
-    @GetMapping("keepPlan/queryAllKeepPlan")
-    public Result<List<KeepPlan>> queryAllKeepPlan(KeepPlanDto keepPlanDto,Integer page,Integer limit){
+    @PostMapping("keepPlan/queryAllKeepPlan")
+    public Result<List<KeepPlan>> queryAllKeepPlan(@RequestBody(required = false) KeepPlanDto keepPlanDto,Integer page,Integer limit){
         System.out.println(page+"---------"+limit);
         Result<List<KeepPlan>> r = Result.success();
         try{
@@ -39,7 +39,7 @@ public class KeepPlanController {
 
     @ApiOperation("维修计划添加")
     @PostMapping("/keepPlan/addKeepPlan")
-    public Result<List<KeepPlanAU>> addKeepPlan(KeepPlanAU keepPlanAU){
+    public Result<List<KeepPlanAU>> addKeepPlan(@RequestBody(required = false) KeepPlanAU keepPlanAU){
         Result<List<KeepPlanAU>> r = Result.success();
         try {
             System.out.println("keepPlanAUadd-----"+keepPlanAU);
@@ -53,7 +53,7 @@ public class KeepPlanController {
 
     @ApiOperation("维修计划修改")
     @PutMapping("/keepPlan/updateKeepPlan")
-    public Result<List<KeepPlanAU>> updateKeepPlan(KeepPlanAU keepPlanAU){
+    public Result<List<KeepPlanAU>> updateKeepPlan(@RequestBody(required = false) KeepPlanAU keepPlanAU){
         System.out.println("KeepPlanAUupdate----------"+keepPlanAU);
         Result<List<KeepPlanAU>> r = Result.success();
         try {

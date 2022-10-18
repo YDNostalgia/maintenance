@@ -23,13 +23,20 @@
         DELETE FROM statute_type WHERE statute_type_id = #{statuteTypeId}
     </delete>
 
-    <select id="queryAll" resultMap="statuteTypeResultMap">
+    <select id="queryByCondition" resultMap="statuteTypeResultMap">
 
         SELECT st.statute_type_id,st.statute_type_name,st.statute_type_update_time,IFNULL(v.total,0) total
         FROM statute_type st LEFT JOIN (SELECT s.statute_type_id,count(s.statute_type_id) total
                               FROM statute s
                               GROUP BY s.statute_type_id) v
         ON st.statute_type_id = v.statute_type_id
+
+    </select>
+
+    <select id="queryAll" resultMap="statuteTypeResultMap">
+
+        SELECT statute_type_id,statute_type_name
+        FROM statute_type
 
     </select>
 

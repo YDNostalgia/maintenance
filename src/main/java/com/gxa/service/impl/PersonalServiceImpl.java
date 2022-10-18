@@ -2,6 +2,7 @@ package com.gxa.service.impl;
 
 import com.gxa.dto.PersonalAttendanceDto;
 import com.gxa.dto.PersonalMtorderDto;
+import com.gxa.dto.PersonalMtorderListDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.*;
 import com.gxa.mapper.*;
@@ -10,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PersonalServiceImpl implements PersonalService {
@@ -32,6 +36,12 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Autowired
     private PersonalAttendanceMapper personalAttendanceMapper;
+
+    @Autowired
+    private PersonalSubmitMapper personalSubmitMapper;
+
+    @Autowired
+    private PersonalOrderMapper personalOrderMapper;
 
     @Override
     public List<Personal> queryAllPersonal() {
@@ -148,5 +158,92 @@ public class PersonalServiceImpl implements PersonalService {
 //        }
 
         return personalAttendances;
+    }
+
+    @Override
+    public void addPersonalSubmit(List<Integer> personalIds, List<Integer> keepRecordIds) {
+
+        if(personalIds.size() == 1 && keepRecordIds.size() == 1){
+            Integer personalId = personalIds.get(0);
+            Integer keepRecordId = keepRecordIds.get(0);
+            this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+        }else if(personalIds.size() == 1 && keepRecordIds.size() > 1){
+            Integer personalId = personalIds.get(0);
+            for (int i = 0;i < keepRecordIds.size();i++){
+                Integer keepRecordId = keepRecordIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }else if(personalIds.size() > 1 && keepRecordIds.size() == 1){
+            Integer keepRecordId = keepRecordIds.get(0);
+            for(int i = 0;i < personalIds.size();i++){
+                Integer personalId = personalIds.get(i);
+                this.personalSubmitMapper.addPersonalSubmit(personalId,keepRecordId);
+            }
+        }
+    }
+
+    @Override
+    public List<PersonalOrder> queryAllPersonalOrder() {
+        List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrder();
+        return personalOrders;
+    }
+
+    @Override
+    public List<PersonalOrder> queryAllPersonalOrderList(PersonalMtorderListDto personalMtorderListDto) {
+        if(personalMtorderListDto == null){
+            PersonalMtorderListDto personalMtorderListDto01 = new PersonalMtorderListDto();
+
+            personalMtorderListDto01.setPname(null);
+            //获取当前的时间
+            Date nowTime = new Date();
+            System.out.println("当前的时间为： " + nowTime);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //创建Calendar实例
+            Calendar calendar = Calendar.getInstance();
+
+            //设置当前时间
+            calendar.setTime(nowTime);
+            //在当前时间减六天，获取当前时间一周的维修工单信息
+            calendar.add(Calendar.DATE,-6);
+
+            Date oldTime = calendar.getTime();
+            System.out.println("减去6天的时间为：" + oldTime);
+
+            //设置查询条件对象的时间值
+            personalMtorderListDto01.setStartTime(nowTime);
+            personalMtorderListDto01.setEndTime(oldTime);
+
+            List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrderList(personalMtorderListDto01);
+            System.out.println("service层输出查询结果：" + personalOrders);
+
+            int orders = 0;
+            for(int j = 0;j < personalOrders.size();j++){
+                PersonalOrder personalOrder = personalOrders.get(j);
+                Date startTime = personalOrder.getStartTime();
+                String sformat = sdf.format(startTime);
+                for(int i = 0;i <= 6;i++){
+                    Calendar calendar01 = Calendar.getInstance();
+                    calendar01.setTime(oldTime);
+                    //在开始的第一天加上i天
+                    calendar01.add(Calendar.DATE,i);
+
+                    Date ctime = calendar01.getTime();
+                    String cformat = sdf.format(ctime);
+                    if(sformat.equals(cformat)){
+                        Map<String, Integer> order = personalOrder.getOrder();
+                        order.put(sformat,1);
+                        orders++;
+                    }else {
+                        Map<String, Integer> order = personalOrder.getOrder();
+                        order.put(sformat,0);
+                    }
+                }
+            }
+
+            return personalOrders;
+        }else {
+            List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrderList(personalMtorderListDto);
+            return personalOrders;
+        }
     }
 }
