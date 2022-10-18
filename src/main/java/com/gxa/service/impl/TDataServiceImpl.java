@@ -5,7 +5,10 @@ package com.gxa.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.TDataAddDropDownFrame;
+import com.gxa.dto.TDataDropDownFrame;
 import com.gxa.dto.TDataDto;
+import com.gxa.entity.EquipmentData;
 import com.gxa.entity.TData;
 import com.gxa.entity.TDataToAdd;
 import com.gxa.entity.TDataToUpdate;
@@ -44,5 +47,18 @@ public class TDataServiceImpl implements TDataService {
     @Override
     public void update(TDataToUpdate tDataToUpdate) {
         this.tDataMapper.update(tDataToUpdate);
+    }
+
+    @Override
+    public List<String> selectEquipmentModel() {
+        List<String> tDataDropDownFrameList=this.tDataMapper.selectEquipmentModel();
+        System.out.println(tDataDropDownFrameList.get(1)+"44444");
+        return tDataDropDownFrameList;
+    }
+
+    @Override
+    public List<String> selectTDataType() {
+        List<String> tDataAddDropDownFrames = this.tDataMapper.selectTDataType();
+        return tDataAddDropDownFrames;
     }
 }
