@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.PersonalOrderMapper">
+    <resultMap id="queryAllPersonalOrderresultMap" type="personalOrder">
+        <result property="pname" column="pname"/>
+        <result property="keepRecordId" column="keepId"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+    <select id="queryAllPersonalOrder" resultMap="queryAllPersonalOrderresultMap">
+        SELECT pl.pname,tk.id keepId,tk.start_time,tk.end_time
+        FROM p_order po,p_list pl,t_keep tk
+        WHERE po.personal_id=pl.id AND po.keep_id=tk.id
+    </select>
+    <select id="queryAllPersonalOrderList" resultMap="queryAllPersonalOrderresultMap">
+        SELECT pl.pname,tk.id keepId,tk.start_time,tk.end_time
+        FROM p_order po,p_list pl,t_keep tk
+        WHERE po.personal_id=pl.id AND po.keep_id=tk.id
+            <if test="pname != null">
+                AND pname=#{pname}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[ AND DATE_FORMAT(tk.start_time,'%Y-%m-%d')>=DATE_FORMAT(#{startTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ AND DATE_FORMAT(tk.start_time,'%Y-%m-%d')<=DATE_FORMAT(#{endTime},'%Y-%m-%d')]]>
+            </if>
+    </select>
+</mapper>

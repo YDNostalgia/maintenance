@@ -76,7 +76,7 @@ public class UserController {
     @ApiOperation("用户列表")
     @GetMapping("/user")
     @ResponseBody
-    public Result<List<User>> list(UserDto userDto, Integer page, Integer limit){
+    public Result<List<User>> list(@RequestBody(required = false) UserDto userDto, Integer page, Integer limit){
 
         PageInfo pageInfo = this.userService.queryAll(userDto,page,limit);
 
@@ -99,6 +99,17 @@ public class UserController {
         Result<User> r=Result.success();
         return r;
     }
+
+
+    @ApiOperation("查询角色")
+    @PostMapping("/user/roleName")
+    @ResponseBody
+    public Result<List<String>> queryRoleName(){
+        List<String> roleName=this.userService.queryRoleName();
+        Result<List<String>> r=Result.success(roleName);
+        return r;
+    }
+
 
     /**
      * 用户修改
