@@ -16,7 +16,6 @@ import java.io.Serializable;
 @ApiModel("装备名称描述")
 public class Equipment implements Serializable {
     @ApiModelProperty(value = "装备ID",name = "id")
-    @JsonIgnore
     private Integer id;
     @ApiModelProperty(value = "装备名称",name = "equipmentName")
     private String equipmentName;

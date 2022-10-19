@@ -28,4 +28,14 @@ public class KeepFundsServiceImpl implements KeepFundsService {
     public void addKeepFunds(KeepFundsAU keepFundsAU) {
         keepFundsMapper.addKeepFunds(keepFundsAU);
     }
+
+    @Override
+    public void updateKeepFunds(KeepFundsAU keepFundsAU) {
+        keepFundsMapper.updateKeepFunds(keepFundsAU);
+    }
+
+    @Override
+    public void deleteKeepFunds(Integer id) {
+        keepFundsMapper.deleteKeepFunds(id);
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@Api("维修档案接口")
+@Api(tags = "维修档案接口")
 public class KeepFileContrller {
     @Autowired
     private KeepFileService keepFileService;
@@ -36,19 +36,19 @@ public class KeepFileContrller {
         }
         return r;
     }
-    @ApiOperation("维修档案添加")
-    @PostMapping("keepFile/addkeepFile")
-    public Result<Integer> addkeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){
-        System.out.println("add"+keepFileAU);
-        Result<Integer> r = Result.success();
-        try {
-            keepFileService.addKeepFile(keepFileAU);
-        }catch (Exception e){
-            e.printStackTrace();
-            r = Result.failed();
-        }
-        return r;
-    }
+//    @ApiOperation("维修档案添加")
+//    @PostMapping("keepFile/addkeepFile")
+//    public Result<Integer> addkeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){
+//        System.out.println("add"+keepFileAU);
+//        Result<Integer> r = Result.success();
+//        try {
+//            keepFileService.addKeepFile(keepFileAU);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            r = Result.failed();
+//        }
+//        return r;
+//    }
     @ApiOperation("维修档案修改")
     @PutMapping("keepFile/updatekeepFile")
     public Result<Integer> updatekeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){

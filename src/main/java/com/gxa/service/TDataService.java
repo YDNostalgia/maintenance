@@ -24,5 +24,5 @@ public interface TDataService {
 
     List<String> selectEquipmentModel();
 
-    List<String> selectTDataType();
+    List<TDataAddDropDownFrame> selectTDataType();
 }

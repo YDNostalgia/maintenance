@@ -23,7 +23,7 @@ public class KeepFile {
     private Integer equipmentId;
     @ApiModelProperty("装备实体")
     private Equipment equipment;
-    @ApiModelProperty("维修结果  0:成功 1:待维修")
+    @ApiModelProperty("维修结果  1:成功 2:待维修")
     private Integer testResults;
     @ApiModelProperty("开始时间")
     private Date startTime;

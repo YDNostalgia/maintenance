@@ -1,5 +1,6 @@
 package com.gxa.mapper;
 
+import com.gxa.dto.BreakdownDto;
 import com.gxa.dto.UserDto;
 import com.gxa.dto.StateDto;
 import com.gxa.entity.User;
@@ -14,6 +15,7 @@ public interface UserMapper {
 
     Set<String> queryPermsByUserName(String userName);
     List<User> queryAll(UserDto userDto);
+
     List<String> queryRoleName();
     Integer add(User user);
     Integer addUserRoleId(@Param("userId") Integer userId,@Param("roleId") Integer roleId);

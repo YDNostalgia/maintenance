@@ -11,15 +11,17 @@
         <result property="desc" column="desc"></result>
         <result property="equipmentNumber" column="equipment_number"></result>
         <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
         <result property="testStatus" column="test_status"></result>
+        <result property="equipmentId" column="equipment_id"></result>
     </resultMap>
     <insert id="addKeepRecord">
-        INSERT INTO t_keep(id,equipment_number,equipment_id,`desc`,start_time,test_status)
-        VALUES (#{id},#{equipmentNumber},#{equipment.id},#{desc},#{startTime},#{testStatus})
+        INSERT INTO t_keep(id,equipment_number,equipment_id,`desc`,start_time,end_time,test_status)
+        VALUES (#{id},#{equipmentNumber},#{equipmentId},#{desc},#{startTime},#{endTime},#{testStatus})
     </insert>
     <update id="updateKeepRecord" parameterType="keepRecord">
         update t_keep
-        set equipment_number=#{equipmentNumber},equipment_id=#{equipment.id},`desc`=#{desc},start_time=#{startTime},test_status=#{testStatus}
+        set equipment_number=#{equipmentNumber},equipment_id=#{equipment.id},`desc`=#{desc},start_time=#{startTime},end_time=#{endTime},test_status=#{testStatus}
         where id=#{id}
     </update>
     <delete id="deleteKeepRecord" parameterType="int">
@@ -27,7 +29,7 @@
     </delete>
 
     <select id="queryAllKeepRecord" resultMap="keepRecordResultMap">
-        SELECT k.id,e.equipment_name,k.equipment_number,k.desc,k.start_time,k.test_status
+        SELECT k.id,e.equipment_name,k.equipment_number,k.desc,k.start_time,k.end_time,k.test_status
         FROM t_keep k,equipmentname e
         WHERE k.equipment_id=e.id
 
@@ -40,7 +42,7 @@
         <if test="id != null and id !=''">
             and k.id=#{id}
         </if>
-        <if test="testStatus != null and testStatus !=''">
+        <if test="testStatus != null and testStatus !='' and testStatus!=0">
             and k.test_status=#{testStatus}
         </if>
     </select>

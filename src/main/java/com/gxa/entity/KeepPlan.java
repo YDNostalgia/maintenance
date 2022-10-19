@@ -24,9 +24,9 @@ public class KeepPlan {
     private Equipment equipment;
     @ApiModelProperty("装备ID")
     private int equipmentId;
-//    @ApiModelProperty("开始时间")
-//    private Date startTime;
-//    @ApiModelProperty("结束时间")
-//    private Date endTime;
+    @ApiModelProperty("开始时间")
+    private Date startTime;
+    @ApiModelProperty("结束时间")
+    private Date endTime;
 
 }

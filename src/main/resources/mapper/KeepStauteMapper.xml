@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.KeepStauteMapper">
+    <resultMap id="keepStauteResultMap" type="keepStaute">
+        <id property="id" column="id"></id>
+        <result property="statueId" column="statue_id"></result>
+        <result property="statue" column="statue"></result>
+    </resultMap>
+    <select id="queryAllKeepStaute" resultMap="keepStauteResultMap">
+        SELECT * FROM t_keep_statues
+    </select>
+
+
+</mapper>

@@ -29,7 +29,7 @@
         delete from t_keep where id=#{id}
     </delete>
     <select id="queryAllKeepFile" resultMap="keepFileResultMap">
-        SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.desc,k.start_time,K.end_time,k.test_results
+        SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.desc,k.start_time,k.end_time,k.test_results
         FROM t_keep k,equipmentname e
         WHERE k.equipment_id=e.id
 

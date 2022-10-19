@@ -39,41 +39,47 @@ public class EquipmentDataController {
 
     @ApiOperation("添加资料分类")
     @PostMapping("/equipmentData/add")
-    public Result add(@RequestBody EquipmentDataToAdd equipmentDataToAdd){
-        System.out.println(equipmentDataToAdd.getCategoryId());
-        System.out.println(equipmentDataToAdd.getCategoryName());
-        if (equipmentDataToAdd != null){
-            this.equipmentDataService.add(equipmentDataToAdd);
-            return Result.success();
-        }else {
-            return Result.failed();
+    public Result<List<EquipmentDataToAdd>> add(@RequestBody(required = false) EquipmentDataToAdd equipmentDataToAdd){
+        Result<List<EquipmentDataToAdd>> r = Result.success();
+        try {
+            System.out.println("equipmentDataToAdd------"+equipmentDataToAdd);
+            equipmentDataService.add(equipmentDataToAdd);
+        }catch (Exception e){
+            e.printStackTrace();
+            Result.success();
         }
-
-
-
+        return  r;
     }
 
 
     @ApiOperation("修改资料分类")
     @PutMapping("/equipmentData/edit")
-    public Result update(@RequestBody EquipmentDataToEdit equipmentDataToEdit){
-        if (equipmentDataToEdit != null){
-            this.equipmentDataService.update(equipmentDataToEdit);
-            return Result.success();
-        }else {
-            return Result.failed();
+    public Result<List<EquipmentDataToEdit>> update(@RequestBody(required = false) EquipmentDataToEdit equipmentDataToEdit){
+        System.out.println("equipmentDataToEdit------"+equipmentDataToEdit);
+        Result<List<EquipmentDataToEdit>> r = Result.success();
+        try {
+            equipmentDataService.update(equipmentDataToEdit);
+        }catch (Exception e){
+            e.printStackTrace();
+            Result.failed();
         }
-
+        return r;
     }
 
     @ApiOperation("删除资料分类")
     @DeleteMapping("/equipmentData/delete")
-    public R delete(@Param("categoryId")@ApiParam(value ="资料类型id",name = "categoryId",required = true) Integer categoryId ){
-        R r;
-        this.equipmentDataService.delete(categoryId);
-        r = R.ok("删除成功");
-        return r;
+    @ResponseBody
+    public Result<Integer> delete( @RequestParam("categoryId") int categoryId ){
+        System.out.println("categoryId------"+categoryId);
+        Result<Integer> r = Result.success();
+        try {
+            equipmentDataService.delete(categoryId);
+        }catch (Exception e){
+            e.printStackTrace();
+            r = Result.failed();
         }
+        return r;
+    }
 
     }
 
