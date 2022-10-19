@@ -1,7 +1,7 @@
 package com.gxa.mapper;
 
 import com.gxa.dto.UserDto;
-import com.gxa.dto.UserRoleDto;
+import com.gxa.dto.StateDto;
 import com.gxa.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +18,7 @@ public interface UserMapper {
     Integer add(User user);
     Integer addUserRoleId(@Param("userId") Integer userId,@Param("roleId") Integer roleId);
     void update(User user);
+    void updateState(StateDto stateDto);
     Integer queryRoleId(String roleName);
     void delete(Integer id);
 }

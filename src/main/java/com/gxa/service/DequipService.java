@@ -15,6 +15,13 @@ public interface DequipService {
     List<Desave> querySave();
     List<Decompany> queryCompany();
 
-    DequipToAdd addDequip(DequipToAdd dequipToAdd);
 
+    Dequip addDequip(Dequip dequip);
+
+
+    Dequip queryByCode(String code);
+    void updateDequip(Dequip dequip);
+
+    void deleteByCode(String code);
+    int deleteManyCode(String[] code);
 }
