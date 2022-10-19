@@ -101,10 +101,10 @@ public class TDataController {
 
     @ApiOperation("资料添加的资料类型的下拉列表")
     @PostMapping("/data/selectDataType")
-    public Result<List<String>> selectTDataType(){
-        Result<List<String>> r = Result.success();
+    public Result<List<TDataAddDropDownFrame>> selectTDataType(){
+        Result<List<TDataAddDropDownFrame>> r = Result.success();
         try {
-            List<String> tDataAddDropDownFrames = tDataService.selectTDataType();
+            List<TDataAddDropDownFrame> tDataAddDropDownFrames = tDataService.selectTDataType();
             r = Result.success(tDataAddDropDownFrames);
             System.out.println(r);
         }catch (Exception e){

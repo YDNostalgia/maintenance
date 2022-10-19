@@ -67,8 +67,12 @@ resultMap标签，它是为了映射select查询出来结果的集合，
         SELECT DISTINCT equipment_model FROM t_data
     </select>
 
-    <select id="selectTDataType" resultType="String">
-        SELECT DISTINCT category_name FROM t_equipment
+<!--    <select id="selectTDataType" resultType="String">-->
+<!--        SELECT DISTINCT category_name FROM t_equipment-->
+<!--    </select>-->
+
+    <select id="selectTDataType" resultMap="equipmentDataResultMap">
+        SELECT DISTINCT category_name,category_id FROM t_equipment
     </select>
 
 </mapper>

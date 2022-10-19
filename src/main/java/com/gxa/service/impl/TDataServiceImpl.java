@@ -57,8 +57,8 @@ public class TDataServiceImpl implements TDataService {
     }
 
     @Override
-    public List<String> selectTDataType() {
-        List<String> tDataAddDropDownFrames = this.tDataMapper.selectTDataType();
+    public List<TDataAddDropDownFrame> selectTDataType() {
+        List<TDataAddDropDownFrame> tDataAddDropDownFrames = this.tDataMapper.selectTDataType();
         return tDataAddDropDownFrames;
     }
 }

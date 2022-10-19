@@ -23,5 +23,7 @@ public interface TDataMapper {
 
     List<String> selectEquipmentModel();
 
-    List<String> selectTDataType();
+//    List<String> selectTDataType();
+
+    List<TDataAddDropDownFrame> selectTDataType();
 }

@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "添加资料中资料类型的下拉列表")
 public class TDataAddDropDownFrame {
+
+    @ApiModelProperty(value = "资料类型的id",name = "categoryId")
+    private Integer categoryId;
+
     @ApiModelProperty(value = "资料类型",name = "categoryName")
     private String categoryName;
 }

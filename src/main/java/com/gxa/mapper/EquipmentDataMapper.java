@@ -11,11 +11,13 @@ public interface EquipmentDataMapper {
     //查询所有的装备分类
     List<EquipmentData> queryAllEquipmentData();
 
+
+    //添加资料类型
     void add(EquipmentDataToAdd equipmentDataToAdd);
 
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
-    void deleteByCategoryId(Integer categoryId);
+    void deleteByCategoryId(int categoryId);
 
 
 }
