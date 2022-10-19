@@ -24,7 +24,7 @@ public class DequipController {
     private DequipService dequipService;
 
 
-    @PostMapping("D")
+    @PostMapping("/dequip/list")
     @ApiOperation("器材管理列表")
     public Result<List<Dequip>> selectList(@RequestBody(required = false) DequipDto dequipDto){
         System.out.println("查询条件----->" + dequipDto);
@@ -46,7 +46,7 @@ public class DequipController {
         return r;
     }
     @GetMapping("/dequip/dtype")
-    @ApiOperation("器材分类 下拉列表")
+    @ApiOperation("器材分类 下拉列表 101发动机配件，102电器配件，103刹车配件,104传统系统配件,105工具")
     public Result<List<Detype>> selectTypeList(){
         List<Detype> detypes = this.dequipService.queryType();
         System.out.println("查询结果----->" + detypes);
@@ -61,7 +61,7 @@ public class DequipController {
         return r;
     }
     @GetMapping("/dequip/dsave")
-    @ApiOperation("存放区域 下拉列表")
+    @ApiOperation("存放区域 下拉列表 10A区，11B区，12C区，13D区，14E区")
     public Result<List<Desave>> selectSaveList(){
         List<Desave> desaves = this.dequipService.querySave();
         System.out.println("查询结果----->" + desaves);
@@ -75,7 +75,7 @@ public class DequipController {
     }
 
     @GetMapping("/dequip/dcompany")
-    @ApiOperation("单位 下拉列表")
+    @ApiOperation("单位 下拉列表 201个，202台，203套")
     public Result<List<Decompany>> selectCompanyList(){
         List<Decompany> decompanies = this.dequipService.queryCompany();
         System.out.println("查询结果----->" + decompanies);
@@ -129,7 +129,6 @@ public class DequipController {
             R r = R.error(1,"数据修改失败，请重新修改");
             return r;
         }
-
     }
 
     @GetMapping("/dequip/delete")

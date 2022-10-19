@@ -10,6 +10,7 @@ import java.util.Map;
 @Data
 @ApiModel("维修工单列表")
 public class PersonalOrder {
+    private Integer id;
     @ApiModelProperty(value = "维修人员",name = "pname")
     private String pname;
     @ApiModelProperty(value = "待维修任务编号",name = "keepRecordId")

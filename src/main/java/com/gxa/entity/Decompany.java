@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Decompany implements Serializable{
     public static final long serialVersionUID= 1L;
 
-    @ApiModelProperty(value = "id",name = "id")
+    @ApiModelProperty(value = "201个，202台，203套",name = "id")
     private Integer id;
     @ApiModelProperty(value = "单位",name = "company")
     private String company;

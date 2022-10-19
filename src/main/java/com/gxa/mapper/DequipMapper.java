@@ -16,6 +16,9 @@ public interface DequipMapper {
     Dequip queryByCode(String code);
     void updateDequip(Dequip dequip);
 
+
+
     void deleteByCode(String code);
     int deleteByManyCode(String[] code);
+
 }

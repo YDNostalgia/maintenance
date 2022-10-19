@@ -73,8 +73,8 @@
     </delete>
     <delete id="deleteEquipmentManagementByIds" parameterType="list">
         DELETE FROM equipment_managment WHERE id in
-        <foreach collection="list" item="equipmentManagement" separator="," open="(" close=")">
-            #{equipmentManagements.id}
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
         </foreach>
     </delete>
 

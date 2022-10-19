@@ -14,7 +14,7 @@
         FROM p_order po,p_list pl,t_keep tk
         WHERE po.personal_id=pl.id AND po.keep_id=tk.id
     </select>
-    <select id="queryAllPersonalOrderList" resultMap="queryAllPersonalOrderresultMap">
+    <select id="queryAllPersonalOrderList" resultMap="queryAllPersonalOrderresultMap" parameterType="com.gxa.dto.PersonalMtorderListDto">
         SELECT pl.pname,tk.id keepId,tk.start_time,tk.end_time
         FROM p_order po,p_list pl,t_keep tk
         WHERE po.personal_id=pl.id AND po.keep_id=tk.id
@@ -27,5 +27,26 @@
             <if test="endTime != null">
                 <![CDATA[ AND DATE_FORMAT(tk.start_time,'%Y-%m-%d')<=DATE_FORMAT(#{endTime},'%Y-%m-%d')]]>
             </if>
+    </select>
+
+    <resultMap id="queryIdAndOrdersResultMap" type="personalOrder">
+        <id property="id" column="pid"/>
+        <result property="pname" column="pname"/>
+        <result property="orders" column="total"/>
+    </resultMap>
+    <select id="queryIdAndOrders" resultMap="queryIdAndOrdersResultMap" parameterType="com.gxa.dto.PersonalMtorderListDto">
+        SELECT pl.id pid,pl.pname,COUNT(po.personal_id) total
+        FROM p_order po,p_list pl,t_keep tk
+        WHERE po.personal_id=pl.id AND po.keep_id=tk.id
+        <if test="pname != null">
+            AND pl.pname=#{pname}
+        </if>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(tk.start_time,'%Y-%m-%d')>=DATE_FORMAT(#{startTime},'%Y-%m-%d')]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(tk.start_time,'%Y-%m-%d')<=DATE_FORMAT(#{endTime},'%Y-%m-%d')]]>
+        </if>
+        GROUP BY po.personal_id
     </select>
 </mapper>

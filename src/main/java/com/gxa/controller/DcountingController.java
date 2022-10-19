@@ -41,23 +41,27 @@ public class DcountingController {
     }
 
     @GetMapping("/dcounting/dreview")
-    @ApiOperation("审核状态 下拉列表")
+    @ApiOperation("审核状态 下拉列表 0:成功 1：失败 2：待审核")
     public Result<List<Dreview>> selectDreviewList(){
-        List<Dreview> dreviews = this.dcountingService.queryAll();
-        System.out.println("查询结果----->" + dreviews);
 
-        Integer size = dreviews.size();
-        long total = size.longValue();
-        System.out.println("total-->" + total);
+        Result<List<Dreview>> resultList = Result.failed("状态信息拉取成功");
+        try{
+            List<Dreview> dreviews = this.dcountingService.queryAll();
+            System.out.println("查询结果----->" + dreviews);
 
-        Result<List<Dreview>> r = Result.success(dreviews, total);
-        return r;
+            Integer size = dreviews.size();
+            long total = size.longValue();
+            System.out.println("total-->" + total);
+
+            resultList = Result.success(dreviews, total);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
-
-
     @PostMapping("/dcounting/perAdd")
-    @ApiOperation("盘点库存新增页")
+    @ApiOperation("盘点库存新增前的查询")
     public R toAddPage(@RequestBody DcountingToAdd dcountingToAdd){
         R r = new R();
         return r;

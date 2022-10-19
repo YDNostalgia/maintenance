@@ -118,7 +118,7 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     }
 
     @Override
-    public void deleteEquipmentManagementByIds(List<EquipmentManagement> equipmentManagements) {
-        this.equipmentManagementMapper.deleteEquipmentManagementByIds(equipmentManagements);
+    public void deleteEquipmentManagementByIds(List<Integer> ids) {
+        this.equipmentManagementMapper.deleteEquipmentManagementByIds(ids);
     }
 }

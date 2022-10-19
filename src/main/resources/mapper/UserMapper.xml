@@ -16,7 +16,7 @@
         <result property="phoneNumber" column="phone_number"></result>
         <result property="roleName" column="role_name"></result>
         <result property="addTime" column="add_time"></result>
-        <result property="state" column="state"></result>
+        <result property="state" column="user_state"></result>
     </resultMap>
 
 
@@ -35,7 +35,7 @@
     </select>
 
     <select id="queryAll" resultMap="userResultMap1">
-        SELECT u.id,u.account,u.user_name,u.phone_number,u.role_name,u.add_time,u.state,u.pwd,u.note
+        SELECT u.id,u.account,u.user_name,u.phone_number,u.role_name,u.add_time,u.user_state,u.pwd,u.note
         FROM t_user u
         <if test="account != null and account!=''">
             WHERE u.account=#{account}
@@ -45,7 +45,7 @@
         </if>
 
         <if test="state != null and state!=''">
-            WHERE u.state=#{state}
+            WHERE u.user_state=#{state}
         </if>
     </select>
 
@@ -64,8 +64,8 @@
 
 
     <insert id="add"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(account,role_name,user_name,pwd,phone_number,note)
-        VALUES (#{account},#{roleName},#{userName},#{pwd},#{phoneNumber},#{note})
+        INSERT INTO t_user(account,role_name,user_name,add_time,pwd,phone_number,user_state,note)
+        VALUES (#{account},#{roleName},#{userName},#{addTime},#{pwd},#{phoneNumber},#{state},#{note})
     </insert>
 
     <insert id="addUserRoleId">
@@ -75,6 +75,11 @@
 
     <update id="update" parameterType="user">
         UPDATE t_user SET account=#{account},role_name=#{roleName},user_name=#{userName},pwd=#{pwd},phone_number=#{phoneNumber},note=#{note}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateState" parameterType="integer">
+        UPDATE t_user SET user_state=#{state}
         WHERE id=#{id}
     </update>
 

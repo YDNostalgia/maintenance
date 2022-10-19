@@ -125,7 +125,7 @@ public class PersonalController {
         Result resultPerson = Result.failed("人员信息添加失败！");
         try {
             Personal person = this.personalService.addPersonal(personal);
-            resultPerson.success();
+            resultPerson = Result.success();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -172,7 +172,7 @@ public class PersonalController {
         Result result = Result.failed("人员信息删除失败！");
         try {
             this.personalService.deletePersonal(id);
-            result.success();
+            result = Result.success();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -198,13 +198,6 @@ public class PersonalController {
         return resultPersonal;
     }
 
-//    @GetMapping(value = "/personalTransfer/next")
-//    @ApiOperation(value = "人员抽组下一步")
-//    public R personalTransferNext(){
-//
-//        R r = new R();
-//        return r;
-//    }
 
     @PostMapping(value = "/mtorder/query")
     @ApiOperation(value = "待维修任务下一步，请求待维修任务列表+搜索")
@@ -212,18 +205,24 @@ public class PersonalController {
         System.out.println("分页page：" + page + ".limit:" + limit);
         System.out.println("查询条件：" + personalMtorderDto);
 
-        PageHelper.startPage(page,limit);
-//        List<KeepRecord> keepRecords = this.personalService.queryAllKeeprecord();
-        List<KeepRecord> keepRecords = this.personalService.queryAllKeeprecordList(personalMtorderDto);
-        System.out.println("条件查询结果" + keepRecords);
+        Result<List<KeepRecord>> result = Result.failed("待维修任务列表拉取失败！");
+        try {
+            PageHelper.startPage(page,limit);
 
-        PageInfo<KeepRecord> pageInfo = new PageInfo<>(keepRecords);
-        Long total = pageInfo.getTotal();
-        System.out.println("total-->" + total);
+            List<KeepRecord> keepRecords = this.personalService.queryAllKeeprecordList(personalMtorderDto);
+            System.out.println("条件查询结果" + keepRecords);
 
-        Result<List<KeepRecord>> resultKeepRecord = Result.success(keepRecords,total);
+            PageInfo<KeepRecord> pageInfo = new PageInfo<>(keepRecords);
+            Long total = pageInfo.getTotal();
+            System.out.println("total-->" + total);
 
-        return resultKeepRecord;
+            result = Result.success(keepRecords,total);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @PostMapping(value = "/personalTransfer/save")
@@ -259,21 +258,24 @@ public class PersonalController {
         System.out.println("当前的时间为：" + queryTime);
         System.out.println("page:" + page + ",limit:" + limit);
 
+        Result<List<PersonalAttendance>> result = Result.failed("考勤管理列表信息拉取失败！");
+        try {
+            //实现分页
+            PageHelper.startPage(page,limit);
 
-        //实现分页
-        PageHelper.startPage(page,limit);
-//        List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendance();
-        List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendanceList(personalAttendanceDto);
+            List<PersonalAttendance> personalAttendances = this.personalService.queryAllPersonalAttendanceList(personalAttendanceDto);
 
-        System.out.println("人员考勤信息：" + personalAttendances);
+            System.out.println("人员考勤信息：" + personalAttendances);
 
-        //获取条件查询总记录条数
-        PageInfo<PersonalAttendance> pageInfo = new PageInfo<>(personalAttendances);
-        long total = pageInfo.getTotal();
+            //获取条件查询总记录条数
+            PageInfo<PersonalAttendance> pageInfo = new PageInfo<>(personalAttendances);
+            long total = pageInfo.getTotal();
 
-        Result<List<PersonalAttendance>> resultPersonalAttendance = Result.success(personalAttendances,total);
-
-        return resultPersonalAttendance;
+            result = Result.success(personalAttendances,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @PostMapping(value = "/mtorder/list")
@@ -281,20 +283,25 @@ public class PersonalController {
     public Result<List<PersonalOrder>> mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto,@Param("page") Integer page,@Param("limit") Integer limit){
         System.out.println("维修工单查询条件：" + personalMtorderListDto);
         System.out.println("page:" + page + ",limit:" + limit);
-        //实现分页
-        PageHelper.startPage(page,limit);
 
-//        List<PersonalOrder> personalOrders = this.personalService.queryAllPersonalOrder();
-        List<PersonalOrder> personalOrders = this.personalService.queryAllPersonalOrderList(personalMtorderListDto);
-        System.out.println("：维修工单列表：" + personalOrders);
+        Result<List<PersonalOrder>> result = Result.failed("维修工单信息拉取失败！");
+        try {
+            //实现分页
+            PageHelper.startPage(page,limit);
 
-        PageInfo<PersonalOrder> pageInfo = new PageInfo<>(personalOrders);
-        long total = pageInfo.getTotal();
+            List<PersonalOrder> personalOrders = this.personalService.queryAllPersonalOrderList(personalMtorderListDto);
+            System.out.println("：维修工单列表：" + personalOrders);
 
-        Result<List<PersonalOrder>> resultPersonalOrder = Result.success();
+            PageInfo<PersonalOrder> pageInfo = new PageInfo<>(personalOrders);
+            long total = pageInfo.getTotal();
 
+            result = Result.success(personalOrders,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        return resultPersonalOrder;
+        return result;
+
     }
 
 
