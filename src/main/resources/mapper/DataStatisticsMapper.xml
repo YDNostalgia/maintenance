@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.DataStatisticsMapper">
+    <resultMap id="equipmentNameResultMap" type="breakdownDto">
+        <result property="num" column="num"></result>
+        <result property="equipmentName" column="equipment_name"></result>
+    </resultMap>
+    <select id="queryBreakdown" resultMap="equipmentNameResultMap">
+        SELECT COUNT(k.id)as num,e.equipment_name
+        FROM t_keep k
+        LEFT JOIN  equipmentname e
+        ON k.equipment_id=e.id
+        WHERE 1=1
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(k.plan_time, '%Y-%m-%d')>=  DATE_FORMAT(#{planTime}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(k.plan_time, '%Y-%m-%d') <= DATE_FORMAT(#{planTime}, '%Y-%m-%d')    ]]>
+        </if>
+        GROUP BY e.equipment_name
+    </select>
+
+
+    <resultMap id="queryMaintenanceStatisticMap" type="maintenanceStatistics">
+        <result property="maintenanceName" column="maintenance_name"></result>
+        <result property="january" column="january"></result>
+        <result property="february" column="february"></result>
+        <result property="march" column="march"></result>
+        <result property="april" column="april"></result>
+        <result property="may" column="may"></result>
+        <result property="june" column="june"></result>
+        <result property="july" column="july"></result>
+        <result property="august" column="august"></result>
+        <result property="september" column="september"></result>
+        <result property="october" column="october"></result>
+        <result property="november" column="november"></result>
+        <result property="december" column="december"></result>
+
+    </resultMap>
+    <select id="queryMaintenanceStatistics" resultMap="queryMaintenanceStatisticMap">
+        SELECT * FROM maintenance_statistics
+    </select>
+    <select id="queryMaintenanceCosts" resultMap="queryMaintenanceStatisticMap">
+        SELECT * FROM maintenance_costs
+    </select>
+
+</mapper>

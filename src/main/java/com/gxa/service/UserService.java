@@ -1,6 +1,7 @@
 package com.gxa.service;
 
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.BreakdownDto;
 import com.gxa.dto.UserDto;
 import com.gxa.dto.StateDto;
 import com.gxa.entity.User;
@@ -18,4 +19,5 @@ public interface UserService {
     void updateState(StateDto stateDto);
     Integer queryRoleId(String roleName);
     void delete(Integer id);
+
 }

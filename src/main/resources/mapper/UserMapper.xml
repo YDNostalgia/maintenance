@@ -19,7 +19,6 @@
         <result property="state" column="user_state"></result>
     </resultMap>
 
-
     <select id="queryByUserNameAndPwd" resultMap="userResultMap">
         SELECT user_name,pwd,salt FROM t_user WHERE user_name=#{userName} AND pwd=#{pwd}
     </select>
@@ -86,4 +85,24 @@
     <delete id="delete" parameterType="integer">
         DELETE FROM t_user WHERE id=#{id}
     </delete>
+
+    <resultMap id="equipmentNameResultMap" type="breakdownDto">
+        <result property="num" column="user_name"></result>
+        <result property="equipmentName" column="pwd"></result>
+    </resultMap>
+    <select id="queryBreakdown" resultMap="equipmentNameResultMap">
+        SELECT COUNT(k.id)as num,e.equipment_name
+        FROM t_keep k
+        LEFT JOIN  equipmentname e
+        ON k.equipment_id=e.id
+        WHERE 1=1
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(k.plan_time, '%Y-%m-%d')>=  DATE_FORMAT(#{planTime}, '%Y-%m-%d')   ]]>
+        </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(k.plan_time, '%Y-%m-%d') <= DATE_FORMAT(#{planTime}, '%Y-%m-%d')    ]]>
+        </if>
+        GROUP BY e.equipment_name
+    </select>
+
 </mapper>

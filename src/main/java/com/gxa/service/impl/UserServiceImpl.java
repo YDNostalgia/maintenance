@@ -2,6 +2,7 @@ package com.gxa.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.BreakdownDto;
 import com.gxa.dto.UserDto;
 import com.gxa.dto.StateDto;
 import com.gxa.entity.User;
@@ -29,6 +30,11 @@ public class UserServiceImpl  implements UserService {
         List<User> users = this.userMapper.queryAll(userDto);
         PageInfo<User> pageInfo=new PageInfo<>(users);
         return pageInfo;
+    }
+
+    public List<BreakdownDto> queryBreakdown(BreakdownDto breakdownDto){
+        List<BreakdownDto> breakdownDtos = this.queryBreakdown(breakdownDto);
+        return breakdownDtos;
     }
 
     @Override
