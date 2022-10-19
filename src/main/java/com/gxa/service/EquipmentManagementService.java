@@ -24,6 +24,6 @@ public interface EquipmentManagementService {
     void deleteEquipmentClassification(Integer id);
     List<EquipmentName> equipmentclassificationDropList(String equipmentClassificationName);
     void updateEquipmentclassification(EquipmentName equipmentName);
-    void deleteEquipmentManagementByIds(List<EquipmentManagement> equipmentManagements );
+    void deleteEquipmentManagementByIds(List<Integer> ids);
 
 }
