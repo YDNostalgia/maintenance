@@ -16,7 +16,7 @@ public class RoleDto {
     @ApiModelProperty(value = "角色名", name = "roleName")
     private String roleName;
     @ApiModelProperty(value = "状态", name = "state")
-    private String state;
+    private Integer state;
 
     @Override
     public String toString() {

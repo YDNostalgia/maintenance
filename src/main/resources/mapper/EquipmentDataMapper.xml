@@ -2,34 +2,42 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--mapper中的namespace用于绑定接口，通过namespace的绑定直接通过id找到相应方法，执行相应的SQL语句-->
 <mapper namespace="com.gxa.mapper.EquipmentDataMapper">
-    <resultMap id="equipmentDataMap" type="equipmentData">
+
+<!--    resultMap标签，为了映射select查询出来的结果的集合，主要作用是将实体类中的字段与数据库表中的字段进行关联映射。
+        当实体类中的字段与数据库表中的字段相同时，可以将resultMap标签中的关联关系忽略不写-->
+    <resultMap id="equipmentDataResultMap" type="equipmentData">
         <id property="categoryId" column="category_id"></id>
         <result property="categoryName" column="category_name"></result>
         <result property="dataCount" column="total"></result>
         <result property="updateTime" column="update_time"></result>
     </resultMap>
 
+<!--    添加-->
     <insert id="add">
-        INSERT INTO t_equipment(category_id,category_name,update_time)
-        VALUES (#{categoryId},#{categoryName},#{updateTime})
+        INSERT INTO t_equipment(category_name,update_time) VALUES (#{categoryName},#{updateTime})
     </insert>
 
+<!--    更新-->
     <update id="update">
         UPDATE t_equipment
-        SET category_name=#{categoryName},update_time=#{updateTime}
+        SET category_name=#{categoryName}, update_time=#{updateTime}
         WHERE category_id=#{categoryId}
     </update>
 
+<!--    删除-->
     <delete id="deleteByCategoryId" parameterType="int">
         DELETE FROM t_equipment WHERE category_id=#{categoryId}
     </delete>
 
-    <select id="queryAllEquipmentData" resultMap="equipmentDataMap" >
-        SELECT te.category_id,te.category_name,te.update_time,v.total
-        FROM t_equipment te,(SELECT td.category_id,count(td.category_id) total
-                             From t_data td
-                             GROUP BY td.category_id) v
-        WHERE te.category_id = v.category_id
+<!--    查询所有的-->
+    <select id="queryAllEquipmentData" resultMap="equipmentDataResultMap" >
+        SELECT te.category_id,te.category_name,te.update_time,IFNULL(v.total,0) total
+        FROM t_equipment te LEFT JOIN(SELECT td.category_id,count(td.category_id) total
+                                      From t_data td
+                                      GROUP BY td.category_id) v
+                                     ON te.category_id = v.category_id
     </select>
 </mapper>

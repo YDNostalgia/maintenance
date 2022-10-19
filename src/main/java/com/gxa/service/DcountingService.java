@@ -2,6 +2,7 @@ package com.gxa.service;
 
 import com.gxa.dto.DcountingDto;
 import com.gxa.entity.Dcounting;
+import com.gxa.entity.DcountingSelect;
 import com.gxa.entity.Dreview;
 
 import java.util.List;
@@ -10,7 +11,9 @@ public interface DcountingService {
 
     List<Dcounting> queryAll(DcountingDto dcountingDto);
 
-    List<Dreview> queryDreviews();
+    List<Dreview> queryAll();
+
+    List<Dcounting> queryByEquip(DcountingSelect dcountingSelect);
     void add(Dcounting dcounting);
 
     Dcounting queryById(Integer id);

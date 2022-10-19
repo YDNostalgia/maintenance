@@ -116,4 +116,9 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
         this.equipmentManagementMapper.updateEquipmentclassification(equipmentName);
 
     }
+
+    @Override
+    public void deleteEquipmentManagementByIds(List<Integer> ids) {
+        this.equipmentManagementMapper.deleteEquipmentManagementByIds(ids);
+    }
 }

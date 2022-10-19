@@ -2,6 +2,7 @@ package com.gxa.service.impl;
 
 import com.gxa.dto.PersonalAttendanceDto;
 import com.gxa.dto.PersonalMtorderDto;
+import com.gxa.dto.PersonalMtorderListDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.*;
 import com.gxa.mapper.*;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PersonalServiceImpl implements PersonalService {
@@ -35,6 +36,9 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Autowired
     private PersonalSubmitMapper personalSubmitMapper;
+
+    @Autowired
+    private PersonalOrderMapper personalOrderMapper;
 
     @Override
     public List<Personal> queryAllPersonal() {
@@ -174,4 +178,165 @@ public class PersonalServiceImpl implements PersonalService {
             }
         }
     }
+
+    @Override
+    public List<PersonalOrder> queryAllPersonalOrder() {
+        List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrder();
+        return personalOrders;
+    }
+
+    @Override
+    public List<PersonalOrder> queryAllPersonalOrderList(PersonalMtorderListDto personalMtorderListDto) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if(personalMtorderListDto == null){
+            PersonalMtorderListDto personalMtorderListDto01 = new PersonalMtorderListDto();
+
+            personalMtorderListDto01.setPname(null);
+            //获取当前的时间
+            Date nowTime = new Date();
+            System.out.println("当前的时间为： " + nowTime);
+
+            //创建Calendar实例
+            Calendar calendar = Calendar.getInstance();
+
+            //设置当前时间
+            calendar.setTime(nowTime);
+            //在当前时间减六天，获取当前时间一周的维修工单信息
+            calendar.add(Calendar.DATE,-6);
+
+            Date oldTime = calendar.getTime();
+            System.out.println("减去6天的时间为：" + oldTime);
+
+            //设置查询条件对象的时间值
+            personalMtorderListDto01.setStartTime(oldTime);
+            personalMtorderListDto01.setEndTime(nowTime);
+
+            System.out.println("service层查询条件personalMtorderListDto01：" + personalMtorderListDto01);
+
+            //根据当前的查询条件查询出维修人员和维修人员总任务量
+            List<PersonalOrder> personalOrdersIds = this.personalOrderMapper.queryIdAndOrders(personalMtorderListDto01);
+            System.out.println("人员的任务量对应：" + personalOrdersIds);
+
+
+            //根据人员遍历
+            for(int j = 0;j < personalOrdersIds.size();j++){
+                PersonalOrder personalOrder01 = personalOrdersIds.get(j);
+                //给每个人创建一个map集合
+                Map<String,Integer> map = new HashMap<>();
+
+                //设置查询条件的pname
+                personalMtorderListDto01.setPname(personalOrder01.getPname());
+
+                List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrderList(personalMtorderListDto01);
+                System.out.println("service层输出查询结果：" + personalOrders);
+
+                for(int i = 0;i <= 6;i++){
+                    //获取当前时间前七天，开始的时间
+                    calendar.setTime(oldTime);
+                    //在开始的第一天加上i天
+                    calendar.add(Calendar.DATE,i);
+
+                    Date ctime = calendar.getTime();
+                    String cformat = sdf.format(ctime);
+                    map.put(cformat,0);
+                }
+
+                personalOrder01.setOrder(map);
+
+                for(int k = 0;k < personalOrders.size();k++){
+                    PersonalOrder personalOrder = personalOrders.get(k);
+                    Date startTime = personalOrder.getStartTime();
+                    String sformat = sdf.format(startTime);
+
+
+                    for(int i = 0;i <= 6;i++){
+                        //获取当前时间前七天，开始的时间
+                        calendar.setTime(oldTime);
+                        //在开始的第一天加上i天
+                        calendar.add(Calendar.DATE,i);
+
+                        Date ctime = calendar.getTime();
+                        String cformat = sdf.format(ctime);
+
+
+                        if(cformat.equals(sformat)){
+                            map.put(cformat,map.get(cformat)+1);
+                            personalOrder01.setOrder(map);
+
+                        }
+                    }
+                }
+            }
+            return personalOrdersIds;
+
+        }else {
+            //获得条件查询的开始时间
+            Date cstartTime = personalMtorderListDto.getStartTime();
+            //获得条件查询的结束时间
+            Date cendTime = personalMtorderListDto.getEndTime();
+            //计算开始时间和结束时间相差多少天
+            int days = (int)((cendTime.getTime() - cstartTime.getTime()) / (1000*3600*24));
+
+            //创建Calendar实例
+            Calendar calendar = Calendar.getInstance();
+
+            //根据当前的查询条件查询出维修人员和维修人员总任务量
+            List<PersonalOrder> personalOrdersIds = this.personalOrderMapper.queryIdAndOrders(personalMtorderListDto);
+            System.out.println("人员的任务量对应：" + personalOrdersIds);
+
+
+            //根据人员遍历
+            for(int j = 0;j < personalOrdersIds.size();j++){
+                PersonalOrder personalOrder01 = personalOrdersIds.get(j);
+                //给每个人创建一个map集合
+                Map<String,Integer> map = new HashMap<>();
+
+                //设置查询条件的pname
+                personalMtorderListDto.setPname(personalOrder01.getPname());
+
+                List<PersonalOrder> personalOrders = this.personalOrderMapper.queryAllPersonalOrderList(personalMtorderListDto);
+                System.out.println("service层输出查询结果：" + personalOrders);
+
+                for(int i = 0;i <= days;i++){
+                    //设置条件查询开始的时间
+                    calendar.setTime(cstartTime);
+                    //在开始的第一天加上i天
+                    calendar.add(Calendar.DATE,i);
+
+                    Date ctime = calendar.getTime();
+                    String cformat = sdf.format(ctime);
+                    map.put(cformat,0);
+                }
+
+                personalOrder01.setOrder(map);
+
+                for(int k = 0;k < personalOrders.size();k++){
+                    PersonalOrder personalOrder = personalOrders.get(k);
+                    Date startTime = personalOrder.getStartTime();
+                    String sformat = sdf.format(startTime);
+
+
+                    for(int i = 0;i <= days;i++){
+                        //设置条件查询开始的时间
+                        calendar.setTime(cstartTime);
+                        //在开始的第一天加上i天
+                        calendar.add(Calendar.DATE,i);
+
+                        Date ctime = calendar.getTime();
+                        String cformat = sdf.format(ctime);
+
+
+                        if(cformat.equals(sformat)){
+                            map.put(cformat,map.get(cformat)+1);
+                            personalOrder01.setOrder(map);
+
+                        }
+                    }
+                }
+            }
+            return personalOrdersIds;
+        }
+    }
+
 }

@@ -5,28 +5,42 @@
 <mapper namespace="com.gxa.mapper.DequipMapper">
 
     <resultMap id="dequipResultMap" type="dequip">
+        <id property="id" column="id"></id>
         <result property="code" column="code"></result>
         <result property="name" column="name"></result>
-        <result property="detype.id" column="id"></result>
+        <result property="detype.id" column="typeId"></result>
         <result property="detype.type" column="type"></result>
         <result property="model" column="model"></result>
-        <result property="decompany.id" column="id"></result>
+        <result property="decompany.id" column="compantId"></result>
         <result property="decompany.company" column="company"></result>
-        <result property="desave.id" column="id"></result>
+        <result property="desave.id" column="typeId"></result>
         <result property="desave.saveArea" column="saveArea"></result>
         <result property="goodsId" column="goodsId"></result>
     </resultMap>
+    <insert id="addDequip" parameterType="dequip">
+        INSERT INTO d_equip(code,name,companyId,goodsId,typeId,model,saveId)
+        VALUES(#{code},#{name},#{decompany.id},#{goodsId},#{detype.id},#{model},#{desave.id})
+    </insert>
+    <delete id="deleteByCode" parameterType="string">
+        DELETE FROM d_equip WHERE code=#{code}
+    </delete>
+    <delete id="deleteByManyCode" parameterType="string">
+        DELETE FROM d_equip WHERE code in
+        <foreach collection="array" item="code" open="code (" close=")" separator=",">
+            #{code}
+        </foreach>
+    </delete>
 
 
-    <select id="queryChooseList" resultMap="dequipResultMap" parameterType="com.gxa.dto.DequipDto">
+    <select id="queryChooseList" resultMap="dequipResultMap" parameterType="dequipDto">
         SELECT de.code,de.name,dt.type,de.model,dc.company,ds.saveArea,de.goodsId
         FROM d_equip de,d_save ds,d_type dt,d_company dc
         WHERE ds.id=de.saveId AND de.typeId=dt.id AND dc.id=de.companyId
-        <if test="code !=null and code !=''">
-            AND code=#{code}
-        </if>
+<!--        <if test="code !=null and code !=''">-->
+<!--            AND de.code=#{code}-->
+<!--        </if>-->
         <if test="name !=null and name !=''">
-            AND name=#{name}
+            AND de.name=#{name}
         </if>
         <if test="typeId !=null">
             AND dt.id=#{typeId}
@@ -35,5 +49,17 @@
             AND ds.id=#{saveId}
         </if>
     </select>
+
+
+    <select id="queryByCode" resultMap="dequipResultMap" parameterType="string">
+        SELECT de.code,de.name,dt.type,de.model,dc.company,ds.saveArea,de.goodsId
+        FROM d_equip de,d_save ds,d_type dt,d_company dc
+        WHERE ds.id=de.saveId AND de.typeId=dt.id AND dc.id=de.companyId AND de.code=#{code}
+    </select>
+    <update id="updateDequip" parameterType="dequip">
+        UPDATE d_equip
+        SET name=#{name},typeId=#{detype.id},model=#{model},companyId=#{decompany.id},saveId=#{desave.id},goodsId=#{goodsId}
+        WHERE code=#{code}
+    </update>
 
 </mapper>

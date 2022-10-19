@@ -28,17 +28,18 @@ public class EquipmentDataServiceImpl implements EquipmentDataService {
 
     @Override
     public void add(EquipmentDataToAdd equipmentDataToAdd) {
-        this.equipmentDataMapper.add(equipmentDataToAdd);
+        equipmentDataMapper.add(equipmentDataToAdd);
     }
 
     @Override
     public void update(EquipmentDataToEdit equipmentDataToEdit) {
-        this.equipmentDataMapper.update(equipmentDataToEdit);
+        equipmentDataMapper.update(equipmentDataToEdit);
     }
 
     @Override
-    public void delete(Integer categoryId) {
-        this.equipmentDataMapper.deleteByCategoryId(categoryId);
+    public void delete(int categoryId) {
+
+        equipmentDataMapper.deleteByCategoryId(categoryId);
     }
 
 }

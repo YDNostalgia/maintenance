@@ -19,8 +19,8 @@ public class EquipmentDataToEdit {
     @ApiModelProperty(value = "资料类别的名称",name = "categoryName")
     private String categoryName;
 
-    @ApiModelProperty(value = "资料数",name = "dataCount")
-    private Integer dataCount;
+//    @ApiModelProperty(value = "资料数",name = "dataCount")
+//    private Integer dataCount;
 
     @ApiModelProperty(value = "资料类型的更新时间",name = "updateTime")
     private Date updateTime;

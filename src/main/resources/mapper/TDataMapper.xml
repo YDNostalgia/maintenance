@@ -29,6 +29,11 @@ resultMap标签，它是为了映射select查询出来结果的集合，
         <result property="fileUploadTime" column="file_upload_time"/>
         <association property="equipmentData" resultMap="equipmentDataResultMap"/>
     </resultMap>
+
+<!--    <resultMap id="tDataTypeResultMap" type="tDataAddDropDownFrame">-->
+<!--        <association property="equipmentData" resultMap="equipmentDataResultMap"/>-->
+<!--    </resultMap>-->
+
     <insert id="add">
         INSERT INTO t_data(data_id,data_name,category_id,equipment_model,data_desc,file_address,file_upload_time)
         VALUES (#{dataId},#{dataName},#{categoryId},#{equipmentModel},#{dataDesc},#{fileAddress},#{fileUploadTime})
@@ -47,16 +52,27 @@ resultMap标签，它是为了映射select查询出来结果的集合，
         SELECT td.data_id,td.data_name,td.equipment_model,td.data_desc,td.file_address,td.file_upload_time,te.category_id,te.category_name,te.update_time
         FROM t_data td,t_equipment te
         WHERE td.category_id = te.category_id
-        <if test="dataName != null">
+        <if test="dataName != null and dataName !='' ">
             and data_name=#{dataName}
         </if>
 
-        <if test="equipmentModel != null">
+        <if test="equipmentModel != null and equipmentModel !='' ">
             and equipment_model=#{equipmentModel}
         </if>
 
 
 
+    </select>
+    <select id="selectEquipmentModel" resultType="string">
+        SELECT DISTINCT equipment_model FROM t_data
+    </select>
+
+<!--    <select id="selectTDataType" resultType="String">-->
+<!--        SELECT DISTINCT category_name FROM t_equipment-->
+<!--    </select>-->
+
+    <select id="selectTDataType" resultMap="equipmentDataResultMap">
+        SELECT DISTINCT category_name,category_id FROM t_equipment
     </select>
 
 </mapper>

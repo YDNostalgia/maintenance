@@ -3,6 +3,7 @@ package com.gxa.dto;
 import com.gxa.entity.Dreview;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,8 @@ public class DcountingDto {
     private Dreview dreview;
     @ApiModelProperty(value = "盘点单号",name = "code")
     private String code;
+    @ApiModelProperty(value ="当前页码" ,name ="page" )
+    private Integer page;
+    @ApiModelProperty(value ="每页记录数" ,name ="limit" )
+    private Integer limit;
 }

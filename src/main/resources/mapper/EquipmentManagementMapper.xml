@@ -5,14 +5,22 @@
 <mapper namespace="com.gxa.mapper.EquipmentManagementMapper">
     <resultMap id="equipmentManagementMap" type="equipmentManagement">
     <id property="id" column="id"></id>
-    <result property="equipmentName.equipName" column="equipment_name"></result>
-    <result property="equipmentClass.equipmentClassName" column="equipmentclassification_name"></result>
-    <result property="state" column="state"></result>
-    <result property="price" column="price"></result>
-    <result property="modalities" column="modalities"></result>
-    <result property="useunits.useunitName" column="useunits_name"></result>
-    <result property="storageLocation.storageLocationName" column="storagelocation_name"></result>
-    <result property="responsiblePerson" column="responsible_person"></result>
+        <result property="equipmentName.id" column="equipmentname_id"></result>
+        <result property="equipmentName.equipName" column="equipment_name"></result>
+
+        <result property="equipmentClass.id" column="equipmentclassification_id"></result>
+        <result property="equipmentClass.equipmentClassName" column="equipmentclassification_name"></result>
+
+        <result property="state" column="state"></result>
+        <result property="price" column="price"></result>
+        <result property="modalities" column="modalities"></result>
+
+        <result property="useunits.id" column="useunits_id"></result>
+        <result property="useunits.useunitName" column="useunits_name"></result>
+
+        <result property="storageLocation.id" column="storagelocation_id"></result>
+        <result property="storageLocation.storageLocationName" column="storagelocation_name"></result>
+        <result property="responsiblePerson" column="responsible_person"></result>
     </resultMap>
 
     <resultMap id="EquipmentClassMap" type="equipmentClass">
@@ -63,9 +71,16 @@
     <delete id="deleteEquipmentClassification" parameterType="integer">
         DELETE FROM equipmentclassification WHERE id=#{id}
     </delete>
+    <delete id="deleteEquipmentManagementByIds" parameterType="list">
+        DELETE FROM equipment_managment WHERE id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
     <select id="queryAllEquipmentManagement" resultMap="equipmentManagementMap" parameterType="equipmentManagementDto" >
-        SELECT e1.id,e3.equipment_name,e2.equipmentclassification_name,e1.state,e1.price,e1.modalities,u.useunits_name,s.storagelocation_name,e1.responsible_person
+        SELECT e1.id,e3.equipment_name,e1.equipmentname_id,e1.equipmentclassification_id,e1.useunits_id,e1.storagelocation_id,
+        e2.equipmentclassification_name,e1.state,e1.price,e1.modalities,u.useunits_name,s.storagelocation_name,e1.responsible_person
         FROM equipment_managment e1,equipmentclassification e2,equipmentname e3,storage_location s,use_units u
         WHERE e1.equipmentclassification_id=e2.id and e1.equipmentname_id=e3.id and e1.useunits_id=u.id and e1.storagelocation_id=s.id
         <if test="id != null and id!=''">
@@ -117,9 +132,9 @@
         SELECT * FROM storage_location
     </select>
     <select id="querylistEquipmentone" resultMap="equipmentListMap">
-        SELECT d.code,d.name,d.type,t.test_results
-        FROM d_equip d,t_keep t
-        WHERE d.code=t.equip_code
+        SELECT d.code,d.name,d1.type,t.test_results
+        FROM d_equip d,t_keep t,d_type d1
+        WHERE d.code=t.equip_code and d.typeId=d1.id
     </select>
     <select id="querylistMaintenanceRecords" resultMap="maintenanceRecordsMap">
         SELECT t.id,t.start_time,t.end_time,t.desc FROM t_keep t

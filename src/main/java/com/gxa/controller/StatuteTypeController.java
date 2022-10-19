@@ -22,12 +22,12 @@ public class StatuteTypeController {
 
     @Autowired
     private StatuteTypeService statuteTypeService;
-    @ApiOperation("查询法规类型")
+    @ApiOperation("分页查询法规类型")
     @PostMapping("/statuteType/list")
     public Result<List<StatuteType>> list(@RequestBody StatuteTypeQueryDto statuteTypeQueryDto){
 
         Result<List<StatuteType>> r = Result.failed();
-        PageInfo<StatuteType> pageInfo = statuteTypeService.queryAll(statuteTypeQueryDto);
+        PageInfo<StatuteType> pageInfo = statuteTypeService.queryByCondition(statuteTypeQueryDto);
         List<StatuteType> statuteTypes = pageInfo.getList();
         long total = pageInfo.getTotal();
 
@@ -37,6 +37,20 @@ public class StatuteTypeController {
         }
         return r;
     }
+
+    @ApiOperation("查询所有法规类型")
+    @GetMapping("/statuteType")
+    public Result<List<StatuteType>> list(){
+
+        Result<List<StatuteType>> r = Result.failed();
+        List<StatuteType> statuteTypes = statuteTypeService.queryAll();
+        if (statuteTypes != null){
+            r = Result.success(statuteTypes);
+            return r;
+        }
+        return r;
+    }
+
 
     @ApiOperation("添加法规类型")
     @PostMapping("/statuteType")

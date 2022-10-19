@@ -23,6 +23,7 @@ public class User {
     private String userName;
     @ApiModelProperty(value = "密码", name = "pwd")
     private String pwd;
+    private String captcha;
     private String salt;
     @ApiModelProperty(value = "手机号码", name = "phoneNumber")
     private String phoneNumber;
@@ -31,7 +32,7 @@ public class User {
     @ApiModelProperty(value = "角色", name = "roleName")
     private String roleName;
     @ApiModelProperty(value = "状态", name = "state")
-    private String state;
+    private Integer state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
 

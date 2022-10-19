@@ -7,14 +7,18 @@ import com.gxa.entity.EquipmentDataToEdit;
 
 public interface EquipmentDataService {
 
-    //查询所有的装备分类
-//    List<EquipmentData> queryAll();
+
+    //分页查询所有的
     PageInfo<EquipmentData> queryAll(Integer page,Integer limit);
+
+    //添加
     void add(EquipmentDataToAdd equipmentDataToAdd);
 
+    //更新
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
-    void delete(Integer categoryId);
+    //删除
+    void delete(int categoryId);
 
 
 

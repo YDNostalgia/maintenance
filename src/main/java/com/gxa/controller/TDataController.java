@@ -1,6 +1,8 @@
 package com.gxa.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.gxa.dto.TDataAddDropDownFrame;
+import com.gxa.dto.TDataDropDownFrame;
 import com.gxa.dto.TDataDto;
 import com.gxa.entity.TData;
 import com.gxa.entity.TDataToAdd;
@@ -25,7 +27,7 @@ public class TDataController {
     private TDataService tDataService;
 
     @ApiOperation("查询资料")
-    @GetMapping("/data/list")
+    @PostMapping("/data/list")
     public Result<List<TData>> queryAllTData( Integer page, Integer limit,@RequestBody(required = false) TDataDto tDataDto){
         System.out.println("tDataDto-->" +tDataDto);
         System.out.println(page + "----" + limit);
@@ -76,6 +78,38 @@ public class TDataController {
         }catch (Exception e){
             e.printStackTrace();
             Result.failed();
+        }
+        return r;
+    }
+
+    @ApiOperation("资料管理的装备型号的下拉列表")
+    @PostMapping("/data/selectEquipmentModel")
+    public Result<List<String>> selectEquipmentModel(){
+        Result<List<String>> r = Result.success();
+        try {
+            List<String> tDataDropDownFrameList = tDataService.selectEquipmentModel();
+            System.out.println(tDataDropDownFrameList.get(1));
+            r = Result.success(tDataDropDownFrameList);
+            System.out.println(r);
+        }catch (Exception e){
+            e.printStackTrace();
+            r.failed();
+        }
+        return r;
+    }
+
+
+    @ApiOperation("资料添加的资料类型的下拉列表")
+    @PostMapping("/data/selectDataType")
+    public Result<List<TDataAddDropDownFrame>> selectTDataType(){
+        Result<List<TDataAddDropDownFrame>> r = Result.success();
+        try {
+            List<TDataAddDropDownFrame> tDataAddDropDownFrames = tDataService.selectTDataType();
+            r = Result.success(tDataAddDropDownFrames);
+            System.out.println(r);
+        }catch (Exception e){
+            e.printStackTrace();
+            r.failed();
         }
         return r;
     }
