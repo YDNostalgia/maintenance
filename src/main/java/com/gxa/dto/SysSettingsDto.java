@@ -17,7 +17,7 @@ public class SysSettingsDto {
     @ApiModelProperty(value = "系统名称", name = "sysName")
     private String sysName;
     @ApiModelProperty(value = "系统远程地址", name = "sysAddress")
-    private Integer sysAddress;
+    private String sysAddress;
 
 
 }

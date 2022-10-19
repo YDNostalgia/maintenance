@@ -21,7 +21,7 @@ public class RoleController {
     private RoleService roleService;
 
     @ApiOperation("角色列表")
-    @GetMapping("/role")
+    @PostMapping("/role/list")
     @ResponseBody
     public Result<List<Role>> list(@RequestBody(required = false) RoleDto roleDto, Integer page, Integer limit){
         PageInfo pageInfo= this.roleService.queryAll(roleDto,page,limit);

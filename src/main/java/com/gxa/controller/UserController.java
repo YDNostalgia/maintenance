@@ -103,7 +103,7 @@ public class UserController {
      * 用户列表
      */
     @ApiOperation("用户列表")
-    @GetMapping("/user")
+    @PostMapping("/user/list")
     @ResponseBody
     public Result<List<User>> list(@RequestBody(required = false) UserDto userDto, Integer page, Integer limit){
 
