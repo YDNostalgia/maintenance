@@ -1,5 +1,6 @@
 package com.gxa.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.gxa.dto.DpartsEditDto;
 import com.gxa.dto.DpartsQueryDto;
 import com.gxa.entity.Dparts;
@@ -25,8 +26,9 @@ public class DpartsController {
     @GetMapping("/dparts/list")
     public R list(@RequestBody DpartsQueryDto dpartsQueryDto){
         R r;
-        Integer limit = dpartsQueryDto.getLimit();
-        Integer page = dpartsQueryDto.getPage();
+
+        //实现分页
+        PageHelper.startPage(dpartsQueryDto.getPage(),dpartsQueryDto.getLimit());
 
         List<Dparts> dparts = this.dpartsService.queryList();
         if (dparts != null){

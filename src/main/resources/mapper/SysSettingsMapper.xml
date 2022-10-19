@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.SysSettingsMapper">
+    <resultMap id="systemResultMap" type="sysSettings">
+        <id property="id" column="id"></id>
+        <result property="sysName" column="sys_name"></result>
+        <result property="sysAddress" column="sys_address"></result>
+    </resultMap>
+    <select id="queryAll" resultMap="systemResultMap">
+        SELECT s.id,s.sys_name,s.sys_address
+        FROM sys_settings s
+    </select>
+
+    <update id="update">
+        UPDATE sys_settings SET sys_name=#{sysName},sys_address=#{sysAddress}
+        WHERE id=#{id}
+    </update>
+
+</mapper>

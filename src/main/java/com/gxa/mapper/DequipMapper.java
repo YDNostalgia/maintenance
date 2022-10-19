@@ -2,7 +2,6 @@ package com.gxa.mapper;
 
 import com.gxa.dto.DequipDto;
 import com.gxa.entity.Dequip;
-import com.gxa.entity.DequipToAdd;
 
 import java.util.List;
 
@@ -11,5 +10,15 @@ public interface DequipMapper {
     List<Dequip> queryChooseList(DequipDto dequipDto);
 
     //添加
-    void addDequip(DequipToAdd dequipToAdd);
+    void addDequip(Dequip dequip);
+
+    //修改前查询
+    Dequip queryByCode(String code);
+    void updateDequip(Dequip dequip);
+
+
+
+    void deleteByCode(String code);
+    int deleteByManyCode(String[] code);
+
 }

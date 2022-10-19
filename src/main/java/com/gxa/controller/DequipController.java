@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Api(tags = "器材管理接口")
@@ -25,12 +26,12 @@ public class DequipController {
 
     @PostMapping("/dequip/list")
     @ApiOperation("器材管理列表")
-    public Result<List<Dequip>> selectList(@RequestBody(required = false) DequipDto dequipDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Dequip>> selectList(@RequestBody(required = false) DequipDto dequipDto){
         System.out.println("查询条件----->" + dequipDto);
-        System.out.println("当前页码----->" + page + ",每页数据---->" + limit);
+        System.out.println("当前页码----->" + dequipDto.getPage() + ",每页数据---->" + dequipDto.getLimit());
 
         //实现分页
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(dequipDto.getPage(),dequipDto.getLimit());
 
         List<Dequip> dequips = this.dequipService.queryChooseList(dequipDto);
         System.out.println("查询结果----->" + dequips);
@@ -45,7 +46,7 @@ public class DequipController {
         return r;
     }
     @GetMapping("/dequip/dtype")
-    @ApiOperation("器材分类 下拉列表")
+    @ApiOperation("器材分类 下拉列表 101发动机配件，102电器配件，103刹车配件,104传统系统配件,105工具")
     public Result<List<Detype>> selectTypeList(){
         List<Detype> detypes = this.dequipService.queryType();
         System.out.println("查询结果----->" + detypes);
@@ -60,8 +61,8 @@ public class DequipController {
         return r;
     }
     @GetMapping("/dequip/dsave")
-    @ApiOperation("存放区域 下拉列表")
-    public Result<List<Desave>> delectSaveList(){
+    @ApiOperation("存放区域 下拉列表 10A区，11B区，12C区，13D区，14E区")
+    public Result<List<Desave>> selectSaveList(){
         List<Desave> desaves = this.dequipService.querySave();
         System.out.println("查询结果----->" + desaves);
 
@@ -74,8 +75,8 @@ public class DequipController {
     }
 
     @GetMapping("/dequip/dcompany")
-    @ApiOperation("单位 下拉列表")
-    public Result<List<Decompany>> delectCompanyList(){
+    @ApiOperation("单位 下拉列表 201个，202台，203套")
+    public Result<List<Decompany>> selectCompanyList(){
         List<Decompany> decompanies = this.dequipService.queryCompany();
         System.out.println("查询结果----->" + decompanies);
 
@@ -90,10 +91,10 @@ public class DequipController {
 
     @PostMapping("/dequip/add")
     @ApiOperation("器材新增")
-    public R addDequip(@RequestBody DequipToAdd dequipToAdd){
-        System.out.println("添加数据——>" + dequipToAdd);
+    public R addDequip(@RequestBody Dequip dequip){
+        System.out.println("添加数据——>" + dequip);
 
-        DequipToAdd queryAdd = this.dequipService.addDequip(dequipToAdd);
+        Dequip queryAdd = this.dequipService.addDequip(dequip);
 
         if(queryAdd != null){
             R r = R.ok("添加成功");
@@ -106,31 +107,60 @@ public class DequipController {
 
 
     @GetMapping("/dequip/perEdit")
-    @ApiOperation("器材修改页")
-    public R toEditPage(@RequestBody DequipToUpdate dequipToUpdate){
+    @ApiOperation("器材修改前的查询")
+    public R queryById(String code){
+        System.out.println(code);
+        Dequip queryByCode = this.dequipService.queryByCode(code);
+
         R r = new R();
+        r.put("data",queryByCode);
         return r;
     }
-    @PutMapping("/dequip/edit")
+    @PostMapping("/dequip/edit")
     @ApiOperation("器材修改")
-    public R dequipEdit(@RequestBody DequipToUpdate dequipToUpdate){
+    public R updateDequip(@RequestBody Dequip dequip){
+        System.out.println(dequip);
 
-        R r = new R();
-        return r;
+        this.dequipService.updateDequip(dequip);
+        if(dequip != null){
+            R r = R.ok("此数据修改成功");
+            return r;
+        }else {
+            R r = R.error(1,"数据修改失败，请重新修改");
+            return r;
+        }
     }
 
-    @DeleteMapping("/dequip/delete")
-    @ApiOperation("器材修改")
-    public R dequipDelete(@RequestBody DequipDelete dequipDelete){
+    @GetMapping("/dequip/delete")
+    @ApiOperation("器材删除")
+    public R dequipDelete(String code){
+        System.out.println(code);
 
-        R r = new R();
-        return r;
+        this.dequipService.deleteByCode(code);
+        if(code != null){
+            R r = R.ok("该数据删除成功！");
+            return r;
+        } else {
+            R r = R.error(1, "该数据删除失败,请重新发起请求！");
+            return r;
+        }
     }
-    @DeleteMapping("/dequip/deletes")
-    @ApiOperation("器材修改")
-    public R dequipDeletes(@RequestBody DequipDeletes DequipDeletes){
-
-        R r = new R();
-        return r;
+    @GetMapping("/dequip/deletes")
+    @ApiOperation("批量删除")
+    public R dequipDeletes(String code){
+        //前端传回的字符串 转化为数组
+        String[] split = code.split(",");
+        if(split != null && split.length>0){
+            if(dequipService.deleteManyCode(split) > 0){
+                R r = R.ok("数据删除成功");
+                return r;
+            } else {
+                R r = R.error(1,"数据删除失败");
+                return r;
+            }
+        } else {
+            R r = R.error(1,"数据删除失败");
+            return r;
+        }
     }
 }

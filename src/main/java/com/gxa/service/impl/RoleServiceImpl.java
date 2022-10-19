@@ -3,6 +3,7 @@ package com.gxa.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.RoleDto;
+import com.gxa.dto.StateDto;
 import com.gxa.dto.UserDto;
 import com.gxa.entity.Role;
 import com.gxa.mapper.RoleMapper;
@@ -37,6 +38,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void update(Role role) {
         this.roleMapper.update(role);
+    }
+
+    public void updateRoleState(StateDto stateDto){
+        this.roleMapper.updateRoleState(stateDto);
     }
 
     @Override
