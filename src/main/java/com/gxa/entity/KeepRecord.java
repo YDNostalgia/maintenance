@@ -32,6 +32,6 @@ public class KeepRecord implements Serializable {
     @ApiModelProperty("结束时间")
     private Date endTime;
 
-    @ApiModelProperty("维修状态 _ 2:待维修 1 :维修完成  0 ：维修中")
+    @ApiModelProperty("维修状态 _ 2:待维修 3 :维修完成  1 ：维修中")
     private Integer testStatus;
 }

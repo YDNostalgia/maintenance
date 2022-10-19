@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@Api("维修计划接口")
+@Api(tags = "维修计划接口")
 public class KeepPlanController {
     @Autowired
     private KeepPlanService keepPlanService;

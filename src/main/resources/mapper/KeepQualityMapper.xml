@@ -14,7 +14,7 @@
         <result property="testStatus" column="test_status"></result>
 
         <result property="equipmentId" column="equipment_id"></result>
-
+<!--        <result property="desc" column="desc"></result>-->
 
     </resultMap>
     <insert id="addKeepQuality" parameterType="keepQuality">
@@ -24,7 +24,7 @@
     <update id="updateKeepQuality">
         update t_keep
         set equipment_id=#{equipmentId},equipment_number=#{equipmentNumber},start_time=#{startTime}
-          ,end_time=#{endTime},test_status=#{testStatus},test_results={testResults}
+          ,end_time=#{endTime},test_status=#{testStatus},test_results=#{testResults}
         where id=#{id}
     </update>
     <delete id="deleteKeepQuality">
