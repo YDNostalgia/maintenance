@@ -18,6 +18,5 @@ public class DequipDto {
     @ApiModelProperty(value ="当前页码" ,name ="page" )
     private Integer page;
     @ApiModelProperty(value ="每页记录数" ,name ="limit" )
-
     private Integer limit;
 }

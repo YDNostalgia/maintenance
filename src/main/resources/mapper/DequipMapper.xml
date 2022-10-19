@@ -36,9 +36,9 @@
         SELECT de.code,de.name,dt.type,de.model,dc.company,ds.saveArea,de.goodsId
         FROM d_equip de,d_save ds,d_type dt,d_company dc
         WHERE ds.id=de.saveId AND de.typeId=dt.id AND dc.id=de.companyId
-        <if test="code !=null and code !=''">
-            AND de.code=#{code}
-        </if>
+<!--        <if test="code !=null and code !=''">-->
+<!--            AND de.code=#{code}-->
+<!--        </if>-->
         <if test="name !=null and name !=''">
             AND de.name=#{name}
         </if>

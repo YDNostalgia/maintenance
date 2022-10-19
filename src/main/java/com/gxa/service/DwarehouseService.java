@@ -13,7 +13,7 @@ public interface DwarehouseService {
 
     List<Dreview> queryDreview(Dreview dreview);
 
-    List<Dequip> queryDequip(Dequip dequip);
+//    List<Dequip> queryDequip(Dequip dequip);
 //DequipToAdd addDequip(DequipToAdd dequipToAdd);
     DwarehouseToAdd addDwarehouse(DwarehouseToAdd dwarehouseToAdd);
 

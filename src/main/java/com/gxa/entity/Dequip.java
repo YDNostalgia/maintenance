@@ -21,8 +21,8 @@ public class Dequip {
     private String model;
 //    @ApiModelProperty(value = "单价",name = "price")
 //    private Double price;
-//    @ApiModelProperty(value = "数量",name = "sum")
-//    private Integer sum;
+//    @ApiModelProperty(value = "数量",name = "desum")
+//    private Integer desum;
     @ApiModelProperty(value = "货架编号",name = "goodsId")
     private String goodsId;
 

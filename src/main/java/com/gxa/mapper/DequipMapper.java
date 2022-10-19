@@ -20,4 +20,5 @@ public interface DequipMapper {
 
     void deleteByCode(String code);
     int deleteByManyCode(String[] code);
+
 }
