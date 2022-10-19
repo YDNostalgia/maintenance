@@ -38,11 +38,11 @@ public class DwarehouseServiceImpl implements DwarehouseService {
         return dreviews;
     }
 
-    @Override
-    public List<Dequip> queryDequip(Dequip dequip) {
-//        List<Dequip> dequips=this.dequipMapper.queryChooseList();
-        return null;
-    }
+//     @Override
+//     public List<Dequip> queryDequip(Dequip dequip) {
+// //        List<Dequip> dequips=this.dequipMapper.queryChooseList();
+//         return null;
+//     }
 
     @Override
     public DwarehouseToAdd addDwarehouse(DwarehouseToAdd dwarehouseToAdd) {
