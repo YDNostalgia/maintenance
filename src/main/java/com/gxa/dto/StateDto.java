@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @ApiModel("修改状态")
 public class StateDto {
     private Integer id;
+    @ApiModelProperty(value = "角色", name = "roleName")
+    private String roleName;
     @ApiModelProperty(value = "状态", name = "state")
     private Integer state;
 

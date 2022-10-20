@@ -49,4 +49,9 @@ public class RoleServiceImpl implements RoleService {
         this.roleMapper.delete(id);
 
     }
+
+    @Override
+    public void updateUserState(StateDto stateDto) {
+        this.roleMapper.updateUserState(stateDto);
+    }
 }

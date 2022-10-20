@@ -32,10 +32,10 @@
                 details = #{details},
             </if>
             <if test= "fileAddress != null and fileAddress != '' ">
-                   fileAddress = #{fileAddress}
+                   fileAddress = #{fileAddress},
             </if>
             <if test= "statuteTypeId != null">
-                 statute_type_id = #{statuteTypeId}
+                 statute_type_id = #{statuteTypeId},
             </if>
         </set>
         WHERE statute_id = #{statuteId}

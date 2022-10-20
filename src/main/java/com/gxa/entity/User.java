@@ -19,12 +19,10 @@ public class User {
     @ApiModelProperty(value = "账号", name = "account")
     private String account;
     @ApiModelProperty(value = "用户名", name = "userName")
-
     private String userName;
     @ApiModelProperty(value = "密码", name = "pwd")
     private String pwd;
     private String captcha;
-    private String salt;
     @ApiModelProperty(value = "手机号码", name = "phoneNumber")
     private String phoneNumber;
     @ApiModelProperty(value = "添加时间", name = "addTime")
@@ -42,7 +40,6 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", pwd='" + pwd + '\'' +
-                ", salt='" + salt + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", addTime=" + addTime +
                 ", roleName='" + roleName + '\'' +
