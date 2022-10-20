@@ -12,5 +12,6 @@ import java.util.Date;
 public class BreakdownDto {
     private  String num;
     private String equipmentName;
-    private Date planTime;
+    private Date startTime;
+    private Date stopTime;
 }

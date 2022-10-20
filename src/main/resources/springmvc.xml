@@ -85,9 +85,9 @@
     </bean>
 
 
-    <!--配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法-->
+<!--&lt;!&ndash;    配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法&ndash;&gt;-->
 <!--    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
-    <!--启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用-->
+<!--&lt;!&ndash;    启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用&ndash;&gt;-->
 <!--    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
 <!--          depends-on="lifecycleBeanPostProcessor"/>-->
 
