@@ -1,9 +1,6 @@
 package com.gxa.service.impl;
 
-import com.gxa.dto.PersonalAttendanceDto;
-import com.gxa.dto.PersonalMtorderDto;
-import com.gxa.dto.PersonalMtorderListDto;
-import com.gxa.dto.PersonalQueryDto;
+import com.gxa.dto.*;
 import com.gxa.entity.*;
 import com.gxa.mapper.*;
 import com.gxa.service.PersonalService;
@@ -93,6 +90,12 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public void deletePersonal(Integer id) {
         this.personalMapper.deletePersonal(id);
+    }
+
+    @Override
+    public List<Personal> queryAllPersonalCzList(PersonalDto personalDto) {
+        List<Personal> personals = this.personalMapper.queryAllPersonalCzList(personalDto);
+        return personals;
     }
 
     @Override
@@ -189,7 +192,7 @@ public class PersonalServiceImpl implements PersonalService {
     public List<PersonalOrder> queryAllPersonalOrderList(PersonalMtorderListDto personalMtorderListDto) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        if(personalMtorderListDto == null){
+        if(personalMtorderListDto.getPname() == null && personalMtorderListDto.getStartTime() == null && personalMtorderListDto.getEndTime() == null){
             PersonalMtorderListDto personalMtorderListDto01 = new PersonalMtorderListDto();
 
             personalMtorderListDto01.setPname(null);

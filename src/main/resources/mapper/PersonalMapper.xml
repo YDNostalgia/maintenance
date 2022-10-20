@@ -49,6 +49,24 @@
         WHERE pl.pdept_id=pd.pdept_id AND pl.pjob_id=pj.pjob_id AND pl.pclass_id=pc.pclass_id AND pl.id=#{id}
     </select>
 
+    <select id="queryAllPersonalCzList" resultMap="personalResultMap" parameterType="com.gxa.dto.PersonalDto">
+        SELECT pl.id,pl.pname,pd.pdept_id,pd.pdept,pj.pjob_id,pj.pjob,pc.pclass_id,pc.pclass
+        FROM p_list pl,p_dept pd,p_job pj,p_class pc
+        WHERE pl.pdept_id=pd.pdept_id AND pl.pjob_id=pj.pjob_id AND pl.pclass_id=pc.pclass_id
+        <if test="pname != null">
+            AND pl.pname=#{pname}
+        </if>
+        <if test="pdeptId != null and pdeptId != '' ">
+            AND pd.pdept_id=#{pdeptId}
+        </if>
+        <if test="pjobId != null and pjobId != '' ">
+            AND pj.pjob_id=#{pjobId}
+        </if>
+        <if test="pclassId != null and pclassId != '' " >
+            AND pc.pclass_id=#{pclassId}
+        </if>
+    </select>
+
     <update id="updatePersonal" parameterType="personal">
         UPDATE p_list
         SET pname=#{pname},pdept_id=#{personalDept.pdeptId},pjob_id=#{personalJob.pjobId},pclass_id=#{personalClass.pclassId}

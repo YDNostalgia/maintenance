@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 @ApiModel("人员查询条件")
 public class PersonalQueryDto {
-
+    @ApiModelProperty(value = "页码",name = "page")
+    private Integer page;
+    @ApiModelProperty(value = "每页记录数",name = "limit")
+    private Integer limit;
     @ApiModelProperty(value = "姓名",name = "pname")
     private String pname;
     @ApiModelProperty(value = "部门id",name = "pdeptId")

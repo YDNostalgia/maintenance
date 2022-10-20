@@ -1,7 +1,6 @@
 package com.gxa.controller;
 
 import com.gxa.dto.BreakdownDto;
-import com.gxa.entity.Detype;
 import com.gxa.entity.MaintenanceStatistics;
 import com.gxa.entity.Statistics;
 import com.gxa.service.DataStatisticsService;
@@ -25,7 +24,8 @@ public class DataStatisticsController {
 
     @PostMapping("/breakdown")
     @ApiOperation("装备故障统计")
-    public Result<List<BreakdownDto>> breakdownList(@RequestBody(required = false) BreakdownDto breakdownDto ){
+    public Result<List<BreakdownDto>> breakdownList(@RequestBody(required = false) BreakdownDto breakdownDto){
+        System.out.println(breakdownDto.getStartTime());
         List<BreakdownDto> breakdownDtos = this.dataStatisticsService.queryBreakdown(breakdownDto);
         System.out.println("结果----->" + breakdownDtos);
         Result<List<BreakdownDto>> r = Result.success(breakdownDtos);
