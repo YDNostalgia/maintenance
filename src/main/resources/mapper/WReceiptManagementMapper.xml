@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReceiptManagementMapper">
+
+    <resultMap id="wReceiptManagementResultMap" type="wReceiptManagement">
+        <result property="receiptDate" column="receipt_date"></result>
+        <result property="receiptNo" column="receipt_no"></result>
+        <result property="preparedBy.id" column="id"></result>
+        <result property="preparedBy.userName" column="user_name"></result>
+        <result property="auditStatus" column="auditStatus"></result>
+        <result property="reviewedBy.id" column="id"></result>
+        <result property="reviewedBy.userName" column="user_name"></result>
+    </resultMap>
+
+    <select id="queryAll" resultMap="wReceiptManagementResultMap">
+        SELECT rm.receipt_date,rm.receipt_no,u1.user_name,rm.auditStatus,u2.user_name
+        FROM t_user u1,w_receipt_management rm,t_user u2
+        WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
+    </select>
+    <select id="queryChoiceAll" resultMap="wReceiptManagementResultMap" parameterType="wReceiptManagementDto">
+        SELECT rm.receipt_date,rm.receipt_no,u1.user_name,rm.auditStatus,u2.user_name
+        FROM t_user u1,w_receipt_management rm,t_user u2
+        WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
+        <if test="auditStatus != null and auditStatus != ''">
+            AND rm.auditStatus=#{auditStatus}
+        </if>
+        <if test="receiptNo !=null and receiptNo != ''">
+            AND rm.receipt_no=#{receiptNo}
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND rm.receipt_date BETWEEN startTime AND endTime
+        </if>
+    </select>
+</mapper>

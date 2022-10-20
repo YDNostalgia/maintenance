@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @ApiModel("器材管理")
 public class WFacilityManagement {
     @ApiModelProperty(value = "器材编号",name = "number")
-    private String number;
+    private Integer number;
     @ApiModelProperty(value = "器材名称",name = "name")
     private String name;
     @ApiModelProperty(value = "规格型号",name = "model")

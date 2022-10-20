@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReceiptManagementStatusMapper">
+
+    <resultMap id="wReceiptManagementStatusResultMap" type="wReceiptManagementStatusDto">
+        <result property="receiptNo" column="receipt_no"></result>
+        <result property="auditStatus" column="auditStatus"></result>
+    </resultMap>
+    <select id="queryByStatus" resultMap="wReceiptManagementStatusResultMap">
+        SELECT receipt_no,auditStatus FROM w_receipt_management
+    </select>
+</mapper>
