@@ -24,26 +24,26 @@
 
 
     <resultMap id="queryMaintenanceStatisticMap" type="maintenanceStatistics">
-        <result property="maintenanceName" column="maintenance_name"></result>
-        <result property="january" column="january"></result>
-        <result property="february" column="february"></result>
-        <result property="march" column="march"></result>
-        <result property="april" column="april"></result>
-        <result property="may" column="may"></result>
-        <result property="june" column="june"></result>
-        <result property="july" column="july"></result>
-        <result property="august" column="august"></result>
-        <result property="september" column="september"></result>
-        <result property="october" column="october"></result>
-        <result property="november" column="november"></result>
-        <result property="december" column="december"></result>
+        <result property="maintenanceName" column="pdept"></result>
+        <result property="month" column="mon"></result>
+        <result property="num" column="num"></result>
 
     </resultMap>
+
+    <resultMap id="queryStatisticsMap" type="statistics">
+        <result property="deptName" column="pdept"></result>
+        <result property="month" column="m"></result>
+        <result property="price" column="s"></result>
+    </resultMap>
+
     <select id="queryMaintenanceStatistics" resultMap="queryMaintenanceStatisticMap">
-        SELECT * FROM maintenance_statistics
+      	SELECT  p.pdept,MONTH(plan_time) mon,COUNT(id) num FROM t_keep t,p_dept p WHERE t.dept_id=p.pdept_id
+	GROUP BY p.pdept,mon ORDER BY p.pdept
     </select>
-    <select id="queryMaintenanceCosts" resultMap="queryMaintenanceStatisticMap">
-        SELECT * FROM maintenance_costs
+
+    <select id="queryStatistics" resultMap="queryStatisticsMap">
+      SELECT  p.pdept,MONTH(plan_time) m,SUM(keep_money) s FROM t_keep t,p_dept p WHERE t.dept_id=p.pdept_id
+      GROUP BY p.pdept,m ORDER BY p.pdept
     </select>
 
 </mapper>

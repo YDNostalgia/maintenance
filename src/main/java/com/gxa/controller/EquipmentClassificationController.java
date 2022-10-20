@@ -22,6 +22,7 @@ public class EquipmentClassificationController {
     @GetMapping("/equipmentclassification/list")
     @ApiOperation("装备分类查询")
     public Result<List<EquipmentClassification>> equipmentclassificationList(Integer limit,Integer page){
+
         Result<List<EquipmentClassification>> r=Result.success();
         try {
             PageHelper.startPage(page,limit);
