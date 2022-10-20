@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ApiModel("维修档案添加修改属性对应")
+@ApiModel("维修档案修改属性对应")
 public class KeepFileAU {
     @ApiModelProperty(value = "id",name = "维修单号")
     private int id;
@@ -22,7 +22,7 @@ public class KeepFileAU {
     @ApiModelProperty("装备ID")
     private Integer equipmentId;
 
-    @ApiModelProperty("维修结果  0:成功 1:待维修")
+    @ApiModelProperty("维修结果  1:成功 2:待维修")
     private Integer testResults;
     @ApiModelProperty("开始时间")
     private Date startTime;

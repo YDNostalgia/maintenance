@@ -16,18 +16,26 @@
 
     </resultMap>
     <insert id="addKeepFunds">
-        insert into t_keep(id,equipment_id,equipment_number,start_time,end_time,test_results,keep_money)
-        values (#{id},#{equipmentId},#{equipmentNumber},#{startTime},#{endTime},#{testResults},#{keepMoney})
+        insert into t_keep(id,equipment_id,equipment_number,start_time,end_time,test_results,keep_money,`desc`)
+        values (#{id},#{equipmentId},#{equipmentNumber},#{startTime},#{endTime},#{testResults},#{keepMoney},#{desc})
     </insert>
+    <update id="updateKeepFunds" parameterType="keepFundsAU">
+        update t_keep
+        set equipment_id=#{equipmentId},equipment_number=#{equipmentNumber},start_time=#{startTime},end_time=#{endTime},test_results=#{testResults},keep_money=#{keepMoney}
+        where  id=#{id}
+    </update>
+    <delete id="deleteKeepFunds">
+        delete from t_keep where id=#{id}
+    </delete>
     <select id="queryAllKeepFunds" resultMap="keepFundsResultMap">
         SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.start_time,k.end_time,k.test_results,k.keep_money
-        FROM t_keep k,equipmentname e
-        WHERE k.equipment_id=e.id
+        FROM t_keep k LEFT JOIN  equipmentname e
+        ON k.equipment_id=e.id where 1=1
 
-        <if test="startTime!=null ">
+        <if test="startTime!=null">
             <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
         </if>
-        <if test="endTime!=null ">
+        <if test="endTime!=null">
             <![CDATA[  and DATE_FORMAT(k.end_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
         </if>
         <if test="id != null and id !=''">

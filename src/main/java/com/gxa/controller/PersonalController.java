@@ -31,8 +31,10 @@ public class PersonalController {
 
     @ApiOperation(value = "人员信息列表")
     @PostMapping(value = "/personal/list")
-    public Result<List<Personal>> personalList(@RequestBody(required = false) PersonalQueryDto personalQueryDto, @Param("page") Integer page, @Param("limit") Integer limit){
+    public Result<List<Personal>> personalList(@RequestBody(required = false) PersonalQueryDto personalQueryDto){
         System.out.println("查询条件" + personalQueryDto);
+        Integer page = personalQueryDto.getPage();
+        Integer limit = personalQueryDto.getLimit();
         System.out.println("当前页码-->" + page + ",每页记录数-->" + limit);
 
         Result<List<Personal>> resultPersonal = Result.failed("人员信息查询失败！");
@@ -181,29 +183,38 @@ public class PersonalController {
 
     @PostMapping(value = "/personal/transfer")
     @ApiOperation(value = "人员抽组信息列表")
-    public Result<List<Personal>> personalTransferList(@RequestBody(required = false) Personal personal,@Param("page") Integer page,@Param("limit") Integer limit){
-        System.out.println(personal);
+    public Result<List<Personal>> personalTransferList(@RequestBody(required = false) PersonalDto personalDto){
+        System.out.println("人员抽组查询条件 ：" + personalDto);
+        Integer page = personalDto.getPage();
+        Integer limit = personalDto.getLimit();
         System.out.println("当前页码-->" + page + ",每页记录数-->" + limit);
 
-        PageHelper.startPage(page,limit);
+        Result<List<Personal>> result = Result.failed("人员抽组信息列表拉取失败！");
+        try {
 
-        List<Personal> personals = this.personalService.queryAllPersonal();
+            PageHelper.startPage(page,limit);
 
-        //获取总记录条数
-        PageInfo<Personal> pageInfo = new PageInfo<>(personals);
-        Long total = pageInfo.getTotal();
+            List<Personal> personals = this.personalService.queryAllPersonalCzList(personalDto);
 
-        Result<List<Personal>> resultPersonal = Result.success(personals,total);
+            //获取总记录条数
+            PageInfo<Personal> pageInfo = new PageInfo<>(personals);
+            Long total = pageInfo.getTotal();
 
-        return resultPersonal;
+            result = Result.success(personals,total);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 
     @PostMapping(value = "/mtorder/query")
     @ApiOperation(value = "待维修任务下一步，请求待维修任务列表+搜索")
-    public Result<List<KeepRecord>> mtorderQuery(@RequestBody(required = false) PersonalMtorderDto personalMtorderDto,@Param("page") Integer page,@Param("limit") Integer limit){
-        System.out.println("分页page：" + page + ".limit:" + limit);
+    public Result<List<KeepRecord>> mtorderQuery(@RequestBody(required = false) PersonalMtorderDto personalMtorderDto){
         System.out.println("查询条件：" + personalMtorderDto);
+        Integer page = personalMtorderDto.getPage();
+        Integer limit = personalMtorderDto.getLimit();
+        System.out.println("分页page：" + page + ".limit:" + limit);
 
         Result<List<KeepRecord>> result = Result.failed("待维修任务列表拉取失败！");
         try {
@@ -280,8 +291,10 @@ public class PersonalController {
 
     @PostMapping(value = "/mtorder/list")
     @ApiOperation(value = "维修工单")
-    public Result<List<PersonalOrder>> mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto,@Param("page") Integer page,@Param("limit") Integer limit){
+    public Result<List<PersonalOrder>> mtorderList(@RequestBody(required = false) PersonalMtorderListDto personalMtorderListDto){
         System.out.println("维修工单查询条件：" + personalMtorderListDto);
+        Integer page = personalMtorderListDto.getPage();
+        Integer limit = personalMtorderListDto.getLimit();
         System.out.println("page:" + page + ",limit:" + limit);
 
         Result<List<PersonalOrder>> result = Result.failed("维修工单信息拉取失败！");

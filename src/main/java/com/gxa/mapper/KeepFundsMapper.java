@@ -11,4 +11,8 @@ public interface KeepFundsMapper {
     List<KeepFunds> queryAllKeepFunds(KeepPlanDto keepPlanDto);
 
     void addKeepFunds(KeepFundsAU keepFundsAU);
+
+    void updateKeepFunds(KeepFundsAU keepFundsAU);
+
+    void  deleteKeepFunds(Integer id);
 }

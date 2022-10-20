@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.KeepRecordDto;
 import com.gxa.entity.KeepRecord;
+import com.gxa.entity.KeepRecordAU;
 import com.gxa.mapper.KeepRecordMapper;
 import com.gxa.service.KeepRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class KeepRecordServiceImpl implements KeepRecordService {
     }
 
     @Override
-    public void addKeepRecord(KeepRecord keepRecord) {
-        keepRecordMapper.addKeepRecord(keepRecord);
+    public void addKeepRecord(KeepRecordAU keepRecordAU) {
+        keepRecordMapper.addKeepRecord(keepRecordAU);
     }
+
 
     @Override
     public void updateKeepRecord(KeepRecord keepRecord) {

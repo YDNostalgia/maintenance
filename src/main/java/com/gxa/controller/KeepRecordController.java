@@ -6,6 +6,7 @@ import com.gxa.dto.KeepPlanDto;
 import com.gxa.dto.KeepRecordDto;
 import com.gxa.entity.KeepPlan;
 import com.gxa.entity.KeepRecord;
+import com.gxa.entity.KeepRecordAU;
 import com.gxa.service.KeepRecordService;
 import com.gxa.utils.R;
 import com.gxa.utils.Result;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api("维修记录接口")
+@Api(tags = "维修记录接口")
 public class KeepRecordController {
     @Autowired
     private KeepRecordService keepRecordService;
@@ -39,19 +40,19 @@ public class KeepRecordController {
             }
             return r;
         }
-    @ApiOperation("维修记录添加")
-    @PostMapping("keepRecord/addRecord")
-    public Result<List<KeepRecord>> addkeepRecord(@RequestBody(required = false) KeepRecord keepRecord){
-        System.out.println("add-----------"+keepRecord);
-        Result<List<KeepRecord>> r = Result.success();
-        try {
-            keepRecordService.addKeepRecord(keepRecord);
-        }catch (Exception e){
-            e.printStackTrace();
-            r = Result.failed();
-        }
-        return r;
-    }
+//    @ApiOperation("维修记录添加")
+//    @PostMapping("keepRecord/addRecord")
+//    public Result<List<KeepRecord>> addkeepRecord(@RequestBody(required = false) KeepRecordAU keepRecordAU){
+//        System.out.println("add-----------"+keepRecordAU);
+//        Result<List<KeepRecord>> r = Result.success();
+//        try {
+//            keepRecordService.addKeepRecord(keepRecordAU);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            r = Result.failed();
+//        }
+//        return r;
+//    }
     @ApiOperation("维修记录修改")
     @PutMapping("keepRecord/updateRecord")
     public Result<Integer> updatekeepRecord(@RequestBody(required = false) KeepRecord keepRecord){

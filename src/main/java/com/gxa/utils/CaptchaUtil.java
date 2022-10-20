@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class CaptchaUtil {
-    public static final String RANDOMCODEKEY = "randomcode_key";//放到session中的key
+    private String captcha="0000";//放到session中的key
     private Random random = new Random();
     private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//随机产生的字符串
 
@@ -43,8 +43,9 @@ public class CaptchaUtil {
         for(int i=1;i<=stringNum;i++){
             randomString=drowString(g,randomString,i);
         }
-        session.removeAttribute(RANDOMCODEKEY);
-        session.setAttribute(RANDOMCODEKEY, randomString);
+        session.removeAttribute(captcha);
+        session.setAttribute(captcha, randomString);
+        System.out.println(session.getAttribute(captcha));
         g.dispose();
         try {
             //将内存中的图片通过流动形式输出到客户端

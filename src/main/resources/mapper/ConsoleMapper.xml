@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.ConsoleMapper">
+    <resultMap id="queryRepairSituationMap" type="repairSituation">
+        <result property="deptName" column="pdept"></result>
+        <result property="total" column="total"></result>
+    </resultMap>
+    <resultMap id="queryRepairCompletedMap" type="repairCompleted">
+        <result property="deptName" column="pdept"></result>
+        <result property="total" column="total"></result>
+    </resultMap>
+    <select id="queryMaintenanceTotal" resultType="java.lang.Integer">
+        SELECT COUNT(ID) FROM t_keep
+    </select>
+    <select id="queryMaintenanceFinishTotal" resultType="java.lang.Integer">
+        SELECT COUNT(ID) FROM t_keep t WHERE t.test_results=2
+    </select>
+    <select id="queryMaintenanceNotFinishTotal" resultType="java.lang.Integer">
+        SELECT COUNT(ID) FROM t_keep t WHERE t.test_results=1
+    </select>
+    <select id="queryMaintenancePersonnelTotal" resultType="java.lang.Integer">
+        SELECT COUNT(ID) FROM p_list t
+    </select>
+    <select id="queryRepairSituation" resultMap="queryRepairSituationMap">
+        SELECT pdept,COUNT(ID) total FROM t_keep t LEFT JOIN p_dept p ON t.dept_id=p.pdept_id  GROUP BY pdept
+    </select>
+    <select id="queryRepairCompleted" resultMap="queryRepairCompletedMap">
+        SELECT pdept,COUNT(ID) total FROM t_keep t,p_dept p WHERE t.dept_id=p.pdept_id AND t.test_results=1  GROUP BY pdept
+    </select>
+</mapper>

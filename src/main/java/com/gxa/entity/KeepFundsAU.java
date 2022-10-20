@@ -22,8 +22,11 @@ public class KeepFundsAU {
     private Date startTime;
     @ApiModelProperty("结束时间")
     private Date endTime;
-    @ApiModelProperty("维修结果  0:成功 1:待维修")
+    @ApiModelProperty("维修结果  1:成功 2:待维修")
     private Integer testResults;
     @ApiModelProperty("维修经费")
     private int keepMoney;
+
+//    @ApiModelProperty("故障描述")
+//    private String desc;
 }

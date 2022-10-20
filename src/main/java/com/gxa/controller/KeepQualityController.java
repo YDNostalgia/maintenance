@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api("维修质量接口")
+@Api(tags = "维修质量接口")
 public class KeepQualityController {
     @Autowired
     private KeepQualityService keepQualityService;
@@ -37,19 +37,19 @@ public class KeepQualityController {
         }
         return r;
     }
-    @ApiOperation("维修质量添加")
-    @PostMapping("KeepQuality/addKeepQuality")
-    public Result<Integer> addKeepQuality(@RequestBody(required = false) KeepQualityAU keepQualityAU){
-        System.out.println("adddd-->" + keepQualityAU);
-        Result<Integer> r = Result.success();
-        try {
-            keepQualityService.addKeepQuality(keepQualityAU);
-        }catch (Exception e){
-            e.printStackTrace();
-            r = Result.failed();
-        }
-        return r;
-    }
+//    @ApiOperation("维修质量添加")
+//    @PostMapping("KeepQuality/addKeepQuality")
+//    public Result<Integer> addKeepQuality(@RequestBody(required = false) KeepQualityAU keepQualityAU){
+//        System.out.println("adddd-->" + keepQualityAU);
+//        Result<Integer> r = Result.success();
+//        try {
+//            keepQualityService.addKeepQuality(keepQualityAU);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            r = Result.failed();
+//        }
+//        return r;
+//    }
     @ApiOperation("维修质量修改")
     @PutMapping("KeepQuality/updateKeepQuality")
     public Result<Integer> updateKeepQuality(@RequestBody(required = false) KeepQualityAU keepQualityAU){
