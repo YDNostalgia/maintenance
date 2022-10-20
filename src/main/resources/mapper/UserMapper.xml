@@ -7,7 +7,8 @@
         <id property="id" column="id"></id>
         <result property="userName" column="user_name"></result>
         <result property="pwd" column="pwd"></result>
-        <result property="salt" column="salt"></result>
+        <result property="roleName" column="role_name"></result>
+        <result property="state" column="user_state"></result>
     </resultMap>
     <resultMap id="userResultMap1" type="user">
         <id property="id" column="id"></id>
@@ -19,90 +20,89 @@
         <result property="state" column="user_state"></result>
     </resultMap>
 
-    <select id="queryByUserNameAndPwd" resultMap="userResultMap">
-        SELECT user_name,pwd,salt FROM t_user WHERE user_name=#{userName} AND pwd=#{pwd}
-    </select>
-    <select id="queryByUserName" resultMap="userResultMap">
-        SELECT user_name,pwd,salt FROM t_user WHERE user_name=#{userName}
+    <!--    根据用户名查询相应的用户数据-->
+    <select id="getUserByName" parameterType="User" resultMap="userResultMap">
+        select * from t_user where  user_name = #{userName}
     </select>
 
+    <!--    根据角色名查询它的权限-->
     <select id="queryPermsByUserName" resultType="java.lang.String">
         SELECT m.perm
-        FROM t_user u,t_role r,t_user_role ur,t_menu m,t_role_menu rm
-        WHERE u.id=ur.user_id AND ur.role_id=r.id AND r.id=rm.role_id AND rm.menu_id=m.id
-          AND u.user_name=#{userName}
+        FROM t_role r,t_menu m,t_role_menu rm
+        WHERE r.id = rm.role_id AND rm.menu_id=m.id
+          AND role_name=#{roleName}
     </select>
 
+
+    <!--    根据用户管理的所有数据-->
     <select id="queryAll" resultMap="userResultMap1">
         SELECT u.id,u.account,u.user_name,u.phone_number,u.role_name,u.add_time,u.user_state,u.pwd,u.note
         FROM t_user u
+        WHERE 1=1
         <if test="account != null and account!=''">
-            WHERE u.account=#{account}
+            AND u.account=#{account}
         </if>
         <if test="roleName != null and roleName !=''">
-            WHERE u.role_name=#{roleName}
+            AND u.role_name=#{roleName}
         </if>
 
         <if test="state != null and state!=''">
-            WHERE u.user_state=#{state}
+            AND u.user_state=#{state}
         </if>
     </select>
 
 
+<!--    根据角色名查相应的ID-->
     <select id="queryRoleId" resultType="integer">
         SELECT r.id
         FROM t_role r
         WHERE r.role_name=#{roleName}
     </select>
 
+    <!--    查询出所有的角色名称-->
     <select id="queryRoleName" resultType="java.lang.String">
         SELECT r.role_name
         FROM t_role r
     </select>
 
 
-
+    <!--    往用户表插入一条数据-->
     <insert id="add"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(account,role_name,user_name,add_time,pwd,phone_number,user_state,note)
         VALUES (#{account},#{roleName},#{userName},#{addTime},#{pwd},#{phoneNumber},#{state},#{note})
     </insert>
 
+
+    <!--    往用户角色关系表插入一条数据-->
     <insert id="addUserRoleId">
         INSERT INTO t_user_role(user_id,role_id)
         VALUES (#{userId},#{roleId})
     </insert>
 
+    <!--    根据ID值修改用户表相应的数据-->
     <update id="update" parameterType="user">
         UPDATE t_user SET account=#{account},role_name=#{roleName},user_name=#{userName},pwd=#{pwd},phone_number=#{phoneNumber},note=#{note}
         WHERE id=#{id}
     </update>
 
+    <!--    根据用户名值修改用户密码-->
+    <update id="updatePassword" parameterType="user">
+        UPDATE t_user SET password=#{pwd}
+        WHERE user_name=#{userName}
+    </update>
+
+    <!--    根据ID值修改用户状态-->
     <update id="updateState" parameterType="integer">
         UPDATE t_user SET user_state=#{state}
         WHERE id=#{id}
     </update>
 
+    <!--    根据ID值删除用户表的相应数据-->
     <delete id="delete" parameterType="integer">
         DELETE FROM t_user WHERE id=#{id}
     </delete>
-
-    <resultMap id="equipmentNameResultMap" type="breakdownDto">
-        <result property="num" column="user_name"></result>
-        <result property="equipmentName" column="pwd"></result>
-    </resultMap>
-    <select id="queryBreakdown" resultMap="equipmentNameResultMap">
-        SELECT COUNT(k.id)as num,e.equipment_name
-        FROM t_keep k
-        LEFT JOIN  equipmentname e
-        ON k.equipment_id=e.id
-        WHERE 1=1
-        <if test="startTime!=null ">
-            <![CDATA[   and DATE_FORMAT(k.plan_time, '%Y-%m-%d')>=  DATE_FORMAT(#{planTime}, '%Y-%m-%d')   ]]>
-        </if>
-        <if test="endTime!=null ">
-            <![CDATA[  and DATE_FORMAT(k.plan_time, '%Y-%m-%d') <= DATE_FORMAT(#{planTime}, '%Y-%m-%d')    ]]>
-        </if>
-        GROUP BY e.equipment_name
-    </select>
+    <delete id="deleteRoleId" parameterType="integer">
+        DELETE FROM t_user_role WHERE user_id=#{id}
+    </delete>
 
 </mapper>

@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("待维修任务搜索")
 public class PersonalMtorderDto {
-
+    @ApiModelProperty(value = "页码",name = "page")
+    private Integer page;
+    @ApiModelProperty(value = "每页记录数",name = "limit")
+    private Integer limit;
     @ApiModelProperty(value = "维修单号",name = "id")
     private Integer id;
     @ApiModelProperty(value = "装备对象",name = "equipment")

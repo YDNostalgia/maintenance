@@ -30,8 +30,8 @@
     </delete>
     <select id="queryAllKeepFile" resultMap="keepFileResultMap">
         SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.desc,k.start_time,k.end_time,k.test_results
-        FROM t_keep k,equipmentname e
-        WHERE k.equipment_id=e.id
+        FROM t_keep k LEFT JOIN equipmentname e
+        ON k.equipment_id=e.id where 1=1
 
         <if test="startTime!=null ">
             <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>

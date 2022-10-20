@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WAccountDetailsMapper">
+
+    <resultMap id="wFacilityUnitResultMap" type="wFacilityUnit">
+        <id property="id" column="id"/>
+        <result property="unit" column="unit"/>
+    </resultMap>
+
+    <resultMap id="wFacilityManagementResultMap" type="wFacilityManagement">
+        <id property="number" column="number"/>
+        <result property="name" column="name"/>
+        <result property="model" column="model"/>
+        <association property="facilityUnit" resultMap="wFacilityUnitResultMap"/>
+    </resultMap>
+
+    <resultMap id="wAccountDetailsResultMap" type="wAccountDetails">
+        <id property="id" column="id"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="receiptNo" column="receipt_no"/>
+        <result property="quantity" column="quantity"/>
+        <association property="wfacilityManagement" resultMap="wFacilityManagementResultMap"/>
+    </resultMap>
+
+    <insert id="add">
+        INSERT INTO w_account_details (receipt_no,facility_management_id,quantity,unitPrice)
+        VALUES <foreach item="data" collection="list" separator=",">
+                (#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity},#{data.unitPrice})
+                </foreach>
+    </insert>
+
+    <update id="update">
+            UPDATE w_account_details
+            SET quantity = #{quantity}
+            WHERE facility_management_id = #{wfacilityManagementId} AND receipt_no = #{receiptNo}
+    </update>
+
+    <select id="queryByCondition" resultMap="wAccountDetailsResultMap">
+        SELECT ad.id,fm.number,fm.`name`,fm.model,fu.unit,ad.receipt_no,ad.quantity,ad.unitPrice
+        FROM w_account_details ad, w_facility_management fm, w_facility_unit fu
+        WHERE ad.facility_management_id = fm.number AND fm.facility_unit_id = fu.id AND ad.quantity > 0
+                AND ad.facility_management_id = #{wfacilityManagementId} AND ad.receipt_no = #{receiptNo}
+    </select>
+
+    <select id="queryByWfacilityManagementId" resultType="java.lang.Integer">
+        SELECT receipt_no
+        FROM w_account_details
+        WHERE facility_management_id = #{wfacilityManagementId}
+    </select>
+
+
+</mapper>
