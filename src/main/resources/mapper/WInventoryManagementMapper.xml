@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WInventoryManagementMapper">
+    <resultMap id="WInventoryManagementResultMap" type="WInventoryManagement">
+        <result property="inventoryNo" column="inventory_no"></result>
+        <result property="inventoryDate" column="inventory_Date"></result>
+        <result property="auditStatus" column="auditStatus"></result>
+        <result property="username" column="t_user.user_name"></result>
+        <result property="username" column="t_user.user_name"></result>
+
+    </resultMap>
+
+    <resultMap id="WInventoryAuditStatusResultMap" type="wInventoryAuditStatusDto">
+        <result property="inventoryNo" column="inventory_no"></result>
+        <result property="auditStatus" column="auditStatus"></result>
+    </resultMap>
+
+    <resultMap id="WInventoryDetailsResultMap" type="WInventoryDetails">
+        <result property="wfacilityManagement.name" column="name"></result>
+        <result property="wfacilityManagement.model" column="model"></result>
+        <result property="quantity" column="quantity"></result>
+        <result property="unitPrice" column="unitPrice"></result>
+    </resultMap>
+
+    <select id="queryAll" resultType="wInventoryManagement">
+        SELECT inventory_no,inventory_date,t_user.user_name,auditStatus,t_user.role_name
+        FROM t_user, w_inventory_management
+        WHERE inventory_no=t_user.id
+    </select>
+
+    <select id="queryAuditStatus" resultMap="WInventoryAuditStatusResultMap">
+        SELECT w_inventory_management.auditStatus
+        FROM w_inventory_management
+        WHERE 1=1
+    </select>
+
+    <select id="queryInventoryNo" resultMap="WInventoryAuditStatusResultMap">
+        SELECT w_inventory_management.inventory_no
+        FROM w_inventory_management
+        WHERE 1=1
+    </select>
+
+    <!--添加前进行查询-->
+    <select id="WInventoryManagement" parameterType="wInventoryDetails">
+        SELECT wid.inventory_no,wfm.name,wfm.model,wfu.unit,wid.quantity,wid.unitPrice
+        FROM w_inventory_details wid,w_facility_management wfm,w_facility_unit wfu
+        WHERE wid.inventory_no=wfm.number AND wfm.`name`=wid.receipt_no
+    </select>
+    <insert id="addWInventoryManagement" parameterType="wInventoryDetails">
+
+    </insert>
+</mapper>
