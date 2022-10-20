@@ -9,6 +9,10 @@ import java.util.Date;
 @Data
 @ApiModel("维修工单搜索")
 public class PersonalMtorderListDto {
+    @ApiModelProperty(value = "页码",name = "page")
+    private Integer page;
+    @ApiModelProperty(value = "每页记录数",name = "limit")
+    private Integer limit;
     @ApiModelProperty(value = "维修人员",name = "pname")
     private String pname;
     @ApiModelProperty(value = "开始时间",name = "startTime")

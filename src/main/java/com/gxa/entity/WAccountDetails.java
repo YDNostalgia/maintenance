@@ -11,8 +11,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("台账管理")
-public class WAccountManagement {
+@ApiModel("库存台账明细")
+public class WAccountDetails {
     @ApiModelProperty(value = "ID",name = "id")
     private Integer id;
     @ApiModelProperty(value = "入账日期",name = "entryDate")

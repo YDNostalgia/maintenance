@@ -1,5 +1,6 @@
 package com.gxa.mapper;
 
+import com.gxa.dto.PersonalDto;
 import com.gxa.dto.PersonalQueryDto;
 import com.gxa.entity.Personal;
 
@@ -12,4 +13,5 @@ public interface PersonalMapper {
     public Personal queryByPersonalId(Integer id);
     public void updatePersonal(Personal personal);
     public void deletePersonal(Integer id);
+    public List<Personal> queryAllPersonalCzList(PersonalDto personalDto);
 }
