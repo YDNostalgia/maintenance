@@ -25,7 +25,7 @@ public class DataStatisticsController {
     @PostMapping("/breakdown")
     @ApiOperation("装备故障统计")
     public Result<List<BreakdownDto>> breakdownList(@RequestBody(required = false) BreakdownDto breakdownDto){
-
+      
         List<BreakdownDto> breakdownDtos = this.dataStatisticsService.queryBreakdown(breakdownDto);
         System.out.println("结果----->" + breakdownDtos);
         Result<List<BreakdownDto>> r = Result.success(breakdownDtos);
