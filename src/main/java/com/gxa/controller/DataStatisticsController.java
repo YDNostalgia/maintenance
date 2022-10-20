@@ -2,6 +2,7 @@ package com.gxa.controller;
 
 import com.gxa.dto.BreakdownDto;
 import com.gxa.entity.MaintenanceStatistics;
+import com.gxa.entity.Statistics;
 import com.gxa.service.DataStatisticsService;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
@@ -46,13 +47,13 @@ public class DataStatisticsController {
         return r;
     }
 
-    @GetMapping("/statistics/maintenanceCosts")
+    @GetMapping("/statistics/maintenanceStatistics")
     @ApiOperation("数据统计接口_维修经费统计")
-    public Result<List<MaintenanceStatistics>> listMaintenanceCosts(){
-        Result<List<MaintenanceStatistics>> r=Result.success();
+    public Result<List<Statistics>> listStatistics(){
+        Result<List<Statistics>> r=Result.success();
         try {
-            List<MaintenanceStatistics> maintenanceStatistics=this.dataStatisticsService.queryMaintenanceCosts();
-            r=Result.success(maintenanceStatistics);
+            List<Statistics> statistics=this.dataStatisticsService.queryStatistics();
+            r=Result.success(statistics);
         }catch (Exception e){
             r.setCode("1");
             r.setMsg("error");
