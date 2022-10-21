@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class WAccountDetailsAddDto {
     @ApiModelProperty(value = "批次号(入库单号)",name = "receiptNo")
     private Integer receiptNo;
-    @ApiModelProperty(value = "器材Id",name = "wfacilityManagemenId")
-    private Integer wfacilityManagemenId;
+    @ApiModelProperty(value = "器材Id",name = "wfacilityManagementId")
+    private Integer wfacilityManagementId;
     @ApiModelProperty(value = "数量",name = "quantity")
     private Integer quantity;
     @ApiModelProperty(value = "单价",name = "unitPrice")
