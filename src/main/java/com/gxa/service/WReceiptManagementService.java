@@ -1,9 +1,11 @@
 package com.gxa.service;
 
-import com.gxa.dto.WReceiptManagementDto;
-import com.gxa.dto.WReceiptManagementFacilityDto;
-import com.gxa.dto.WReceiptManagementStatusDto;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.dto.*;
+import com.gxa.entity.WReceiptDetails;
 import com.gxa.entity.WReceiptManagement;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,12 +15,11 @@ public interface WReceiptManagementService {
     //审核状态 下拉列表
     List<WReceiptManagementStatusDto> queryByStatus();
     //根据条件 查询所有信息
-    List<WReceiptManagement> queryChoiceAll(WReceiptManagementDto wReceiptManagementDto);
+    PageInfo<WReceiptManagement> queryChoiceAll(WReceiptManagementQueryDto wReceiptManagementQueryDto);
 
-    //器材名称 下拉列表
-    List<WReceiptManagementFacilityDto> queryFacilityName();
-    //器材型号 下拉列表
-    List<WReceiptManagementFacilityDto> queryFacilityModel(String name);
-    //获取 器材编号
-    List<WReceiptManagementFacilityDto> queryFacilityNumber(WReceiptManagementFacilityDto wReceiptManagementFacilityDto);
+
+    List<WReceiptDetails> add(WReceiptManagementAddDto wReceiptManagementAddDto);
+
+    void update(WReceiptManagementUpdateDto wReceiptManagementUpdateDto);
+
 }

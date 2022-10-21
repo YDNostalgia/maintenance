@@ -1,16 +1,19 @@
 package com.gxa.service.impl;
 
-import com.gxa.dto.WReceiptManagementDto;
-import com.gxa.dto.WReceiptManagementFacilityDto;
-import com.gxa.dto.WReceiptManagementStatusDto;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.dto.*;
+import com.gxa.entity.WAccountDetails;
+import com.gxa.entity.WFacilityManagement;
+import com.gxa.entity.WReceiptDetails;
 import com.gxa.entity.WReceiptManagement;
-import com.gxa.mapper.WReceiptManagementFacilityMapper;
-import com.gxa.mapper.WReceiptManagementMapper;
-import com.gxa.mapper.WReceiptManagementStatusMapper;
+import com.gxa.mapper.*;
 import com.gxa.service.WReceiptManagementService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +24,9 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
     @Autowired
     private WReceiptManagementStatusMapper wReceiptManagementStatusMapper;
     @Autowired
-    private WReceiptManagementFacilityMapper wReceiptManagementFacilityMapper;
+    private WReceiptDetailsMapper wReceiptDetailsMapper;
+    @Autowired
+    private WAccountDetailsMapper wAccountDetailsMapper;
 
     @Override
     public List<WReceiptManagement> queryAll() {
@@ -36,26 +41,72 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
     }
 
     @Override
-    public List<WReceiptManagement> queryChoiceAll(WReceiptManagementDto wReceiptManagementDto) {
-        List<WReceiptManagement> wReceiptManagements = this.wReceiptManagementMapper.queryChoiceAll(wReceiptManagementDto);
-        return wReceiptManagements;
+    public PageInfo<WReceiptManagement> queryChoiceAll(WReceiptManagementQueryDto wReceiptManagementQueryDto) {
+        PageHelper.startPage(wReceiptManagementQueryDto.getPage(),wReceiptManagementQueryDto.getLimit());
+
+        List<WReceiptManagement> wReceiptManagements = this.wReceiptManagementMapper.queryChoiceAll(wReceiptManagementQueryDto);
+
+        PageInfo<WReceiptManagement> pageInfo = new PageInfo<>(wReceiptManagements);
+        return pageInfo;
+    }
+
+
+    @Override
+    public List<WReceiptDetails> add(WReceiptManagementAddDto wReceiptManagementAddDto) {
+        Integer receiptNo = wReceiptManagementAddDto.getReceiptNo();
+
+        List<WReceiptDetailsAddDto> wReceiptDetailsAddDtos = wReceiptManagementAddDto.getWReceiptDetailsAddDtos();
+        for(WReceiptDetailsAddDto wReceiptDetailsAddDto : wReceiptDetailsAddDtos){
+            wReceiptDetailsAddDto.setReceiptNo(receiptNo);
+        }
+
+        wReceiptManagementAddDto.setWReceiptDetailsAddDtos(null);
+        wReceiptManagementMapper.add(wReceiptManagementAddDto);
+        wReceiptDetailsMapper.add(wReceiptDetailsAddDtos);
+
+        List<WReceiptDetails> wReceiptDetails = wReceiptDetailsMapper.queryByReceiptNo(receiptNo);
+        return wReceiptDetails;
     }
 
     @Override
-    public List<WReceiptManagementFacilityDto> queryFacilityName() {
-        List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementFacilityMapper.queryFacilityName();
-        return wReceiptManagementFacilityDtos;
+    public void update(WReceiptManagementUpdateDto wReceiptManagementUpdateDto) {
+        wReceiptManagementMapper.update(wReceiptManagementUpdateDto);
+        Integer auditStatus = wReceiptManagementUpdateDto.getAuditStatus();
+
+        if(auditStatus == 2){
+            //获取入库单号
+            Integer receiptNo = wReceiptManagementUpdateDto.getReceiptNo();
+            List<WReceiptDetails> wReceiptDetails = wReceiptDetailsMapper.queryByReceiptNo(receiptNo);
+            for(int i=0;i< wReceiptDetails.size();i++){
+                System.out.println(wReceiptDetails.get(i));
+
+                //获取器材编号
+                Integer number = wReceiptDetails.get(i).getWfacilityManagement().getNumber();
+                //获取数量
+                Integer quantity = wReceiptDetails.get(i).getQuantity();
+                //获取价格
+                double unitPrice = wReceiptDetails.get(i).getUnitPrice();
+
+                //通过入库单号 器材编号 查询库存信息
+                WAccountDetailsQueryDto wAccountDetailsQueryDto = new WAccountDetailsQueryDto();
+                wAccountDetailsQueryDto.setReceiptNo(receiptNo);
+                wAccountDetailsQueryDto.setWfacilityManagementId(number);
+
+                WAccountDetailsAddDto wAccountDetailsAddDto = new WAccountDetailsAddDto();
+                wAccountDetailsAddDto.setReceiptNo(receiptNo);
+                wAccountDetailsAddDto.setWfacilityManagementId(number);
+                wAccountDetailsAddDto.setQuantity(quantity);
+                wAccountDetailsAddDto.setUnitPrice(unitPrice);
+
+
+                List<WAccountDetailsAddDto> wAccountDetailsAddDtos = new ArrayList<>();
+                wAccountDetailsAddDtos.add(i,wAccountDetailsAddDto);
+
+                System.out.println("查询条件：" + wAccountDetailsAddDto);
+
+                wAccountDetailsMapper.add(wAccountDetailsAddDtos);
+            }
+        }
     }
 
-    @Override
-    public List<WReceiptManagementFacilityDto> queryFacilityModel(String name) {
-        List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementFacilityMapper.queryFacilityModel(name);
-        return wReceiptManagementFacilityDtos;
-    }
-
-    @Override
-    public List<WReceiptManagementFacilityDto> queryFacilityNumber(WReceiptManagementFacilityDto wReceiptManagementFacilityDto) {
-        List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementFacilityMapper.queryFacilityNumber(wReceiptManagementFacilityDto);
-        return wReceiptManagementFacilityDtos;
-    }
 }

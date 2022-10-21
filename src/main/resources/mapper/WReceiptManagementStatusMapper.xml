@@ -9,6 +9,6 @@
         <result property="auditStatus" column="auditStatus"></result>
     </resultMap>
     <select id="queryByStatus" resultMap="wReceiptManagementStatusResultMap">
-        SELECT receipt_no,auditStatus FROM w_receipt_management
+        SELECT receipt_no,auditStatus  FROM w_receipt_management
     </select>
 </mapper>

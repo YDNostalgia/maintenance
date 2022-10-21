@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @ApiModel("入库管理 查询条件")
-public class WReceiptManagementDto {
+public class WReceiptManagementQueryDto {
     @ApiModelProperty(value = "开始时间",name = "startTime")
     private Date startTime;
     @ApiModelProperty(value = "结束时间",name = "endTime")

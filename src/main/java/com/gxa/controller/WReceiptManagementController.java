@@ -2,15 +2,13 @@ package com.gxa.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gxa.dto.WReceiptManagementDto;
-import com.gxa.dto.WReceiptManagementFacilityDto;
-import com.gxa.dto.WReceiptManagementStatusDto;
+import com.gxa.dto.*;
+import com.gxa.entity.WReceiptDetails;
 import com.gxa.entity.WReceiptManagement;
 import com.gxa.service.WReceiptManagementService;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +37,6 @@ public class WReceiptManagementController {
             System.out.println("total——————>" + total);
 
             listResult = Result.success(wReceiptManagementStatusDtos,total);
-            return listResult;
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -49,93 +46,56 @@ public class WReceiptManagementController {
 
     @ApiOperation(value = "入库信息列表 条件查询")
     @PostMapping(value = "/wReceiptManagement/list")
-    public Result<List<WReceiptManagement>> selectList(@RequestBody(required = false) WReceiptManagementDto wReceiptManagementDto){
-        System.out.println("查询条件—————>" + wReceiptManagementDto);
-        System.out.println("当前页码：" + wReceiptManagementDto.getPage() + ",每页记录数：" + wReceiptManagementDto.getLimit());
-
+    public Result<List<WReceiptManagement>> selectList(@RequestBody(required = false) WReceiptManagementQueryDto wReceiptManagementQueryDto){
         Result<List<WReceiptManagement>> listResult = Result.failed("入库信息查询失败！");
 
-        try{
-            List<WReceiptManagement> wReceiptManagements = this.wReceiptManagementService.queryChoiceAll(wReceiptManagementDto);
-            System.out.println("查询记录数————>" + wReceiptManagements);
+        PageInfo<WReceiptManagement> pageInfo = wReceiptManagementService.queryChoiceAll(wReceiptManagementQueryDto);
+        List<WReceiptManagement> wReceiptManagements = pageInfo.getList();
+        System.out.println("查询记录数————>" + wReceiptManagements);
 
-            //实现分页
-            PageHelper.startPage(wReceiptManagementDto.getPage(),wReceiptManagementDto.getLimit());
+        Long total = pageInfo.getTotal();
+        System.out.println("total————>" + total);
 
-            PageInfo<WReceiptManagement> pageInfo = new PageInfo<>(wReceiptManagements);
-            Long total = pageInfo.getTotal();
-            System.out.println("total————>" + total);
-
+        if(wReceiptManagements != null){
             listResult = Result.success(wReceiptManagements,total);
             return listResult;
-        } catch (Exception e){
-            e.printStackTrace();
         }
         return listResult;
     }
 
 
-    @ApiOperation(value = "器材名称 下拉查询")
-    @PostMapping(value = "/wReceiptManagement/facilityName")
-    public Result<List<WReceiptManagementFacilityDto>> selectByFacilityName(){
-        Result<List<WReceiptManagementFacilityDto>> listResult = Result.failed("器材名称获取失败");
+    @ApiOperation("添加 入库单")
+    @PostMapping("/wReceiptManagement/add")
+    public Result<List<WReceiptDetails>> add(@RequestBody WReceiptManagementAddDto wReceiptManagementAddDto){
+        Result<List<WReceiptDetails>> r = Result.failed();
 
         try{
-            List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementService.queryFacilityName();
-            System.out.println("查询记录数————>" + wReceiptManagementFacilityDtos);
+            List<WReceiptDetails> wReceiptDetails = wReceiptManagementService.add(wReceiptManagementAddDto);
 
-            Integer size = wReceiptManagementFacilityDtos.size();
-            Long total = size.longValue();
-            System.out.println("total——————>" + total);
-
-            listResult=Result.success(wReceiptManagementFacilityDtos,total);
-            return listResult;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return listResult;
-    }
-
-    @ApiOperation(value = "器材型号 下拉查询")
-    @PostMapping(value = "/wReceiptManagement/facilityModel")
-    public Result<List<WReceiptManagementFacilityDto>> selectFacilityModel(String name){
-        Result<List<WReceiptManagementFacilityDto>> listResult = Result.failed("器材型号获取失败");
-
-        try{
-            List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementService.queryFacilityModel(name);
-            System.out.println("查询记录数——————>" + wReceiptManagementFacilityDtos);
-
-            Integer size = wReceiptManagementFacilityDtos.size();
-            Long total = size.longValue();
-            System.out.println("total——————>" + total);
-
-            listResult = Result.success(wReceiptManagementFacilityDtos,total);
-            return listResult;
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return listResult;
-    }
-
-    @ApiOperation(value = "获取 器材编号")
-    @PostMapping("/wReceiptManagement/FacilityNumber")
-    public Result<List<WReceiptManagementFacilityDto>> selectNumber(@RequestBody(required = false) WReceiptManagementFacilityDto wReceiptManagementFacilityDto){
-        Result<List<WReceiptManagementFacilityDto>> listResult = Result.failed("器材编号获取失败");
-
-        try{
-            List<WReceiptManagementFacilityDto> wReceiptManagementFacilityDtos = this.wReceiptManagementService.queryFacilityNumber(wReceiptManagementFacilityDto);
-            System.out.println("查询记录数——————>" + wReceiptManagementFacilityDtos);
-
-            Integer size = wReceiptManagementFacilityDtos.size();
+            Integer size = wReceiptDetails.size();
             Long total = size.longValue();
             System.out.println("total————————>" + total);
 
-            listResult = Result.success(wReceiptManagementFacilityDtos,total);
-            return listResult;
-        }catch (Exception e){
+            r = Result.success(wReceiptDetails,total);
+        } catch (Exception e){
             e.printStackTrace();
         }
-        return listResult;
+        return r;
     }
+
+    @ApiOperation("修改 入库单")
+    @PostMapping("/wReceiptManagement/update")
+    public Result update(@RequestBody WReceiptManagementUpdateDto wReceiptManagementUpdateDto){
+        Result r = Result.failed();
+
+        try{
+            wReceiptManagementService.update(wReceiptManagementUpdateDto);
+            r = Result.success();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+
 
 }
