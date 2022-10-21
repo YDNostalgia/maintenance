@@ -1,6 +1,7 @@
 package com.gxa.service;
 
 import com.gxa.dto.BreakdownDto;
+import com.gxa.entity.EquipmentNumber;
 import com.gxa.entity.MaintenanceStatistics;
 import com.gxa.entity.Statistics;
 
@@ -11,4 +12,7 @@ public interface DataStatisticsService {
     List<MaintenanceStatistics> queryMaintenanceStatistic();
 
     List<Statistics> queryStatistics();
+
+
+    List<EquipmentNumber> queryEquipmentStatistics();
 }

@@ -1,6 +1,7 @@
 package com.gxa.controller;
 
 import com.gxa.dto.BreakdownDto;
+import com.gxa.entity.EquipmentNumber;
 import com.gxa.entity.MaintenanceStatistics;
 import com.gxa.entity.Statistics;
 import com.gxa.service.DataStatisticsService;
@@ -29,6 +30,16 @@ public class DataStatisticsController {
         List<BreakdownDto> breakdownDtos = this.dataStatisticsService.queryBreakdown(breakdownDto);
         System.out.println("结果----->" + breakdownDtos);
         Result<List<BreakdownDto>> r = Result.success(breakdownDtos);
+        return r;
+    }
+
+    @GetMapping("/equipmentNumber")
+    @ApiOperation("器材调用统计")
+    public Result<List<EquipmentNumber>> breakdownList(){
+
+        List<EquipmentNumber> equipmentNumbers = this.dataStatisticsService.queryEquipmentStatistics();
+        System.out.println("结果----->" + equipmentNumbers);
+        Result<List<EquipmentNumber>> r = Result.success(equipmentNumbers);
         return r;
     }
 
