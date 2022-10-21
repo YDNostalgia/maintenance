@@ -53,7 +53,7 @@ public class EquipmentDataController {
 
 
     @ApiOperation("修改资料分类")
-    @PutMapping("/equipmentData/edit")
+    @PutMapping("/equipmentData/update")
     public Result<List<EquipmentDataToEdit>> update(@RequestBody(required = false) EquipmentDataToEdit equipmentDataToEdit){
         System.out.println("equipmentDataToEdit------"+equipmentDataToEdit);
         Result<List<EquipmentDataToEdit>> r = Result.success();
