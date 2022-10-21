@@ -28,4 +28,7 @@ public class KeepPlanAU {
     private Date startTime;
     @ApiModelProperty("结束时间")
     private Date endTime;
+
+    @ApiModelProperty(value = "部门id",name = "id")
+    private Integer deptId;
 }
