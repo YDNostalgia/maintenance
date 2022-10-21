@@ -20,7 +20,7 @@ public class WPickingDetailsAddDto {
     private Integer pickingNo;
     @ApiModelProperty(value = "批次号（入库单号）",name = "receiptNo")
     private Integer receiptNo;
-    @ApiModelProperty(value = "器材编号",name = "wfacilityManagement")
+    @ApiModelProperty(value = "器材编号",name = "wfacilityManagementId")
     private Integer wfacilityManagementId;
     @ApiModelProperty(value = "数量",name = "quantity")
     private Integer quantity;

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReceiptDetailsMapper">
+    <resultMap id="wFacilityUnitResultMap" type="wFacilityUnit">
+        <id property="id" column="id"></id>
+        <result property="unit" column="id"></result>
+    </resultMap>
+
+    <resultMap id="wFacilityManagementResultMap" type="wFacilityManagement">
+        <id property="number" column="number"></id>
+        <result property="name" column="name"></result>
+        <result property="model" column="model"></result>
+        <association property="facilityUnit" resultMap="wFacilityUnitResultMap"></association>
+     </resultMap>
+
+    <resultMap id="wReceiptDetailsResultMap" type="wReceiptDetails">
+        <id property="id" column="id"></id>
+        <result property="receiptNo" column="receipt_no"></result>
+        <result property="quantity" column="quantity"></result>
+        <result property="unitPrice" column="unitPrice"></result>
+        <association property="wfacilityManagement" resultMap="wFacilityManagementResultMap"></association>
+    </resultMap>
+
+    <insert id="add">
+        INSERT INTO w_receipt_details (receipt_no,facility_management_id,quantity,unitPrice)
+        VALUES <foreach collection="list" item="data" separator=",">
+        (#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity},#{data.unitPrice})
+    </foreach>
+    </insert>
+
+    <select id="queryByReceiptNo" resultMap="wReceiptDetailsResultMap">
+        SELECT rd.id,fm.number,fm.name,fm.model,fu.unit,rd.quantity,rd.unitPrice,(rd.quantity*rd.unitPrice) as money
+        FROM w_receipt_details rd,w_facility_management fm,w_facility_unit fu
+        WHERE rd.facility_management_id=fm.number AND fm.facility_unit_id=fu.id AND rd.receipt_no=#{receiptNo}
+    </select>
+
+
+</mapper>

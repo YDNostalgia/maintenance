@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface WAccountDetailsMapper {
     WAccountDetails queryByCondition(WAccountDetailsQueryDto wAccountDetailsQueryDto);
-    List<Integer> queryByWfacilityManagementId(@Param("wfacilityManagementId") Integer wfacilityManagementId);
+    List<Integer> queryByWfacilityManagementId(@Param("wfacilityManagementId") Integer wfacilityManagementId,@Param("code") Integer code);
     void add(List<WAccountDetailsAddDto> wAccountDetailsAddDtos);
     void update(WAccountDetailsUpdateDto wAccountDetailsUpdateDto);
 }

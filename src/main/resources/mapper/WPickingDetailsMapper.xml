@@ -30,6 +30,10 @@
                 (#{data.pickingNo},#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity},#{data.unitPrice})
               </foreach>
     </insert>
+    <delete id="delete">
+        DELETE FROM w_picking_details
+        WHERE picking_no = #{pickingNo}
+    </delete>
 
     <select id="queryByPickingNo" resultMap="wPickingDetailsResultMap">
         SELECT pd.id,pd.picking_no,fm.number,fm.name,fm.model,fu.unit,pd.receipt_no,pd.quantity,pd.unitPrice

@@ -23,6 +23,6 @@ public class WPickingManagementAddDto {
     private Integer personalDeptId;
     @ApiModelProperty(value = "制单人ID",name = "preparedBy")
     private Integer preparedById;
-    @ApiModelProperty(value = "领料明细",name = "wPickingDetails")
+    @ApiModelProperty(value = "领料明细",name = "wPickingDetailsAddDtos")
     private List<WPickingDetailsAddDto> wPickingDetailsAddDtos;
 }

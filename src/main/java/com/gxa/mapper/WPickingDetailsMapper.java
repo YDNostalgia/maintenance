@@ -12,4 +12,5 @@ import java.util.List;
 public interface WPickingDetailsMapper {
     List<WPickingDetails> queryByPickingNo(@Param("pickingNo") Integer pickingNo);
     void add(List<WPickingDetailsAddDto> wPickingDetailsAddDtos);
+    void delete(Integer pickingNo);
 }

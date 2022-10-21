@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface WAccountDetailsService {
-    List<Integer> queryByWfacilityManagementId(Integer wfacilityManagementId);
+    List<Integer> queryByWfacilityManagementId(Integer wfacilityManagementId,Integer code);
     WAccountDetails queryByCondition(WAccountDetailsQueryDto wAccountDetailsQueryDto);
 }
