@@ -11,11 +11,15 @@ import com.gxa.mapper.WAccountDetailsMapper;
 import com.gxa.mapper.WPickingDetailsMapper;
 import com.gxa.mapper.WPickingManagementMapper;
 import com.gxa.service.WPickingManagementService;
+import com.gxa.utils.DocNoGenerationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WPickingManagementServiceImpl implements WPickingManagementService {
@@ -26,6 +30,14 @@ public class WPickingManagementServiceImpl implements WPickingManagementService 
     private WPickingDetailsMapper wPickingDetailsMapper;
     @Autowired
     private WAccountDetailsMapper wAccountDetailsMapper;
+
+    @Autowired
+    private DocNoGenerationUtil docNoGenerationUtil;
+    @Override
+    public Integer addNo() {
+        Integer pickingNo = docNoGenerationUtil.generateDocNo(2);
+        return pickingNo;
+    }
 
     @Override
     /**
@@ -55,16 +67,22 @@ public class WPickingManagementServiceImpl implements WPickingManagementService 
     }
 
     @Override
-    public void update(WPickingManagementUpdateDto wPickingManagementUpdateDto) {
-        wPickingManagementMapper.update(wPickingManagementUpdateDto);
-        Integer auditStatus = wPickingManagementUpdateDto.getAuditStatus();
+    public String update(WPickingManagementUpdateDto wPickingManagementUpdateDto) {
+
+        Integer pickingNo = wPickingManagementUpdateDto.getPickingNo();
+        Integer auditStatus = wPickingManagementMapper.queryByPickingNo(pickingNo);
 
         if (auditStatus == 2){
-            Integer pickingNo = wPickingManagementUpdateDto.getPickingNo();
+            return "审核失败：领料单已审核通过，不能重复审核";
+        }
+
+        wPickingManagementMapper.update(wPickingManagementUpdateDto);
+        auditStatus = wPickingManagementUpdateDto.getAuditStatus();
+
+        if (auditStatus == 2){
             List<WPickingDetails> wPickingDetails = wPickingDetailsMapper.queryByPickingNo(pickingNo);
             for (int i=0; i < wPickingDetails.size();i++){
 
-                System.out.println(wPickingDetails.get(i));
 //                获取入库单号
                 Integer receiptNo = wPickingDetails.get(i).getReceiptNo();
 
@@ -73,7 +91,6 @@ public class WPickingManagementServiceImpl implements WPickingManagementService 
 
 //                获取领料数量
                 Integer quantity = wPickingDetails.get(i).getQuantity();
-                System.out.println("领料数量：" + quantity);
 
 //                通过入库单号和装备编号查询库存信息
                 WAccountDetailsQueryDto wAccountDetailsQueryDto = new WAccountDetailsQueryDto();
@@ -83,7 +100,17 @@ public class WPickingManagementServiceImpl implements WPickingManagementService 
 
 //                获取库存数量
                 Integer quantity1 = wAccountDetails.getQuantity();
-                System.out.println("库存数量：" + quantity1);
+
+                String wfacilityManagementName = wAccountDetails.getWfacilityManagement().getName();
+
+                if (quantity1 < quantity){
+                    try {
+                        throw new Exception();
+                    }finally {
+                        return "审核失败：" + wfacilityManagementName + "库存数量不足";
+                    }
+
+                }
 
 //                更新库存数量
                 quantity1 -= quantity;
@@ -98,6 +125,18 @@ public class WPickingManagementServiceImpl implements WPickingManagementService 
                 wAccountDetailsMapper.update(wAccountDetailsUpdateDto);
             }
         }
+        return "审核成功";
+    }
+
+    @Override
+    public String delete(Integer pickingNo) {
+        Integer auditStatus = wPickingManagementMapper.queryByPickingNo(pickingNo);
+        if (auditStatus == 2){
+            return "删除失败：审核通过单据，不允许删除";
+        }
+        wPickingManagementMapper.delete(pickingNo);
+        wPickingDetailsMapper.delete(pickingNo);
+        return "删除成功";
     }
 
 }

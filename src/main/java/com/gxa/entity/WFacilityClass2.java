@@ -15,6 +15,8 @@ public class WFacilityClass2 {
     private Integer id;
     @ApiModelProperty(value = "器材二级分类名称",name = "name")
     private String name;
+    @ApiModelProperty(value = "器材二级分类数量",name = "count")
+    private int count;
     @ApiModelProperty(value = "器材一级分类",name = "facilityClass1")
     private WFacilityClass1 facilityClass1;
 }

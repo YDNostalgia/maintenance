@@ -70,6 +70,20 @@
     <update id="updatePersonal" parameterType="personal">
         UPDATE p_list
         SET pname=#{pname},pdept_id=#{personalDept.pdeptId},pjob_id=#{personalJob.pjobId},pclass_id=#{personalClass.pclassId}
+<!--        <set>-->
+<!--            <if test="pname != null and pname != '' ">-->
+<!--                pname=#{pname},-->
+<!--            </if>-->
+<!--            <if test="personalDept.pdeptId != null and personalDept.pdeptId != '' ">-->
+<!--                pdept_id=#{personalDept.pdeptId},-->
+<!--            </if>-->
+<!--            <if test="personalJob.pjobId != null and personalJob.pjobId != '' ">-->
+<!--                pjob_id=#{personalJob.pjobId},-->
+<!--            </if>-->
+<!--            <if test="personalClass.pclassId != null and personalClass.pclassId != '' ">-->
+<!--                pclass_id=#{personalClass.pclassId}-->
+<!--            </if>-->
+<!--        </set>-->
         WHERE id=#{id}
     </update>
 </mapper>

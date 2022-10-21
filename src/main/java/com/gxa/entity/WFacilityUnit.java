@@ -13,7 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ApiModel("单位表")
 public class WFacilityUnit implements Serializable{
-
     @ApiModelProperty(value = "ID",name = "id")
     private Integer id;
     @ApiModelProperty(value = "单位",name = "unit")

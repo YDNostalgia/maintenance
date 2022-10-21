@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WEquipManageMapper">
+<!--查询器材管理所有列表-->
+    <resultMap id="queryAllWFacilityManagementResult" type="wFacilityManagement">
+        <result property="number" column="number"/>
+        <result property="name" column="wfm_name"/>
+        <result property="wfacilityClass2.id" column="wfc2_id"/>
+        <result property="wfacilityClass2.name" column="wfc2_name"/>
+        <result property="model" column="model"/>
+        <result property="facilityUnit.id" column="wfu_id"/>
+        <result property="facilityUnit.unit" column="unit"/>
+        <result property="location.id" column="wl_id"/>
+        <result property="location.name" column="wl_name"/>
+        <result property="location.region.id" column="wr_id"/>
+        <result property="location.region.name" column="wr_name"/>
+    </resultMap>
+    <select id="queryAllWFacilityManagement" resultMap="queryAllWFacilityManagementResult">
+        SELECT wfm.number,wfm.`name` wfm_name,wfc2.id wfc2_id,wfc2.`name` wfc2_name,wfm.model,wl.id wl_id,wl.`name` wl_name,wr.id wr_id,wr.`name` wr_name,wfu.id wfu_id,wfu.unit
+        FROM w_facility_management wfm,w_location wl,w_facility_class2 wfc2,w_facility_unit wfu,w_region wr
+        WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id
+    </select>
+
+    <delete id="deleteWequipManage">
+        DELETE FROM w_facility_management WHERE number=#{number}
+    </delete>
+
+    <insert id="addWequipManage" parameterType="com.gxa.dto.WequipManageAddDto">
+        INSERT INTO w_facility_management(number,name,model,location_id,facility_class2_id,facility_unit_id)
+        VALUES(#{number},#{name},#{model},#{locationId},#{classId},#{unitId})
+    </insert>
+
+    <update id="updateWequipManage" parameterType="com.gxa.dto.WequipManageAddDto">
+        UPDATE w_facility_management
+        SET name=#{name},model=#{model},location_id=#{locationId},facility_class2_id=#{classId},facility_unit_id=#{unitId}
+        WHERE number=#{number}
+    </update>
+
+    <select id="queryAllWFacilityManagementNameList" resultMap="queryAllWFacilityManagementResult" parameterType="com.gxa.dto.WEquipManageQueryDto">
+        SELECT wfm.number,wfm.`name` wfm_name,wfc2.id wfc2_id,wfc2.`name` wfc2_name,wfm.model,wl.id wl_id,wl.`name` wl_name,wr.id wr_id,wr.`name` wr_name,wfu.id wfu_id,wfu.unit
+        FROM w_facility_management wfm,w_location wl,w_facility_class2 wfc2,w_facility_unit wfu,w_region wr
+        WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id
+        <if test="wFacilityClass2Id != null and wFacilityClass2Id != '' ">
+            AND wfm.facility_class2_id=#{wFacilityClass2Id}
+        </if>
+        <if test="wRegionId != null and wRegionId != '' ">
+            AND wr.id=#{wRegionId}
+        </if>
+        <if test="wEquipManageId != null and wEquipManageId !='' ">
+            AND wfm.number=#{wEquipManageId}
+        </if>
+        <if test="wEquipManageName != null and wEquipManageName != '' ">
+            AND wfm.`name`=#{wEquipManageName}
+        </if>
+    </select>
+
+    <select id="queryByNumber" resultMap="queryAllWFacilityManagementResult">
+        SELECT wfm.number,wfm.`name` wfm_name,wfc2.id wfc2_id,wfc2.`name` wfc2_name,wfm.model,wl.id wl_id,wl.`name` wl_name,wr.id wr_id,wr.`name` wr_name,wfu.id wfu_id,wfu.unit
+        FROM w_facility_management wfm,w_location wl,w_facility_class2 wfc2,w_facility_unit wfu,w_region wr
+        WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id AND wfm.number=#{number}
+    </select>
+
+</mapper>
