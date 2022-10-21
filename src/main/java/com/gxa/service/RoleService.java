@@ -15,4 +15,5 @@ public interface RoleService {
     void update(Role role);
     void updateRoleState(StateDto stateDto);
     void delete(Integer id);
+    void updateUserState(StateDto stateDto);
 }

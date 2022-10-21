@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.KeepPersonPerforMapper">
+    <resultMap id="keepPersonPerforMapper" type="keepPersonPerfor">
+        <result property="personList.pid" column="id"></result>
+        <result property="personList.pname" column="pname"></result>
+        <result property="keepTotal" column="total"></result>
+    </resultMap>
+    <select id="queryKeepPersonPerfor" resultMap="keepPersonPerforMapper">
+        SELECT pl.id,pl.pname,IFNULL(v.total,0) total
+        FROM p_list pl LEFT JOIN(SELECT tkr.user_id,COUNT(tkr.user_id) total
+        FROM t_keep_record tkr
+        WHERE tkr.status = '维修完成'
+        GROUP BY tkr.user_id) v
+        ON pl.id = v.user_id
+    </select>
+
+
+</mapper>

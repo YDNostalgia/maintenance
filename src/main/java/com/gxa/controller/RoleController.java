@@ -34,7 +34,7 @@ public class RoleController {
      * 用户添加
      */
     @ApiOperation("角色添加")
-    @PostMapping("/role")
+    @PostMapping("/role/add")
     @ResponseBody
     public Result<Role> add(@RequestBody Role role){
         System.out.println("***********" + role);
@@ -49,7 +49,7 @@ public class RoleController {
      * 用户修改
      */
     @ApiOperation("角色修改")
-    @PutMapping("/role")
+    @PutMapping("/role/update")
     @ResponseBody
     public Result<Role> update(@RequestBody Role role){
         System.out.println("***********" + role);
@@ -64,6 +64,7 @@ public class RoleController {
     public Result<StateDto> updateRoleState(@RequestBody StateDto stateDto){
         System.out.println("***********" + stateDto.getState());
         this.roleService.updateRoleState(stateDto);
+        this.roleService.updateUserState(stateDto);
         Result<StateDto> r=Result.success();
         return r;
     }
@@ -73,7 +74,7 @@ public class RoleController {
      * 用户删除
      */
     @ApiOperation("角色删除")
-    @DeleteMapping("/role")
+    @DeleteMapping("/role/delete")
     @ResponseBody
     public Result<Role> delete(@RequestParam("id") Integer id){
         this.roleService.delete(id);

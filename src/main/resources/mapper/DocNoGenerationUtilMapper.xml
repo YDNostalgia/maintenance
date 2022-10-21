@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.DocNoGenerationUtilMapper">
+
+    <insert id="addNo">
+        <choose>
+            <when test="businessId == 1">
+                INSERT INTO w_receipt_management (receipt_no)
+                VALUES (#{oddNumber})
+            </when>
+            <when test="businessId == 2">
+                INSERT INTO w_picking_management (picking_no)
+                VALUES (#{oddNumber})
+            </when>
+            <when test="businessId == 3">
+                INSERT INTO w_return_management (return_no)
+                VALUES (#{oddNumber})
+            </when>
+            <when test="businessId == 4">
+                INSERT INTO w_inventory_management (inventory_no)
+                VALUES (#{oddNumber})
+            </when>
+        </choose>
+    </insert>
+
+    <select id="queryQuantity" resultType="java.lang.Integer">
+        <choose>
+            <when test="businessId == 1">
+                SELECT count(receipt_no)
+                FROM w_receipt_management
+                WHERE receipt_no &gt; #{min} AND receipt_no &lt; #{max}
+            </when>
+            <when test="businessId == 2">
+                SELECT count(picking_no)
+                FROM w_picking_management
+                WHERE picking_no &gt; #{min} AND picking_no &lt; #{max}
+            </when>
+            <when test="businessId == 3">
+                SELECT count(return_no)
+                FROM w_return_management
+                WHERE return_no &gt; #{min} AND return_no &lt; #{max}
+            </when>
+            <when test="businessId == 4">
+                SELECT count(inventory_no)
+                FROM w_inventory_management
+                WHERE inventory_no &gt; #{min} AND inventory_no &lt; #{max}
+            </when>
+        </choose>
+    </select>
+
+</mapper>

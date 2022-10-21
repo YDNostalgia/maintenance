@@ -17,6 +17,7 @@ public class UserDto {
     private String account;
     @ApiModelProperty(value = "角色", name = "roleName")
     private String roleName;
+
     @ApiModelProperty(value = "状态", name = "state")
     private Integer state;
 

@@ -18,11 +18,11 @@ public class WReturnManagement {
     @ApiModelProperty(value = "退料日期",name = "returnDate")
     private Date returnDate;
     @ApiModelProperty(value = "退料部门",name = "personalDept")
-    private PersonalDept personalDept;
+    private String personalDept;
     @ApiModelProperty(value = "制单人",name = "preparedBy")
-    private User preparedBy;
+    private String preparedBy;
     @ApiModelProperty(value = "审核状态(0:待审核，1：审核通过，2，审核拒绝)",name = "auditStatus")
     private Integer auditStatus;
     @ApiModelProperty(value = "审核人",name = "reviewedBy")
-    private User reviewedBy;
+    private String reviewedBy;
 }

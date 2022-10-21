@@ -29,4 +29,9 @@ public class KeepPlan {
     @ApiModelProperty("结束时间")
     private Date endTime;
 
+    @ApiModelProperty(value = "部门id",name = "id")
+    private Integer deptId;
+    @ApiModelProperty( "维修部门实体")
+    private PersonalDept personalDept;
+
 }

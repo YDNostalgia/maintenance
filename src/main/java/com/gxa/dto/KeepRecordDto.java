@@ -31,4 +31,36 @@ public class KeepRecordDto {
                 ", testStatus=" + testStatus +
                 '}';
     }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getTestStatus() {
+        return testStatus;
+    }
+
+    public void setTestStatus(int testStatus) {
+        this.testStatus = testStatus;
+    }
 }

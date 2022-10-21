@@ -67,8 +67,8 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     }
 
     @Override
-    public List<EquipmentList> querylistEquipmentone() {
-        List<EquipmentList> equipmentLists=this.equipmentManagementMapper.querylistEquipmentone();
+    public List<EquipmentList> querylistEquipmentone(Integer id) {
+        List<EquipmentList> equipmentLists=this.equipmentManagementMapper.querylistEquipmentone(id);
         return equipmentLists;
     }
 

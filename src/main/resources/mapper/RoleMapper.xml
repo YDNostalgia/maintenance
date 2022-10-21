@@ -11,22 +11,24 @@
         <result property="addTime" column="add_time"></result>
         <result property="state" column="role_state"></result>
     </resultMap>
+
+
     <select id="queryAll" resultMap="roleResultMap">
         SELECT r.id,r.role_name,r.role_desc,IFNULL(v.personnel_number,0) personnel_number,r.add_time,r.role_state
         FROM t_role r LEFT JOIN (SELECT role_id,count(role_id) AS personnel_number
         FROM t_user_role ur
         GROUP BY role_id) v
         ON r.id	= v.role_id
-
+        WHERE 1=1
         <if test="id != null and id!=''">
-            WHERE r.id=#{id}
+            AND r.id=#{id}
         </if>
         <if test="roleName != null and roleName !=''">
-            WHERE r.role_name=#{roleName}
+            AND r.role_name=#{roleName}
         </if>
 
         <if test="state != null and state!=''">
-            WHERE r.state=#{state}
+            AND r.state=#{state}
         </if>
     </select>
 
@@ -48,4 +50,10 @@
     <delete id="delete">
         DELETE FROM t_role WHERE id=#{id}
     </delete>
+
+    <update id="updateUserState" parameterType="stateDto">
+        UPDATE t_user SET user_state = replace(user_state,user_state,#{state})
+        WHERE role_name=#{roleName}
+    </update>
+
 </mapper>
