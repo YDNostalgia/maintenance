@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WLocationMapper">
+    <resultMap id="queryAllWLocationResult" type="wLocation">
+        <id property="id" column="wlid"/>
+        <result property="name" column="wlname"/>
+        <result property="region.id" column="wrid"/>
+        <result property="region.name" column="wrname"/>
+    </resultMap>
+
+    <insert id="addWregion" parameterType="string">
+        INSERT INTO w_region(name) VALUES(#{wRegionName})
+    </insert>
+
+    <insert id="addWlocation">
+        INSERT INTO w_location(name,region_id) VALUES(#{wLocationName},#{wRegionId})
+    </insert>
+
+    <update id="updateWregionName" parameterType="wRegion">
+        UPDATE w_region
+        SET name=#{name}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateWlocationName" parameterType="com.gxa.dto.WlocationUpdateDto">
+        UPDATE w_location
+        SET name=#{wLocationName}
+        WHERE id=#{wLocationId}
+    </update>
+
+    <delete id="deleteWregion">
+        DELETE FROM w_region WHERE id=#{wRegionId}
+    </delete>
+
+    <delete id="deleteWlocation">
+        DELETE FROM w_location WHERE name=#{wLocationName}
+    </delete>
+
+    <select id="queryAllWLocation" resultMap="queryAllWLocationResult">
+        SELECT wl.id wlid,wl.name wlname,wr.id wrid,wr.name wrname
+        FROM w_region wr,w_location wl
+        WHERE wl.region_id=wr.id
+    </select>
+
+    <resultMap id="queryWLocationQuantityResult" type="wLocation">
+        <result property="name" column="name"/>
+        <result property="count" column="total"/>
+    </resultMap>
+    <select id="queryWLocationQuantity" resultMap="queryWLocationQuantityResult">
+        SELECT wl.`name`,IFNULL(v.total,0) total
+        FROM  w_location wl LEFT JOIN
+              (SELECT wfm.location_id location_id,SUM(wad.quantity) total
+               FROM w_facility_management wfm,w_account_details wad
+               WHERE wad.facility_management_id=wfm.number
+               GROUP BY wfm.location_id) v
+              ON wl.id=v.location_id
+    </select>
+
+    <resultMap id="queryALLWregionResult" type="wRegion">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="queryALLWregion" resultMap="queryALLWregionResult">
+        SELECT * FROM w_region
+    </select>
+</mapper>

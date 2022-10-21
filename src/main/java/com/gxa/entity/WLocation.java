@@ -16,7 +16,7 @@ public class WLocation {
     @ApiModelProperty(value = "货位名称",name = "name")
     private String name;
     @ApiModelProperty(value = "数量",name = "count")
-    private Integer count;
+    private int count;
     @ApiModelProperty(value = "区域",name = "region")
     private WRegion region;
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gxa.mapper.WEquipClassMapper">
+    <!--    查询出所有二级分类和一级分类的对应关系-->
+    <resultMap id="queryAllWfacilityClass2Result" type="wFacilityClass2">
+        <id property="id" column="wfc2Id"/>
+        <result property="name" column="wfc2Name"/>
+        <result property="facilityClass1.id" column="wfc1Id"/>
+        <result property="facilityClass1.name" column="wfc1Name"/>
+    </resultMap>
+    <select id="queryAllWfacilityClass2" resultMap="queryAllWfacilityClass2Result">
+        SELECT wfc2.id wfc2Id,wfc2.name wfc2Name,wfc1.id wfc1Id,wfc1.name wfc1Name
+        FROM w_facility_class1 wfc1,w_facility_class2 wfc2
+        WHERE wfc2.facility_class1_id=wfc1.id
+    </select>
+
+<!--    根据id删除一级种类-->
+    <delete id="deleteWfacilityClass1">
+        DELETE FROM w_facility_class1 WHERE id=#{id}
+    </delete>
+
+    <!--    根据id删除二级种类-->
+    <delete id="deleteWfacilityClass2">
+        DELETE FROM w_facility_class2 WHERE id=#{id}
+    </delete>
+
+    <!--    修改一级类别种类名称-->
+    <update id="updateWfacilityClass1Name" parameterType="wFacilityClass1">
+        UPDATE w_facility_class1 SET name=#{name} WHERE id=#{id}
+    </update>
+
+    <!--    修改二级类别种类名称-->
+    <update id="updateWfacilityClass2Name" parameterType="com.gxa.dto.WFacilityClass2UpdateDto">
+        UPDATE w_facility_class2 SET name=#{wFacilityClass2Name} WHERE id=#{wFacilityClass2Id}
+    </update>
+
+    <!--    添加一级器材种类-->
+    <insert id="addWfacilityClass1">
+        INSERT INTO w_facility_class1(name) VALUES(#{wFacilityClass1Name})
+    </insert>
+
+    <!--    添加二级器材种类-->
+    <insert id="addWfacilityClass2" parameterType="com.gxa.dto.WFacilityClass2AddDto">
+        INSERT INTO w_facility_class2(name,facility_class1_id) VALUES(#{wFacilityClass2Name},#{wFacilityClass1Id})
+    </insert>
+
+    <!--    查询出所有二级器材的数量-->
+    <resultMap id="queryALLWfacilityClass2QuantityResult" type="wFacilityClass2">
+        <result property="id" column="id"/>
+        <result property="count" column="total"/>
+    </resultMap>
+    <select id="queryALLWfacilityClass2Quantity" resultMap="queryALLWfacilityClass2QuantityResult">
+        SELECT wfc2.id,IFNULL(v.total,0) total
+        FROM  w_facility_class2 wfc2 LEFT JOIN
+              (SELECT wfm.facility_class2_id facility_class2_id,SUM(wad.quantity) total
+               FROM w_facility_management wfm,w_account_details wad
+               WHERE wad.facility_management_id=wfm.number
+               GROUP BY wfm.facility_class2_id) v
+              ON wfc2.id=v.facility_class2_id
+    </select>
+
+<!--    查询出所有一级器材-->
+    <resultMap id="queryAllWfacilityClass1Result" type="wFacilityClass1">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="queryAllWfacilityClass1" resultMap="queryAllWfacilityClass1Result">
+        SELECT * FROM w_facility_class1
+    </select>
+</mapper>
