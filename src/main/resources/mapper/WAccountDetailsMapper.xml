@@ -40,14 +40,18 @@
     <select id="queryByCondition" resultMap="wAccountDetailsResultMap">
         SELECT ad.id,fm.number,fm.`name`,fm.model,fu.unit,ad.receipt_no,ad.quantity,ad.unitPrice
         FROM w_account_details ad, w_facility_management fm, w_facility_unit fu
-        WHERE ad.facility_management_id = fm.number AND fm.facility_unit_id = fu.id AND ad.quantity > 0
+        WHERE ad.facility_management_id = fm.number AND fm.facility_unit_id = fu.id
                 AND ad.facility_management_id = #{wfacilityManagementId} AND ad.receipt_no = #{receiptNo}
+
     </select>
 
     <select id="queryByWfacilityManagementId" resultType="java.lang.Integer">
         SELECT receipt_no
         FROM w_account_details
         WHERE facility_management_id = #{wfacilityManagementId}
+        <if test="code == 2">
+            AND ad.quantity > 0
+        </if>
     </select>
 
 

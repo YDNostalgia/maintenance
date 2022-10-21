@@ -19,6 +19,9 @@
 <!--    将minio的工具类交给spring管理-->
     <bean class="com.gxa.utils.MinioUtil"/>
 
+<!--    将单号生成的工具类交给spring管理-->
+    <bean class="com.gxa.utils.DocNoGenerationUtil"/>
+
 <!--    将sqlSessionFactory交给spring管理-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>

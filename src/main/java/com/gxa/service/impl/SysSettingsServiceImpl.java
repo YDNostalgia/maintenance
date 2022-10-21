@@ -28,6 +28,6 @@ public class SysSettingsServiceImpl implements SysSettingsService {
 
     @Override
     public void update(SysSettingsDto sysSettingsDto) {
-
+        this.sysSettingsMapper.update(sysSettingsDto);
     }
 }

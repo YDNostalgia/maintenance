@@ -6,7 +6,9 @@ import com.gxa.entity.Statute;
 import com.gxa.entity.WPickingManagement;
 
 public interface WPickingManagementService {
+    Integer addNo();
     PageInfo<WPickingManagement> queryByCondition(WPickingManagementQueryDto wPickingManagementQueryDto);
     void add(WPickingManagementAddDto wPickingManagementAddDto);
-    void update(WPickingManagementUpdateDto wPickingManagementUpdateDto);
+    String update(WPickingManagementUpdateDto wPickingManagementUpdateDto);
+    String delete(Integer pickingNo);
 }
