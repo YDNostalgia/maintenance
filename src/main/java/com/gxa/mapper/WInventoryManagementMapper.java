@@ -1,19 +1,17 @@
 package com.gxa.mapper;
 
-import com.gxa.dto.WInventoryAuditStatusDto;
-import com.gxa.dto.WInventoryManagementDto;
-import com.gxa.entity.WInventoryDetails;
+import com.gxa.dto.WInventoryManagementAddDto;
+import com.gxa.dto.WInventoryManagementQueryDto;
+import com.gxa.dto.WInventoryManagementUpdateDto;
 import com.gxa.entity.WInventoryManagement;
 
 import java.util.List;
 
 public interface WInventoryManagementMapper {
-    List<WInventoryManagement> queryAll(WInventoryManagementDto wInventoryManagementDto);
+    List<WInventoryManagement> queryByCondition(WInventoryManagementQueryDto wInventoryManagementQueryDto);
 
-//    Integer count(WInventoryManagementDto wInventoryManagementDto);
+    void add(WInventoryManagementAddDto wInventoryManagementAddDto);
 
-    List<WInventoryAuditStatusDto> queryAuditStatus();
+    void update(WInventoryManagementUpdateDto wInventoryManagementUpdateDto);
 
-    List<WInventoryAuditStatusDto> queryInventoryNo();
-    void addWInventoryManagement(WInventoryDetails wInventoryDetails);
 }

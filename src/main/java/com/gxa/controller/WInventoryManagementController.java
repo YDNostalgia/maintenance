@@ -1,12 +1,9 @@
 package com.gxa.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gxa.dto.EquipmentManagementDto;
-import com.gxa.dto.WInventoryAuditStatusDto;
-import com.gxa.dto.WInventoryManagementDto;
-import com.gxa.entity.EquipmentManagement;
-import com.gxa.entity.EquipmentManagementAU;
+import com.gxa.dto.WInventoryManagementAddDto;
+import com.gxa.dto.WInventoryManagementQueryDto;
+import com.gxa.dto.WInventoryManagementUpdateDto;
 import com.gxa.entity.WInventoryManagement;
 import com.gxa.entity.WPickingDetails;
 import com.gxa.service.WInventoryManageMentService;
@@ -15,7 +12,6 @@ import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,51 +23,47 @@ public class WInventoryManagementController {
     @Autowired
     private WInventoryManageMentService wInventoryManageMentService;
 
-
     @PostMapping("/wInventoryManagement/list")
-    @ApiOperation("")
-    public Result<List<WInventoryManagement>> listWInventory(@RequestBody(required = false) WInventoryManagementDto wInventoryManagementDto, Integer page, Integer limit){
-        Result<List<WInventoryManagement>> r=Result.success();
-        try {
-            PageHelper.startPage(page,limit);
-            List<WInventoryManagement> wInventoryManagements=this.wInventoryManageMentService.queryAll(wInventoryManagementDto);
-            PageInfo<WInventoryManagement> pageInfo = new PageInfo<>(wInventoryManagements);
-            long total = (int) pageInfo.getTotal();
+    @ApiOperation("查询库存盘点单号")
+    public Result<List<WInventoryManagement>> list(@RequestBody WInventoryManagementQueryDto wInventoryManagementQueryDto){
+        Result<List<WInventoryManagement>> r=Result.failed();
+        PageInfo<WInventoryManagement> pageInfo=wInventoryManageMentService.queryByCondition(wInventoryManagementQueryDto);
+        System.out.println("==============="+pageInfo);
+        List<WInventoryManagement> wInventoryManagements=pageInfo.getList();
+        long total=pageInfo.getTotal();
+
+        if (wInventoryManagements!=null){
             r=Result.success(wInventoryManagements,total);
-        }catch (Exception e){
-            r.setCode("1");
-            r.setMsg("error");
-            e.printStackTrace();
+            return r;
         }
         return r;
     }
 
-    @PostMapping("/wInventoryManagement/preselect")
-    public R wInventoryManagementPreadd(){
-        R r=new R();
-        List<WInventoryAuditStatusDto> AuditStatus=this.wInventoryManageMentService.queryAuditStatus();
-        List<WInventoryAuditStatusDto> Inventoryno=this.wInventoryManageMentService.queryInventoryNo();
-
-        System.out.println(AuditStatus);
-        System.out.println(Inventoryno);
-        r.put("AuditStatus",AuditStatus);//状态集合
-        r.put("Inventoryno",Inventoryno);//单号集合
-        return r;
-    }
-
-    @PostMapping("/WInventoryDetails/add")
-    @ApiOperation("装备添加")
-    public Result<WPickingDetails> WInventoryAdd(@RequestBody WPickingDetails wPickingDetails){
-
-        Result<WPickingDetails> r=Result.success();
+    @PostMapping("/WInventoryManagement/add")
+    @ApiOperation("添加库存盘点单")
+   public Result add(@RequestBody WInventoryManagementAddDto wInventoryManagementAddDto){
+        Result r=Result.failed();
         try {
-//            this.wInventoryManageMentService.
+            wInventoryManageMentService.add(wInventoryManagementAddDto);
             r=Result.success();
         }catch (Exception e){
-            r.setCode("1");
-            r.setMsg("error");
             e.printStackTrace();
         }
         return r;
     }
+
+    @PostMapping("/WInventoryManag/update")
+    @ApiOperation("修改库存盘点单")
+    public Result update(@RequestBody WInventoryManagementUpdateDto wInventoryManagementUpdateDto){
+
+        Result r=Result.failed();
+        try {
+            wInventoryManageMentService.update(wInventoryManagementUpdateDto);
+            r=Result.success();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+
 }
