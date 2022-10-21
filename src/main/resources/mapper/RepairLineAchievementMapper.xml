@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.RepairLineAchievementMapper">
+    <resultMap id="repairLineAchievementResultMap" type="repairLineAchievement">
+        <id property="deptId" column="pdept_id"></id>
+        <result property="deptName" column="pdept"></result>
+        <result property="repairNums" column="total"></result>
+    </resultMap>
+
+    <select id="query" resultType="com.gxa.entity.RepairLineAchievement" resultMap="repairLineAchievementResultMap">
+        SELECT pd.pdept_id,pd.pdept,IFNULL(v.total,0) total
+        FROM p_dept pd LEFT JOIN(SELECT tk.dept_id,COUNT(tk.dept_id) total
+                                 FROM t_keep tk
+                                 GROUP BY tk.dept_id) v
+                                ON pd.pdept_id = v.dept_id
+    </select>
+</mapper>

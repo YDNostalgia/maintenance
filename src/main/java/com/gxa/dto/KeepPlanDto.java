@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ApiModel("维护计划搜索信息")
+@ApiModel("器材调用 添加")
 public class KeepPlanDto {
     @ApiModelProperty("开始时间")
     private Date startTime;
