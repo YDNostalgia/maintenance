@@ -13,17 +13,22 @@
         <result property="equipmentId" column="equipment_id"></result>
         <result property="startTime" column="start_time"></result>
         <result property="endTime" column="end_time"></result>
+
+        <result property="deptId" column="dept_id"></result>
+        <result property="personalDept.pdeptId" column="pdept_id"></result>
+        <result property="personalDept.pdept" column="pdept"></result>
+
     </resultMap>
 
 
     <insert id="addKeepPlan">
-        INSERT INTO t_keep(id,equipment_id,equipment_number,`desc`,plan_time,start_time,end_time)
-        VALUES(#{id},#{equipmentId},#{equipmentNumber},#{desc},#{planTime},#{startTime},#{endTime})
+        INSERT INTO t_keep(id,equipment_id,equipment_number,`desc`,plan_time,start_time,end_time,dept_id)
+        VALUES(#{id},#{equipmentId},#{equipmentNumber},#{desc},#{planTime},#{startTime},#{endTime},#{deptId})
     </insert>
 
     <update id="updateKeepPlan" parameterType="keepPlanAU">
         UPDATE t_keep
-        SET equipment_id=#{equipmentId},equipment_number=#{equipmentNumber},`desc`=#{desc},plan_time=#{planTime},start_time=#{startTime},end_time=#{endTime}
+        SET equipment_id=#{equipmentId},equipment_number=#{equipmentNumber},`desc`=#{desc},plan_time=#{planTime},start_time=#{startTime},end_time=#{endTime},dept_id=#{deptId}
         WHERE id=#{id}
     </update>
     <delete id="deleteKeepPlan">
@@ -31,9 +36,11 @@
     </delete>
 
     <select id="queryAllKeepPlan"  resultMap="keepPlanResultMap">
-        SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.desc,k.plan_time,e.id as eid,k.start_time,k.end_time
-        FROM t_keep k,equipmentname e
-        WHERE k.equipment_id=e.id
+        SELECT k.id,e.equipment_name,e.id as eid,k.equipment_number,k.desc,k.plan_time,k.start_time,k.end_time,k.dept_id,d.pdept_id,d.pdept
+        FROM t_keep k
+        LEFT JOIN equipmentname e ON k.equipment_id=e.id
+        LEFT JOIN p_dept d ON k.dept_id=d.pdept_id
+        WHERE 1=1
 
         <if test="startTime!=null ">
             <![CDATA[   and DATE_FORMAT(k.start_time, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>

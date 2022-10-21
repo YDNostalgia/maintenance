@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReturnDetailsMapper">
+
+    <resultMap id="wFacilityUnitResultMap" type="wFacilityUnit">
+        <id property="id" column="id"/>
+        <result property="unit" column="unit"/>
+    </resultMap>
+
+    <resultMap id="wFacilityManagementResultMap" type="wFacilityManagement">
+        <id property="number" column="number"/>
+        <result property="name" column="name"/>
+        <result property="model" column="model"/>
+        <association property="facilityUnit" resultMap="wFacilityUnitResultMap"/>
+    </resultMap>
+
+    <resultMap id="wReturnDetailsResultMap" type="wReturnDetails">
+        <id property="id" column="id"/>
+        <result property="returnNo" column="return_no"/>
+        <result property="receiptNo" column="receipt_no"/>
+        <result property="quantity" column="quantity"/>
+        <association property="wfacilityManagement" resultMap="wFacilityManagementResultMap"/>
+    </resultMap>
+
+    <insert id="add">
+        INSERT INTO w_return_details (return_no,receipt_no,facility_management_id,quantity,unitPrice)
+        VALUES <foreach item="data" collection="list" separator=",">
+                (#{data.returnNo},#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity},#{data.unitPrice})
+              </foreach>
+    </insert>
+    <delete id="delete">
+        DELETE FROM w_return_details
+        WHERE return_no = #{returnNo}
+    </delete>
+
+    <select id="queryByReturnNo" resultMap="wReturnDetailsResultMap">
+        SELECT rd.id,rd.return_no,fm.number,fm.name,fm.model,fu.unit,rd.receipt_no,rd.quantity,rd.unitPrice
+        FROM  w_return_details rd,w_facility_management fm,w_facility_unit fu
+        WHERE  fm.number = rd.facility_management_id AND fm.facility_unit_id = fu.id AND rd.return_no = #{returnNo}
+    </select>
+
+</mapper>

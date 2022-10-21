@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.KeepProcessMapper">
+    <resultMap id="keepProcessResultMap" type="keepProcess">
+        <id property="id" column="id"></id>
+        <result property="keepId" column="keep_id"></result>
+        <result property="creatTime" column="create_time"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="states" column="status"></result>
+        <result property="imgSrc" column="img_src"></result>
+        <result property="desc" column="desc"></result>
+
+        <result property="personList.pid" column="pid"></result>
+        <result property="personList.pname" column="pname"></result>
+
+    </resultMap>
+    <insert id="addKeepProcess">
+        INSERT INTO t_keep_record(keep_id,create_time,user_id,`status`,img_src,`desc`)
+        VALUES(#{keepId},#{creatTime},#{userId},#{states},#{imgSrc},#{desc})
+    </insert>
+    <select id="queryByKeepId" resultMap="keepProcessResultMap" parameterType="integer">
+        SELECT t.id,t.keep_id,t.create_time,t.user_id,t.`status`,t.img_src,t.`desc`,p.pname,p.id as pid
+        FROM t_keep_record t LEFT JOIN p_list p ON t.user_id=p.id
+        WHERE keep_id = #{keepId}
+    </select>
+
+
+</mapper>

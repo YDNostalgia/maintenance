@@ -3,6 +3,7 @@ package com.gxa.service.impl;
 
 import com.gxa.dto.BreakdownDto;
 import com.gxa.entity.MaintenanceStatistics;
+import com.gxa.entity.Statistics;
 import com.gxa.mapper.DataStatisticsMapper;
 import com.gxa.service.DataStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
     }
 
     @Override
-    public List<MaintenanceStatistics> queryMaintenanceCosts() {
-        List<MaintenanceStatistics> maintenanceStatistics=this.dataStatisticsMapper.queryMaintenanceCosts();
-        return maintenanceStatistics;
+    public List<Statistics> queryStatistics() {
+        List<Statistics> statistics=this.dataStatisticsMapper.queryStatistics();
+        return statistics;
     }
 
 

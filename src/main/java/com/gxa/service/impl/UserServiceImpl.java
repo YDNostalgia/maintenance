@@ -18,10 +18,10 @@ public class UserServiceImpl  implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
-    public User login(String userName, String pwd) {
-        User user = this.userMapper.queryByUserNameAndPwd(userName,pwd);
-        return user ;
+    public User getUserByName(String userName) {
+        return userMapper.getUserByName(userName);
     }
 
     @Override
@@ -32,10 +32,6 @@ public class UserServiceImpl  implements UserService {
         return pageInfo;
     }
 
-    public List<BreakdownDto> queryBreakdown(BreakdownDto breakdownDto){
-        List<BreakdownDto> breakdownDtos = this.queryBreakdown(breakdownDto);
-        return breakdownDtos;
-    }
 
     @Override
     public List<String> queryRoleName() {
@@ -49,7 +45,7 @@ public class UserServiceImpl  implements UserService {
         Integer userId=this.userMapper.add(user);
         return userId;
     }
-
+    @Override
     public void addUserRoleId(Integer userId,Integer roleId){
         this.userMapper.addUserRoleId(userId,roleId);
     }
@@ -63,6 +59,10 @@ public class UserServiceImpl  implements UserService {
     public void updateState(StateDto stateDto) {
         this.userMapper.updateState(stateDto);
     }
+    @Override
+    public void updatePassword(User user){
+        this.userMapper.updatePassword(user);
+    }
 
     @Override
     public Integer queryRoleId(String userName) {
@@ -74,4 +74,10 @@ public class UserServiceImpl  implements UserService {
     public void delete(Integer id) {
         this.userMapper.delete(id);
     }
+    @Override
+    public void deleteRoleId(Integer id){
+        this.userMapper.deleteRoleId(id);
+    }
+
+
 }
