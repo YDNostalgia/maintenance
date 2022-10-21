@@ -42,11 +42,11 @@ public class EquipmentManagementController {
     }
     @GetMapping("/equipment/list/equipmentlist")
     @ApiOperation("查询某个装备——器材清单")
-    public Result<List<EquipmentList>> listEquipmentOne( Integer page, Integer limit){
+    public Result<List<EquipmentList>> listEquipmentOne(Integer id, Integer page, Integer limit){
         Result<List<EquipmentList>> r=Result.success();
         try {
             PageHelper.startPage(page,limit);
-            List<EquipmentList> equipmentLists=this.equipmentManagementService.querylistEquipmentone();
+            List<EquipmentList> equipmentLists=this.equipmentManagementService.querylistEquipmentone(id);
             PageInfo<EquipmentList> pageInfo = new PageInfo<>(equipmentLists);
             long total = (int) pageInfo.getTotal();
             r=Result.success(equipmentLists,total);

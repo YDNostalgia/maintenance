@@ -15,7 +15,7 @@ public interface EquipmentManagementMapper {
     void addEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
     void updateEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
     void deleteEquipmentManagement(Integer id);
-    List<EquipmentList> querylistEquipmentone();
+    List<EquipmentList> querylistEquipmentone(Integer id);
     List<MaintenanceRecords> querylistMaintenanceRecords();
     List<TechnicalData> querylistTechnicalData();
     List<EquipmentClassification> queryAllEquipmentClassifications();
