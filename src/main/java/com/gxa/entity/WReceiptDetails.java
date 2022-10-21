@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class WReceiptDetails {
     @ApiModelProperty(value = "ID",name = "id")
     private Integer id;
-    @ApiModelProperty(value = "入库单号",name = "number")
+    @ApiModelProperty(value = "入库单号",name = "receiptNo")
     private Integer receiptNo;
     @ApiModelProperty(value = "器材",name = "wfacilityManagement")
     private WFacilityManagement wfacilityManagement;
