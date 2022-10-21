@@ -22,7 +22,7 @@ public class ConsoleController {
     private ConsoleService consoleService;
     @GetMapping("/console/list")
     @ApiOperation("装备查询_带条件的查询（不传条件就是查询全部）")
-    public R listConsole(@RequestBody(required = false) EquipmentManagementDto equipmentManagementDto, Integer page, Integer limit){
+    public R listConsole(){
         R r=new R();
         try {
             Integer maintenanceTotal=this.consoleService.queryMaintenanceTotal();
