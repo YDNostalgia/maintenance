@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.EquipmentCallMapper">
+    <resultMap id="equipmentCallResultMap" type="equipCall">
+        <id property="id" column="tid"></id>
+        <result property="num" column="num"></result>
+
+        <result property="keepManagement.number" column="number"></result>
+        <result property="keepManagement.name" column="wfm_name"></result>
+        <result property="keepManagement.model" column="model"></result>
+
+        <result property="keepUnit.id" column="uid"></result>
+        <result property="keepUnit.unit" column="unit"></result>
+
+        <result property="keepFacility.id" column="wid"></result>
+        <result property="keepFacility.name" column="name"></result>
+
+        <result property="kid" column="kid"></result>
+        <result property="keepId" column="keep_record_id"></result>
+    </resultMap>
+    <insert id="addEquipmentCall">
+        INSERT INTO t_keep_invoking(num,kit_id,keep_record_id) VALUES(#{num},#{keepId},#{kid})
+    </insert>
+    <select id="queryEquipmentCallById" resultMap="equipmentCallResultMap">
+        SELECT wfm.number,wfm.`name` wfm_name,wfm.model,wfu.unit,ti.id tid,ti.num num,wfc1.`name`,wfu.id uid,wfc1.id wid,k.id kid
+        FROM w_facility_management wfm,w_location wl,w_facility_class2 wfc2,w_facility_unit wfu,w_region wr,w_facility_class1 wfc1,t_keep_invoking ti,t_keep k
+        WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id AND wfc1.id=wfc2.facility_class1_id
+          AND wfm.number=ti.kit_id AND ti.keep_record_id=k.id AND k.id=#{kid}
+    </select>
+
+
+</mapper>
