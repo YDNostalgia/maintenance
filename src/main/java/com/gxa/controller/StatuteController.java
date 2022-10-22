@@ -39,7 +39,7 @@ public class StatuteController {
     }
 
     @ApiOperation("添加法规")
-    @PostMapping("/statute")
+    @PostMapping("/statute/add")
     public Result add(@RequestBody StatuteAddDto statuteAddDto){
         Result r = Result.failed("添加失败");
         try {
@@ -53,7 +53,7 @@ public class StatuteController {
     }
 
     @ApiOperation("修改法规")
-    @PutMapping("/statute")
+    @PutMapping("/statute/update")
     public Result update(@RequestBody StatuteEditDto statuteEditDto){
         Result r = Result.failed("修改失败");
         try {
