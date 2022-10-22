@@ -15,8 +15,6 @@ public class WReceiptManagementAddDto {
     private Integer receiptNo;
     @ApiModelProperty(value = "入库日期",name = "warehousingDate")
     private Date receiptDate;
-    @ApiModelProperty(value = "审核状态(1:待审核，2：审核通过，3，审核拒绝)",name = "auditStatus")
-    private Integer auditStatus;
     @ApiModelProperty(value = "制单人",name = "preparedBy")
     private Integer preparedById;
     @ApiModelProperty(value = "审核人",name = "reviewedBy")

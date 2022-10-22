@@ -12,8 +12,9 @@
         <result property="reviewedBy" column="reviewed_by"></result>
     </resultMap>
     <insert id="add">
-        INSERT INTO w_receipt_management(receipt_no,receipt_date,auditStatus,prepared_by_id,reviewed_by_id)
-        VALUES (#{receiptNo},#{receiptDate},#{auditStatus},#{preparedById},#{reviewedById})
+        UPDATE w_receipt_management
+        SET receipt_date=#{receiptDate},prepared_by_id=#{preparedById},reviewed_by_id=#{reviewedById}
+        WHERE receipt_no=#{receiptNo}
     </insert>
 
     <update id="update">
