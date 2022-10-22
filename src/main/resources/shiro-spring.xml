@@ -60,19 +60,20 @@
         <property name="unauthorizedUrl" value="/unauthorized"/>
         <property name="filterChainDefinitions">
             <value>
-<!--                /=anon-->
-<!--                /**/login=anon-->
-<!--                /**/list=statelessAuth,perms[list]-->
-<!--                /**/add**=statelessAuth,perms[list,add]-->
-<!--                /**/update**=statelessAuth,perms[list,add,update]-->
-<!--                /**/state**=statelessAuth,perms[list,add,update,delete]-->
-<!--                /**/delete**=statelessAuth,perms[list,add,update,delete]-->
-<!--                /swagger-ui.html=anon-->
-<!--                /webjars/**=anon-->
-<!--                /v2/**=anon-->
-<!--                /swagger-resources/**=anon-->
-<!--                /configuration/**=anon-->
-<!--                /**=statelessAuth-->
+                /=anon
+                /**/login=anon
+                /**/index.html=anon
+                /**/list=statelessAuth,perms[list]
+                /**/add=statelessAuth,perms[list,add]
+                /**/update=statelessAuth,perms[list,add,update]
+                /**/state=statelessAuth,perms[list,add,update,delete]
+                /**/delete=statelessAuth,perms[list,add,update,delete]
+                /swagger-ui.html=anon
+                /webjars/**=anon
+                /v2/**=anon
+                /swagger-resources/**=anon
+                /configuration/**=anon
+                /**=statelessAuth
 
             </value>
         </property>

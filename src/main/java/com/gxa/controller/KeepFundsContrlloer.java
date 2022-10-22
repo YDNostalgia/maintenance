@@ -21,7 +21,7 @@ public class KeepFundsContrlloer {
     @Autowired
     private KeepFundsService keepFundsService;
     @ApiOperation("维修经费查询")
-    @PostMapping("KeepFunds/queryAllKeepFunds")
+    @PostMapping("/KeepFunds/queryAllKeepFunds")
     public Result<List<KeepFunds>> queryAllKeepFunds(@RequestBody(required = false) KeepPlanDto keepPlanDto,Integer page,Integer limit){
         System.out.println("List-->" + keepPlanDto);
         System.out.println(page+  "----"+ limit);
@@ -50,7 +50,7 @@ public class KeepFundsContrlloer {
 //        return r;
 //    }
     @ApiOperation("维修经费修改")
-    @PutMapping("KeepFunds/updateKeepFunds")
+    @PutMapping("/KeepFunds/update")
     public Result<Integer> updateKeepFunds(@RequestBody(required = false) KeepFundsAU keepFundsAU){
         System.out.println("up---------->"+keepFundsAU);
         Result<Integer> r = Result.success();
@@ -63,7 +63,7 @@ public class KeepFundsContrlloer {
         return r;
     }
     @ApiOperation("维修经费删除")
-    @DeleteMapping("KeepFunds/deleteKeepFunds")
+    @DeleteMapping("/KeepFunds/delete")
     public Result<Integer> deleteKeepFunds(@RequestParam("id") Integer id){
         System.out.println("de--------->" + id);
         Result<Integer> r = Result.success();

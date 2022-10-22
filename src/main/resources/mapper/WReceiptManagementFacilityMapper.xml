@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReceiptManagementFacilityMapper">
+    <resultMap id="wReceiptManagementFacilityResultMap" type="wReceiptManagementFacilityDto">
+        <id property="number" column="number"></id>
+        <result property="name" column="name"></result>
+        <result property="model" column="model"></result>
+    </resultMap>
+
+    <select id="queryFacilityName" resultMap="wReceiptManagementFacilityResultMap">
+        SELECT name FROM w_facility_management
+    </select>
+
+
+    <select id="queryFacilityModel" resultMap="wReceiptManagementFacilityResultMap" parameterType="string">
+        SELECT model FROM w_facility_management
+        WHERE 1=1
+        <if test="name != null and name != ''">
+            AND name=#{name}
+        </if>
+    </select>
+
+
+    <select id="queryFacilityNumber" resultMap="wReceiptManagementFacilityResultMap" parameterType="wReceiptManagementFacilityDto">
+        SELECT number FROM w_facility_management
+        WHERE 1=1
+        <if test="name != null and name != ''">
+            AND name=#{name}
+        </if>
+        <if test="model != null and model != ''">
+            AND model=#{model}
+        </if>
+    </select>
+</mapper>
