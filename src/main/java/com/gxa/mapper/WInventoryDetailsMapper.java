@@ -10,4 +10,5 @@ public interface WInventoryDetailsMapper {
     List<WInventoryDetails> queryByInventoryNo(@Param("inventoryNo") Integer inventoryNo);
     void add(List<WInventoryDetailsAddDto> wInventoryDetailsAddDtos);
 
+    void delete(Integer inventoryNo);
 }

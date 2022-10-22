@@ -21,8 +21,7 @@ public class WInventoryManagementQueryDto {
     private Date startTime;
     @ApiModelProperty(value = "结束时间", name = "endTime")
     private Date endTime;
-//    @ApiModelProperty (value = "部门ID",name = "pdeptId")
-//    private Integer pdeptId;
+
     @ApiModelProperty (value = "审核状态(1:待审核，2：审核通过，3，审核拒绝)",name = "auditStatus")
     private Integer auditStatus;
     @ApiModelProperty(value = "盘点单号",name = "inventoryNo")

@@ -39,7 +39,7 @@ public class StatuteTypeController {
     }
 
     @ApiOperation("查询所有法规类型")
-    @GetMapping("/statuteType")
+    @GetMapping("/statuteType/list")
     public Result<List<StatuteType>> list(){
 
         Result<List<StatuteType>> r = Result.failed();
@@ -53,7 +53,7 @@ public class StatuteTypeController {
 
 
     @ApiOperation("添加法规类型")
-    @PostMapping("/statuteType")
+    @PostMapping("/statuteType/add")
     public Result add(@RequestBody @ApiParam(value = "法规类型名称",name = "statuteTypeName",required = true) String statuteTypeName){
 
         Result r = Result.failed();
@@ -69,8 +69,8 @@ public class StatuteTypeController {
     }
 
     @ApiOperation("修改法规类型")
-    @PutMapping("/statuteType")
-    public Result edit(@RequestBody StatuteTypeEditDto statuteTypeEditDto){
+    @PutMapping("/statuteType/update")
+    public Result update(@RequestBody StatuteTypeEditDto statuteTypeEditDto){
         Result r = Result.failed("修改失败");
         try {
             statuteTypeService.update(statuteTypeEditDto);
@@ -83,7 +83,7 @@ public class StatuteTypeController {
     }
 
     @ApiOperation("删除法规类型")
-    @DeleteMapping("/statuteType")
+    @DeleteMapping("/statuteType/delete")
     public Result delete(@RequestBody @ApiParam(value = "法规类型名称",name = "statuteTypeId",required = true) Integer statuteTypeId){
         Result r = Result.failed("删除失败");
         try {
