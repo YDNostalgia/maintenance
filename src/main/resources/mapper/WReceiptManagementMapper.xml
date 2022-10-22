@@ -41,4 +41,16 @@
             AND rm.receipt_date BETWEEN startTime AND endTime
         </if>
     </select>
+
+
+
+    <select id="queryByReceiptNo" resultType="java.lang.Integer">
+        SELECT auditStatus
+        FROM w_receipt_management
+        WHERE receipt_no=#{receiptNo}
+    </select>
+    <delete id="delete">
+        DELETE FROM w_receipt_management
+        WHERE receipt_no=#{receiptNo}
+    </delete>
 </mapper>

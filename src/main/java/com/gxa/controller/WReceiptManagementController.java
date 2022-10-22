@@ -9,10 +9,9 @@ import com.gxa.service.WReceiptManagementService;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class WReceiptManagementController {
     public Result<List<WReceiptManagement>> selectList(@RequestBody(required = false) WReceiptManagementQueryDto wReceiptManagementQueryDto){
         Result<List<WReceiptManagement>> listResult = Result.failed("入库信息查询失败！");
 
-        PageInfo<WReceiptManagement> pageInfo = wReceiptManagementService.queryChoiceAll(wReceiptManagementQueryDto);
+        PageInfo<WReceiptManagement> pageInfo = this.wReceiptManagementService.queryChoiceAll(wReceiptManagementQueryDto);
         List<WReceiptManagement> wReceiptManagements = pageInfo.getList();
         System.out.println("查询记录数————>" + wReceiptManagements);
 
@@ -70,7 +69,7 @@ public class WReceiptManagementController {
         Result<List<WReceiptDetails>> r = Result.failed();
 
         try{
-            List<WReceiptDetails> wReceiptDetails = wReceiptManagementService.add(wReceiptManagementAddDto);
+            List<WReceiptDetails> wReceiptDetails = this.wReceiptManagementService.add(wReceiptManagementAddDto);
 
             Integer size = wReceiptDetails.size();
             Long total = size.longValue();
@@ -84,12 +83,12 @@ public class WReceiptManagementController {
     }
 
     @ApiOperation("修改 入库单")
-    @PostMapping("/wReceiptManagement/update")
+    @PutMapping("/wReceiptManagement/update")
     public Result update(@RequestBody WReceiptManagementUpdateDto wReceiptManagementUpdateDto){
         Result r = Result.failed();
 
         try{
-            wReceiptManagementService.update(wReceiptManagementUpdateDto);
+            this.wReceiptManagementService.update(wReceiptManagementUpdateDto);
             r = Result.success();
         } catch (Exception e){
             e.printStackTrace();
@@ -98,4 +97,23 @@ public class WReceiptManagementController {
     }
 
 
+    @ApiOperation("删除 入库单")
+    @DeleteMapping("/wReceiptManagement/delete")
+    public Result delete( Integer receiptNo){
+
+        Result r = Result.failed();
+
+        try{
+            String msg = this.wReceiptManagementService.delete(receiptNo);
+            if(msg.equals("删除成功")){
+                r = Result.success();
+                r.setMsg(msg);
+            } else {
+                r = Result.failed("删除失败：审核通过入库单，不允许删除");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
 }

@@ -109,4 +109,16 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
         }
     }
 
+    @Override
+    public String delete(Integer receiptNo) {
+
+        Integer auditStatus = this.wReceiptManagementMapper.queryByReceiptNo(receiptNo);
+
+        if (auditStatus == 2){
+            return "删除失败：审核通过的入库单，不允许删除";
+        }
+        wReceiptManagementMapper.delete(receiptNo);
+        wReceiptDetailsMapper.delete(receiptNo);
+        return "删除成功";
+    }
 }

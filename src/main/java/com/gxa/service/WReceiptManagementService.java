@@ -22,4 +22,5 @@ public interface WReceiptManagementService {
 
     void update(WReceiptManagementUpdateDto wReceiptManagementUpdateDto);
 
+    String delete(Integer receiptNo);
 }
