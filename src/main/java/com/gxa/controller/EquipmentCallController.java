@@ -26,7 +26,7 @@ public class EquipmentCallController {
     private Result<Integer> r;
 
     @ApiOperation("器材调用 查询")
-    @PostMapping("EquipmentCall/queryAllEquipmentCall")
+    @PostMapping("/EquipmentCall/queryAllEquipmentCall")
     public Result<List<EquipCall>> queryAllKeepPlan(int id){
         System.out.println("id---------->" +id);
         Result<List<EquipCall>> r = Result.success();
@@ -42,7 +42,7 @@ public class EquipmentCallController {
 
 
     @ApiOperation("维修计划添加")
-    @PostMapping("/EquipmentCall/addEquipmentCall")
+    @PostMapping("/EquipmentCall/add")
     public Result<Integer> addEquipmentCall(@RequestBody(required = false) EquipCallDto equipCallDto){
         Result<Integer> r = Result.success();
         try {
