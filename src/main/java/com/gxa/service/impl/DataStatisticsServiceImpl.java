@@ -2,6 +2,7 @@ package com.gxa.service.impl;
 
 
 import com.gxa.dto.BreakdownDto;
+import com.gxa.entity.EquipmentNumber;
 import com.gxa.entity.MaintenanceStatistics;
 import com.gxa.entity.Statistics;
 import com.gxa.mapper.DataStatisticsMapper;
@@ -33,6 +34,11 @@ public class DataStatisticsServiceImpl implements DataStatisticsService {
     public List<Statistics> queryStatistics() {
         List<Statistics> statistics=this.dataStatisticsMapper.queryStatistics();
         return statistics;
+    }
+
+    public List<EquipmentNumber> queryEquipmentStatistics() {
+        List<EquipmentNumber> equipmentNumbers=this.dataStatisticsMapper.queryEquipmentStatistics();
+        return equipmentNumbers;
     }
 
 

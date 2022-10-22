@@ -62,4 +62,21 @@
         WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id AND wfm.number=#{number}
     </select>
 
+    <select id="queryAllName" resultType="java.lang.String">
+        SELECT name
+        FROM w_facility_management GROUP BY name
+    </select>
+
+    <select id="queryByName" resultType="java.lang.String">
+        SELECT model
+        FROM w_facility_management
+        WHERE name = #{facilityName}
+    </select>
+
+    <select id="queryByNameAndModel" resultType="java.lang.Integer">
+        SELECT number
+        FROM w_facility_management
+        WHERE name = #{facilityName} AND model = #{facilityModel}
+    </select>
+
 </mapper>

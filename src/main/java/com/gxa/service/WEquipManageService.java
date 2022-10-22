@@ -3,10 +3,17 @@ package com.gxa.service;
 import com.gxa.dto.WEquipManageQueryDto;
 import com.gxa.dto.WequipManageAddDto;
 import com.gxa.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface WEquipManageService {
+    //查询所有器材名称
+    public List<String> queryAllName();
+    //根据器材名称查询所有型号
+    public List<String> queryByName(@Param("facilityName") String facilityName);
+    //根据器材名称和型号查询器材编号
+    public Integer queryByNameAndModel(@Param("facilityName") String facilityName,@Param("facilityModel") String facilityModel);
     //无条件拉取所有器材管理列表信息
     public List<WFacilityManagement> queryAllWFacilityManagement();
     //查询器材分类下拉框
