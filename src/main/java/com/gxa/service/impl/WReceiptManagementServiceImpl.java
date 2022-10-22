@@ -98,11 +98,6 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
                 //获取价格
                 double unitPrice = wReceiptDetails.get(i).getUnitPrice();
 
-                //通过入库单号 器材编号 查询库存信息
-                WAccountDetailsQueryDto wAccountDetailsQueryDto = new WAccountDetailsQueryDto();
-                wAccountDetailsQueryDto.setReceiptNo(receiptNo);
-                wAccountDetailsQueryDto.setWfacilityManagementId(number);
-
                 //添加到 库存
                 WAccountDetailsAddDto wAccountDetailsAddDto = new WAccountDetailsAddDto();
                 wAccountDetailsAddDto.setReceiptNo(receiptNo);
