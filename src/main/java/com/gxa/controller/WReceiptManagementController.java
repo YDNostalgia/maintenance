@@ -22,6 +22,19 @@ public class WReceiptManagementController {
     @Autowired
     private WReceiptManagementService wReceiptManagementService;
 
+    @ApiOperation("生成 入库单号")
+    @GetMapping("/wReceiptManagement/addNo")
+    public Result addNo(){
+        Result r = Result.failed();
+        try{
+            Integer receiptNo = wReceiptManagementService.addNo();
+            r = Result.success(receiptNo);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+
     @ApiOperation(value = "审核状态 下拉列表(1.待审核，2.审核通过，3.审核拒绝)")
     @PostMapping(value = "/wReceiptManagement/status")
     public Result<List<WReceiptManagementStatusDto>> selectByStatus(){
@@ -88,8 +101,13 @@ public class WReceiptManagementController {
         Result r = Result.failed();
 
         try{
-            this.wReceiptManagementService.update(wReceiptManagementUpdateDto);
-            r = Result.success();
+            String msg = this.wReceiptManagementService.update(wReceiptManagementUpdateDto);
+            if(msg.equals("修改成功，添加明细成功")){
+                r = Result.success();
+                r.setMsg(msg);
+            } else{
+                r = Result.failed(msg);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -109,7 +127,7 @@ public class WReceiptManagementController {
                 r = Result.success();
                 r.setMsg(msg);
             } else {
-                r = Result.failed("删除失败：审核通过入库单，不允许删除");
+                r = Result.failed(msg);
             }
         } catch (Exception e){
             e.printStackTrace();

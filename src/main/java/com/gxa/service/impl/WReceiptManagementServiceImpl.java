@@ -3,13 +3,11 @@ package com.gxa.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.dto.*;
-import com.gxa.entity.WAccountDetails;
-import com.gxa.entity.WFacilityManagement;
 import com.gxa.entity.WReceiptDetails;
 import com.gxa.entity.WReceiptManagement;
 import com.gxa.mapper.*;
 import com.gxa.service.WReceiptManagementService;
-import org.apache.ibatis.annotations.Param;
+import com.gxa.utils.DocNoGenerationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +25,8 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
     private WReceiptDetailsMapper wReceiptDetailsMapper;
     @Autowired
     private WAccountDetailsMapper wAccountDetailsMapper;
+    @Autowired
+    private DocNoGenerationUtil docNoGenerationUtil;
 
     @Override
     public List<WReceiptManagement> queryAll() {
@@ -50,6 +50,11 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
         return pageInfo;
     }
 
+    @Override
+    public Integer addNo() {
+        Integer receiptNo = this.docNoGenerationUtil.generateDocNo(1);
+        return receiptNo;
+    }
 
     @Override
     public List<WReceiptDetails> add(WReceiptManagementAddDto wReceiptManagementAddDto) {
@@ -69,13 +74,19 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
     }
 
     @Override
-    public void update(WReceiptManagementUpdateDto wReceiptManagementUpdateDto) {
+    public String update(WReceiptManagementUpdateDto wReceiptManagementUpdateDto) {
+
+        Integer receiptNo = wReceiptManagementUpdateDto.getReceiptNo();
+        Integer auditStatus = wReceiptManagementMapper.queryByReceiptNo(receiptNo);
+
+        if (auditStatus == 2){
+            return "审核失败：入库单已审核通过，不能重复审核";
+        }
+
         wReceiptManagementMapper.update(wReceiptManagementUpdateDto);
-        Integer auditStatus = wReceiptManagementUpdateDto.getAuditStatus();
+        auditStatus = wReceiptManagementUpdateDto.getAuditStatus();
 
         if(auditStatus == 2){
-            //获取入库单号
-            Integer receiptNo = wReceiptManagementUpdateDto.getReceiptNo();
             List<WReceiptDetails> wReceiptDetails = wReceiptDetailsMapper.queryByReceiptNo(receiptNo);
             for(int i=0;i< wReceiptDetails.size();i++){
                 System.out.println(wReceiptDetails.get(i));
@@ -92,6 +103,7 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
                 wAccountDetailsQueryDto.setReceiptNo(receiptNo);
                 wAccountDetailsQueryDto.setWfacilityManagementId(number);
 
+                //添加到 库存
                 WAccountDetailsAddDto wAccountDetailsAddDto = new WAccountDetailsAddDto();
                 wAccountDetailsAddDto.setReceiptNo(receiptNo);
                 wAccountDetailsAddDto.setWfacilityManagementId(number);
@@ -100,13 +112,14 @@ public class WReceiptManagementServiceImpl implements WReceiptManagementService 
 
 
                 List<WAccountDetailsAddDto> wAccountDetailsAddDtos = new ArrayList<>();
-                wAccountDetailsAddDtos.add(i,wAccountDetailsAddDto);
+                wAccountDetailsAddDtos.add(wAccountDetailsAddDto);
 
                 System.out.println("查询条件：" + wAccountDetailsAddDto);
 
                 wAccountDetailsMapper.add(wAccountDetailsAddDtos);
             }
         }
+        return "修改成功，添加明细成功";
     }
 
     @Override
