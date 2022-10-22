@@ -22,6 +22,11 @@
         WHERE inventory_no = #{inventoryNo}
     </update>
 
+    <delete id="delete">
+        DELETE FROM w_inventory_management
+        WHERE inventory_no = #{inventoryNo}
+    </delete>
+
     <select id="queryByCondition" resultMap="wInventoryManagementResultMap" parameterType="wInventoryManagementQueryDto">
         SELECT im.inventory_no,im.inventory_date,u1.user_name as prepared_by,im.auditStatus,u2.user_name as reviewed_by
         FROM t_user u1,t_user u2,w_inventory_management im
@@ -39,6 +44,10 @@
             AND im.inventory_no = #{inventoryNo}
         </if>
     </select>
-
+    <select id="queryByInventoryNo" resultType="java.lang.Integer">
+           SELECT auditStatus
+           FROM w_inventory_management
+           WHERE inventory_no = #{inventoryNo}
+    </select>
 
 </mapper>

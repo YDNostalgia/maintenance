@@ -8,10 +8,12 @@ import com.gxa.entity.WInventoryManagement;
 import java.util.List;
 
 public interface WInventoryManageMentService {
+  Integer addNo();
   PageInfo<WInventoryManagement> queryByCondition(WInventoryManagementQueryDto wInventoryManagementQueryDto);
 
   void add(WInventoryManagementAddDto wInventoryManagementAddDto);
 
-  void update(WInventoryManagementUpdateDto wInventoryManagementUpdateDto);
+  String update(WInventoryManagementUpdateDto wInventoryManagementUpdateDto);
+  String delete(Integer inventoryNo);
 
 }

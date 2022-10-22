@@ -26,11 +26,15 @@
     </resultMap>
 
     <insert id="add">
-        INSERT INTO w_inventory_details (inventory_no,receipt_no,facility_management_id,quantity,unitPrice)
+        INSERT INTO w_inventory_details (inventory_no,receipt_no,facility_management_id,quantity)
         VALUES <foreach item="data" collection="list" separator=",">
-        (#{data.inventoryNo},#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity},#{data.unitPrice})
-    </foreach>
+                (#{data.inventoryNo},#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity})
+              </foreach>
     </insert>
+    <delete id="delete">
+        DELETE FROM w_inventory_details
+        WHERE inventory_no=#{inventoryNo}
+    </delete>
 
     <select id="queryByInventoryNo" resultMap="wInventoryDetailsResultMap">
         SELECT pd.id,pd.inventory_no,fm.number,fm.name,fm.model,fu.unit,pd.receipt_no,pd.quantity,pd.unitPrice

@@ -19,6 +19,5 @@ public class WInventoryDetailsAddDto {
     private Integer wfacilityManagementId;
     @ApiModelProperty(value = "数量",name = "quantity")
     private Integer quantity;
-    @ApiModelProperty(value = "单价",name = "unitPrice")
-    private double unitPrice;
+
 }
