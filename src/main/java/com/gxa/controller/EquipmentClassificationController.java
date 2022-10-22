@@ -73,6 +73,7 @@ public class EquipmentClassificationController {
     public R equipmentClassificationDelete( Integer id){
         System.out.println(id);
         R r=new R();
+
         try{
             this.equipmentManagementService.deleteEquipmentClassification(id);
         }catch (Exception e){
