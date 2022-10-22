@@ -29,6 +29,24 @@ public class WEquipManageServiceImpl implements WEquipManageService {
     private WlocationXlaMapper wlocationXlaMapper;
 
     @Override
+    public List<String> queryAllName() {
+        List<String> facilityNames = wEquipManageMapper.queryAllName();
+        return facilityNames;
+    }
+
+    @Override
+    public List<String> queryByName(String facilityName) {
+        List<String> facilityModels = wEquipManageMapper.queryByName(facilityName);
+        return facilityModels;
+    }
+
+    @Override
+    public Integer queryByNameAndModel(String facilityName, String facilityModel) {
+        Integer number = wEquipManageMapper.queryByNameAndModel(facilityName, facilityModel);
+        return number;
+    }
+
+    @Override
     public List<WFacilityManagement> queryAllWFacilityManagement() {
         List<WFacilityManagement> wFacilityManagements = this.wEquipManageMapper.queryAllWFacilityManagement();
         return wFacilityManagements;

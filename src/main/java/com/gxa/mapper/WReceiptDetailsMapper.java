@@ -12,5 +12,5 @@ public interface WReceiptDetailsMapper {
 
     List<WReceiptDetails> queryByReceiptNo(@Param("receiptNo") Integer receiptNo);
 
-
+    void delete(@Param("receiptNo") Integer receiptNo);
 }

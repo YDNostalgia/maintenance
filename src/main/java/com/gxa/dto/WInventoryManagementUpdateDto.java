@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "更改盘点审核状态")
 public class WInventoryManagementUpdateDto {
-    @ApiModelProperty(value = "盘点单号",name = "inventory_No")
+    @ApiModelProperty(value = "盘点单号",name = "inventoryNo")
     private Integer inventoryNo;
     @ApiModelProperty(value = "审核状态(1:待审核，2：审核通过，3，审核拒绝)",name = "auditStatus")
     private Integer auditStatus;
+    @ApiModelProperty(value = "审核人Id",name = "reviewedById")
+    private Integer reviewedById;
 }

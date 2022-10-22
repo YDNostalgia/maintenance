@@ -60,7 +60,7 @@
         <property name="unauthorizedUrl" value="/unauthorized"/>
         <property name="filterChainDefinitions">
             <value>
-                /=anon
+               <!-- /=anon
                 /**/login=anon
                 /**/index.html=anon
                 /**/list=statelessAuth,perms[list]
@@ -73,7 +73,7 @@
                 /v2/**=anon
                 /swagger-resources/**=anon
                 /configuration/**=anon
-                /**=statelessAuth
+                /**=statelessAuth-->
 
             </value>
         </property>

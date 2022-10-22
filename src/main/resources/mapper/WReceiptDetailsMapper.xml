@@ -30,6 +30,11 @@
     </foreach>
     </insert>
 
+    <delete id="delete">
+        DELETE FROM w_receipt_details
+        WHERE receipt_no=#{receiptNo}
+    </delete>
+
     <select id="queryByReceiptNo" resultMap="wReceiptDetailsResultMap">
         SELECT rd.id,fm.number,fm.name,fm.model,fu.unit,rd.quantity,rd.unitPrice,(rd.quantity*rd.unitPrice) as money
         FROM w_receipt_details rd,w_facility_management fm,w_facility_unit fu

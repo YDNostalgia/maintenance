@@ -10,18 +10,27 @@ import com.gxa.mapper.WAccountDetailsMapper;
 import com.gxa.mapper.WInventoryDetailsMapper;
 import com.gxa.mapper.WInventoryManagementMapper;
 import com.gxa.service.WInventoryManageMentService;
+import com.gxa.utils.DocNoGenerationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class WIventoryManagementServiceImpl implements WInventoryManageMentService {
+public class WInventoryManagementServiceImpl implements WInventoryManageMentService {
     @Autowired
     private WInventoryManagementMapper wInventoryManagementMapper;
     @Autowired
     private WInventoryDetailsMapper wInventoryDetailsMapper;
     @Autowired
     private WAccountDetailsMapper wAccountDetailsMapper;
+    @Autowired
+    private DocNoGenerationUtil docNoGenerationUtil;
+
+    @Override
+    public Integer addNo() {
+        Integer inventoryNo=docNoGenerationUtil.generateDocNo(4);
+        return inventoryNo;
+    }
 
     @Override
     public PageInfo<WInventoryManagement> queryByCondition(WInventoryManagementQueryDto wInventoryManagementQueryDto) {
@@ -50,16 +59,23 @@ public class WIventoryManagementServiceImpl implements WInventoryManageMentServi
     }
 
     @Override
-    public void update(WInventoryManagementUpdateDto wInventoryManagementUpdateDto) {
-        wInventoryManagementMapper.update(wInventoryManagementUpdateDto);
-        Integer auditStatus = wInventoryManagementUpdateDto.getAuditStatus();
+    public String update(WInventoryManagementUpdateDto wInventoryManagementUpdateDto) {
+
+        Integer inventoryNo=wInventoryManagementUpdateDto.getInventoryNo();
+        Integer auditStatus=wInventoryManagementMapper.queryByInventoryNo(inventoryNo);
 
         if (auditStatus==2){
-            Integer inventoryNo=wInventoryManagementUpdateDto.getInventoryNo();
+            return "审核失败：盘点单已审核通过，不能重复审核";
+        }
+
+        wInventoryManagementMapper.update(wInventoryManagementUpdateDto);
+        auditStatus = wInventoryManagementUpdateDto.getAuditStatus();
+
+        if (auditStatus==2){
             List<WInventoryDetails> wInventoryDetails=wInventoryDetailsMapper.queryByInventoryNo(inventoryNo);
             for (int i=0;i<wInventoryDetails.size();i++){
 
-                System.out.println(wInventoryDetails.get(i));
+
 
                 Integer receiptNo= wInventoryDetails.get(i).getReceiptNo();//提取单号
 
@@ -76,23 +92,40 @@ public class WIventoryManagementServiceImpl implements WInventoryManageMentServi
                 WAccountDetails wAccountDetails = wAccountDetailsMapper.queryByCondition(wAccountDetailsQueryDto);
 
                 //获取库存数量
-//                Integer quantity1=wAccountDetails.getQuantity();
-//                System.out.println("这个是库存数量--->>"+quantity1);
+                Integer quantity1=wAccountDetails.getQuantity();
+                System.out.println("这个是库存数量--->>"+quantity1);
+                String wfacilityManagementName = wAccountDetails.getWfacilityManagement().getName();
+
+                if (quantity1 < quantity) {
+                    try {
+                        throw new Exception();
+                    } finally {
+                        return "审核失败：" + wfacilityManagementName + "库存数量不足";
+                    }
+                }
 
                 WAccountDetailsUpdateDto wAccountDetailsUpdateDto=new WAccountDetailsUpdateDto();
                 wAccountDetailsUpdateDto.setReceiptNo(receiptNo);
                 wAccountDetailsUpdateDto.setWfacilityManagementId(number);
-                wAccountDetailsUpdateDto.setQuantity(quantity);
+                wAccountDetailsUpdateDto.setQuantity(quantity1);
 
-                System.out.println("查询条件：----->"+quantity);
+                System.out.println("查询条件：----->"+quantity1);
                 wAccountDetailsMapper.update(wAccountDetailsUpdateDto);
             }
         }
-        else {
-            System.out.println("——————————>审核未通过不能修改!");
-        }
+        return "审核成功";
     }
 
+    @Override
+    public String delete(Integer inventoryNo) {
+        Integer auditStatus = wInventoryManagementMapper.queryByInventoryNo(inventoryNo);
+        if (auditStatus == 2){
+            return "删除失败：审核通过单据，不允许删除";
+        }
+        wInventoryManagementMapper.delete(inventoryNo);
+        wInventoryDetailsMapper.delete(inventoryNo);
+        return "删除成功";
+    }
 
 
 }
