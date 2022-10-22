@@ -23,7 +23,7 @@ public class KeepQualityController {
     private KeepQualityService keepQualityService;
 
     @ApiOperation("维修质量查询")
-    @PostMapping("KeepQuality/queryAllKeepQuality")
+    @PostMapping("/KeepQuality/queryAllKeepQuality")
     public Result<List<KeepQuality>> queryAllKeepQuality(@RequestBody(required = false) KeepPlanDto keepPlanDto,Integer page,Integer limit){
         System.out.println("keepPlanDto-->" + keepPlanDto);
         System.out.println(page+  "----"+ limit);
@@ -51,7 +51,7 @@ public class KeepQualityController {
 //        return r;
 //    }
     @ApiOperation("维修质量修改")
-    @PutMapping("KeepQuality/updateKeepQuality")
+    @PutMapping("/KeepQuality/update")
     public Result<Integer> updateKeepQuality(@RequestBody(required = false) KeepQualityAU keepQualityAU){
         System.out.println("adddd-->" + keepQualityAU);
         Result<Integer> r = Result.success();
@@ -64,7 +64,7 @@ public class KeepQualityController {
         return r;
     }
     @ApiOperation("维修质量删除")
-    @DeleteMapping("KeepQuality/deleteKeepQuality")
+    @DeleteMapping("/KeepQuality/delete")
     public Result<Integer> deleteKeepQuality(@RequestParam("id") Integer id){
         System.out.println("delete-->" + id);
         Result<Integer> r = Result.success();

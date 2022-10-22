@@ -18,7 +18,7 @@ public class KeepStauteController {
     private KeepStauteSerivce keepStauteSerivce;
 
     @ApiOperation("维修状态查询")
-    @PostMapping("keepPlan/queryAllStaute")
+    @PostMapping("/keepPlan/queryAllStaute")
     public Result<List<KeepStaute>> queryAllStaute(){
         Result<List<KeepStaute>> r = Result.success();
         try {

@@ -1,11 +1,8 @@
 package com.gxa.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.gxa.dto.RoleDto;
+
 import com.gxa.dto.SysSettingsDto;
-import com.gxa.entity.Role;
 import com.gxa.entity.SysSettings;
-import com.gxa.service.RoleService;
 import com.gxa.service.SysSettingsService;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
@@ -22,12 +19,10 @@ public class SysSettingsController {
     private SysSettingsService sysSettingsService;
 
     @ApiOperation("系统设置列表")
-    @GetMapping("/sys")
-    @ResponseBody
-    public Result<List<SysSettings>> list(@RequestBody(required = false) SysSettingsDto sysSettingsDto){
+    @GetMapping("/sys/list")
+    public Result<List<SysSettings>> list(){
         List<SysSettings> sysSettings= this.sysSettingsService.queryAll();
         Result<List<SysSettings>> r=Result.success(sysSettings);
-
         return r;
     }
 
@@ -36,7 +31,7 @@ public class SysSettingsController {
      * 系统设置修改
      */
     @ApiOperation("系统设置修改")
-    @PutMapping("/sys")
+    @PutMapping("/sys/update")
     @ResponseBody
     public Result<SysSettings> update(@RequestBody SysSettingsDto sysSettingsDto){
         System.out.println("***********" + sysSettingsDto);

@@ -154,7 +154,7 @@ public class EquipmentManagementController {
         }
         return r;
     }
-    @DeleteMapping("/equipment/deleteidss")
+    @DeleteMapping("/equipment/deleteidss/delete")
     @ApiOperation("装备多选删除")
     public R equipmentDeleteIdss(@RequestBody List<Integer> ids){
         System.out.println(ids);

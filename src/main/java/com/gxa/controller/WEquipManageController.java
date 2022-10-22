@@ -11,6 +11,8 @@ import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,43 @@ public class WEquipManageController {
     @Autowired
     private WEquipManageService wEquipManageService;
 
+    @GetMapping(value = "/wFacilityManagement/listName")
+    @ApiOperation(value = "查询所有器材名称")
+    public Result<List<String>> queryAllName(){
+        Result<List<String>> r = Result.failed();
+        try {
+            List<String> facilityNames = wEquipManageService.queryAllName();
+            r = Result.success(facilityNames);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+    @GetMapping(value = "/wFacilityManagement/listMOdel")
+    @ApiOperation(value = "根据器材名称查询型号")
+    public Result<List<String>> queryByName(@Param("facilityName") @ApiParam(value = "器材名称",name = "facilityName") String facilityName) {
+        Result<List<String>> r = Result.failed();
+        try {
+            List<String> facilityModels = wEquipManageService.queryByName(facilityName);
+            r = Result.success(facilityModels);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+    @GetMapping(value = "/wFacilityManagement/listNumber")
+    @ApiOperation(value = "根据器材名称和型号查询器材编号")
+    public Result<Integer> queryByNameAndModel(@Param("facilityName") @ApiParam(value = "器材名称",name = "facilityName") String facilityName,
+                                               @Param("facilityModel") @ApiParam(value = "器材型号",name = "facilityModel") String facilityModel){
+        Result<Integer> r = Result.failed();
+        try {
+            Integer facilityNumber = wEquipManageService.queryByNameAndModel(facilityName, facilityModel);
+            r = Result.success(facilityNumber);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
+    }
     @PostMapping(value = "/wFacilityManagement/list")
     @ApiOperation(value = "器材管理-器材管理列表/搜索")
     public Result<List<WFacilityManagement>> wFacilityManagementList(@RequestBody(required = false) WEquipManageQueryDto wEquipManageQueryDto){

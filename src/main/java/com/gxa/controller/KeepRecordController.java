@@ -23,7 +23,7 @@ public class KeepRecordController {
     @Autowired
     private KeepRecordService keepRecordService;
     @ApiOperation("维修记录查询")
-    @PostMapping("keepRecord/queryAllRecord")
+    @PostMapping("/keepRecord/queryAllRecord")
     public Result<List<KeepRecord>> queryAllkeepRecord(@RequestBody(required = false) KeepRecordDto keepRecordDto, Integer page, Integer limit){
         System.out.println("keepRecordDto-->" + keepRecordDto);
         System.out.println(page+  "----"+ limit);
@@ -54,7 +54,7 @@ public class KeepRecordController {
 //        return r;
 //    }
     @ApiOperation("维修记录修改")
-    @PutMapping("keepRecord/updateRecord")
+    @PutMapping("/keepRecord/update")
     public Result<Integer> updatekeepRecord(@RequestBody(required = false) KeepRecord keepRecord){
         System.out.println("update---------"+keepRecord);
         Result<Integer> r = Result.success();
@@ -67,7 +67,7 @@ public class KeepRecordController {
         return r;
     }
     @ApiOperation("维修记录删除")
-    @DeleteMapping("keepRecord/deleteRecord")
+    @DeleteMapping("/keepRecord/delete")
     public Result<Integer> deleteRecord(@RequestParam("id") Integer id){
         System.out.println("delete---------"+id);
         Result<Integer> r = Result.success();
