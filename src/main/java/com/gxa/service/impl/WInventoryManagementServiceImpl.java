@@ -56,7 +56,6 @@ public class WInventoryManagementServiceImpl implements WInventoryManageMentServ
         wInventoryManagementAddDto.setWInventoryDetailsAddDtos(null);
         wInventoryManagementMapper.add(wInventoryManagementAddDto);
         wInventoryDetailsMapper.add(wInventoryDetailsAddDtos);
-
     }
 
     @Override

@@ -11,10 +11,16 @@
         <result property="reviewedBy" column="reviewed_by"></result>
     </resultMap>
 
-    <insert id="add">
+  <!--  <insert id="add">
         INSERT INTO w_inventory_management(inventory_no,inventory_date,prepared_by_id)
         VALUES (#{inventoryNo},#{inventoryDate},#{preparedById})
-    </insert>
+    </insert>-->
+
+    <update id="add">
+        UPDATE w_inventory_management
+        SET inventory_date = #{inventoryDate},prepared_by_id =#{preparedById}
+        WHERE inventory_no = #{inventoryNo}
+    </update>
 
     <update id="update">
         UPDATE w_inventory_management

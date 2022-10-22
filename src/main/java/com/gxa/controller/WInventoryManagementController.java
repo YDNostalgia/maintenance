@@ -85,7 +85,7 @@ public class WInventoryManagementController {
 
     @ApiOperation("删除库存盘点单")
     @DeleteMapping("/WInventoryManagement/delete")
-    public Result  delete(@Param("inventoryNo") Integer inventoryNo){
+    public Result  delete(Integer inventoryNo){
 
         Result r = Result.failed();
         try {

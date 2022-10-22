@@ -17,7 +17,7 @@ public class WInventoryDetailsAddDto {
     private Integer receiptNo;
     @ApiModelProperty(value = "器材编号",name = "wfacilityManagement")
     private Integer wfacilityManagementId;
-    @ApiModelProperty(value = "数量",name = "quantity")
+    @ApiModelProperty(value = "盘点数量",name = "quantity")
     private Integer quantity;
 
 }
