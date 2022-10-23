@@ -2,6 +2,7 @@ package com.gxa.service.impl;
 
 import com.gxa.dto.EquipCallDto;
 import com.gxa.entity.EquipCall;
+import com.gxa.entity.KeepManagement;
 import com.gxa.mapper.EquipmentCallMapper;
 import com.gxa.service.EquipmentCallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class EquipmentCallServiceImpl implements EquipmentCallService {
 
     @Override
     public void addEquipmentCall(EquipCallDto equipCallDto) {
+
         equipmentCallMapper.addEquipmentCall(equipCallDto);
+    }
+
+    @Override
+    public List<KeepManagement> queryAllEquipment() {
+        List<KeepManagement> keepManagements = equipmentCallMapper.queryAllEquipment();
+        return keepManagements;
     }
 }

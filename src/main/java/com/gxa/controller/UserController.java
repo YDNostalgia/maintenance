@@ -43,7 +43,6 @@ public class UserController {
      */
 
     @GetMapping("/login")
-
     @ResponseBody
     public Result<String> toLogin() {
         Result<String> r=Result.failed("请登录");
@@ -53,8 +52,8 @@ public class UserController {
     @PostMapping("/user/login")
     @ApiOperation("用户登录")
     @ResponseBody
-    public Result<String> login(@RequestBody User user, HttpServletRequest request) {
-        Result<String> r=new Result<>();
+    public Result<User> login(@RequestBody User user, HttpServletRequest request) {
+        Result<User> r=new Result<>();
         System.out.println(user.getUserName());
         System.out.println(user.getPwd());
         HttpSession session= request.getSession();
@@ -86,7 +85,8 @@ public class UserController {
         try {
             subject.login(usernamePasswordToken);
             logger.info("登录成功");
-            r=Result.success(jwt);
+            r=Result.success(user1);
+            r.setMsg(jwt);
             return r;
         }catch (Exception e) {
             r=Result.failed();
@@ -229,6 +229,8 @@ public class UserController {
     @GetMapping( "/unauthorized")
     public Result<String> unAuth(){
         Result<String> r=Result.failed("没有权限");
+        r.setCode("1");
+        System.out.println(r.getMsg());
         return r;
     }
 

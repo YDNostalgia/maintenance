@@ -83,7 +83,7 @@ public class EquipmentClassificationController {
         return r;
     }
 
-    @GetMapping("/equipmentclassification/list/droplist")
+    @PostMapping("/equipmentclassification/list/droplist")
     @ApiOperation("装备分类_具体种类的下拉查询")
     public Result<List<EquipmentName>> equipmentclassificationDropList(@RequestBody String equipmentClassificationName){
         Result<List<EquipmentName>> r=Result.success();

@@ -29,13 +29,7 @@ public class MyStatelessShiroFilter extends AccessControlFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
         logger.info("is access allowed");
-        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        if (httpRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            logger.info("OPTIONS放行");
-            setHeader(httpRequest,httpResponse);
-            return true;
-        }
+
 
         return false;
     }
@@ -50,14 +44,23 @@ public class MyStatelessShiroFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         logger.info("on access denied");
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpResp = WebUtils.toHttp(servletResponse);
+        /*系统重定向会默认把请求头清空，这里通过拦截器重新设置请求头，解决跨域问题*/
+        httpResp.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        httpResp.addHeader("Access-Control-Allow-Headers", "*");
+        httpResp.addHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+        httpResp.addHeader("Access-Control-Allow-Credentials", "true");
+//
+//        this.saveRequestAndRedirectToLogin(request, servletResponse);
         String jwt = request.getHeader("token");
-        System.out.println(jwt);
+        System.out.println("111111111"+jwt);
 
         if (JwtUtil.verifyToken(jwt)) {
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(jwt, jwt);
             try {
-                System.out.println("1111"+usernamePasswordToken.getUsername());
+
                 //委托realm进行登录认证
                 getSubject(servletRequest, servletResponse).login(usernamePasswordToken);
                 return true;
@@ -80,14 +83,18 @@ public class MyStatelessShiroFilter extends AccessControlFilter {
         logger.info("redirectToLogin");
         WebUtils.issueRedirect(request, response, "/login");
     }
-    private void setHeader(HttpServletRequest request, HttpServletResponse response){
-        //跨域的header设置
-        response.setHeader("Access-control-Allow-Origin", request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Methods", request.getMethod());
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
-        //防止乱码，适用于传输JSON数据
-        response.setHeader("Content-Type","application/json;charset=UTF-8");
-        response.setStatus(HttpStatus.OK.value());
+    @Override
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        HttpServletRequest httpRequest = WebUtils.toHttp(request);
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+        if (httpRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            httpResponse.setHeader("Access-control-Allow-Origin", httpRequest.getHeader("Origin"));
+            httpResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+            httpResponse.setHeader("Access-Control-Allow-Headers", httpRequest.getHeader("Access-Control-Request-Headers"));
+            httpResponse.setStatus(HttpStatus.OK.value());
+            return false;
+        }
+        return super.preHandle(request, response);
     }
+
 }
