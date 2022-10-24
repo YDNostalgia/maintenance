@@ -18,7 +18,11 @@ public interface EquipmentDataService {
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
     //删除
-    void delete(int categoryId);
+    void delete(Integer categoryId);
+
+    //查询资料数
+
+    Integer getDataCountInteger(Integer categoryId);
 
 
 

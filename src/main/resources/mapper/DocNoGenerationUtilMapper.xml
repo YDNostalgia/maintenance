@@ -28,24 +28,20 @@
     <select id="queryQuantity" resultType="java.lang.Integer">
         <choose>
             <when test="businessId == 1">
-                SELECT count(receipt_no)
+                SELECT max(receipt_no)
                 FROM w_receipt_management
-                WHERE receipt_no &gt; #{min} AND receipt_no &lt; #{max}
             </when>
             <when test="businessId == 2">
-                SELECT count(picking_no)
+                SELECT max(picking_no)
                 FROM w_picking_management
-                WHERE picking_no &gt; #{min} AND picking_no &lt; #{max}
             </when>
             <when test="businessId == 3">
-                SELECT count(return_no)
+                SELECT max(return_no)
                 FROM w_return_management
-                WHERE return_no &gt; #{min} AND return_no &lt; #{max}
             </when>
             <when test="businessId == 4">
-                SELECT count(inventory_no)
+                SELECT max(inventory_no)
                 FROM w_inventory_management
-                WHERE inventory_no &gt; #{min} AND inventory_no &lt; #{max}
             </when>
         </choose>
     </select>
