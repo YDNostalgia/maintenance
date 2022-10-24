@@ -28,8 +28,9 @@
     </update>
 
 <!--    删除-->
-    <delete id="deleteByCategoryId" parameterType="int">
-        DELETE FROM t_equipment WHERE category_id=#{categoryId}
+    <delete id="deleteByCategoryId" parameterType="integer">
+        DELETE FROM t_equipment
+               WHERE category_id=#{categoryId}
     </delete>
 
 <!--    查询所有的-->
@@ -39,5 +40,12 @@
                                       From t_data td
                                       GROUP BY td.category_id) v
                                      ON te.category_id = v.category_id
+    </select>
+
+<!--    查询资料数-->
+    <select id="getDataCountInteger" resultType="integer">
+        SELECT count(td.category_id) total
+        From t_data td
+        WHERE td.category_id=#{categoryId}
     </select>
 </mapper>
