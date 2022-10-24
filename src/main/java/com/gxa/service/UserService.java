@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User getUserByName(String userName);
+    List<User> getUserByName(String userName);
 
     PageInfo<User> queryAll(UserDto userDto,Integer page,Integer limit);
     List<String> queryRoleName();

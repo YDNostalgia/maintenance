@@ -4,25 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.mapper.UserMapper">
     <resultMap id="userResultMap" type="user">
-        <id property="id" column="id"></id>
         <result property="userName" column="user_name"></result>
         <result property="pwd" column="pwd"></result>
         <result property="roleName" column="role_name"></result>
         <result property="state" column="user_state"></result>
+        <association property="routing" resultMap="routingResultMap"/>
     </resultMap>
-    <resultMap id="userResultMap1" type="user">
-        <id property="id" column="id"></id>
-        <result property="account" column="account"></result>
-        <result property="userName" column="user_name"></result>
-        <result property="phoneNumber" column="phone_number"></result>
-        <result property="roleName" column="role_name"></result>
-        <result property="addTime" column="add_time"></result>
-        <result property="state" column="user_state"></result>
+
+    <resultMap id="routingChildrenResultMap" type="routingChildren">
+        <result property="title" column="title"/>
+        <result property="href" column="href"/>
+        <result property="com" column="com"/>
+    </resultMap>
+
+    <resultMap id="routingResultMap" type="routing">
+        <result property="title" column="title"/>
+        <result property="icon" column="icon"/>
+        <association property="children" resultMap="routingChildrenResultMap"/>
     </resultMap>
 
     <!--    根据用户名查询相应的用户数据-->
-    <select id="getUserByName" parameterType="User" resultMap="userResultMap">
-        select * from t_user where  user_name = #{userName}
+    <select id="getUserByName" resultMap="userResultMap">
+        SELECT u.user_name,u.pwd,u.role_name,u.user_state,u.role_name,ro.title,ro.icon,rc.title,rc.href,rc.com
+        FROM t_user u,t_user_role ur,t_role r,t_routing ro,t_role_routing rro,t_rout_children rc,routing_children_id rci
+        WHERE u.id=ur.user_id AND ur.role_id=r.id AND r.id=rro.role_id AND rro.routing_id=ro.id AND ro.id=rci.routing_id AND rc.id=rci.childrern_id
+          AND u.user_name=#{userName}
+        ORDER BY u.user_name
     </select>
 
     <!--    根据角色名查询它的权限-->
@@ -32,6 +39,17 @@
         WHERE r.id = rm.role_id AND rm.menu_id=m.id
           AND role_name=#{roleName}
     </select>
+
+
+    <resultMap id="userResultMap1" type="user">
+        <id property="id" column="id"></id>
+        <result property="account" column="account"></result>
+        <result property="userName" column="user_name"></result>
+        <result property="phoneNumber" column="phone_number"></result>
+        <result property="roleName" column="role_name"></result>
+        <result property="addTime" column="add_time"></result>
+        <result property="state" column="user_state"></result>
+    </resultMap>
 
 
     <!--    根据用户管理的所有数据-->
@@ -66,6 +84,8 @@
     </select>
 
 
+
+
     <!--    往用户表插入一条数据-->
     <insert id="add"  parameterType="user" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_user(account,role_name,user_name,add_time,pwd,phone_number,user_state,note)
@@ -87,7 +107,7 @@
 
     <!--    根据用户名值修改用户密码-->
     <update id="updatePassword" parameterType="user">
-        UPDATE t_user SET password=#{pwd}
+        UPDATE t_user SET pwd=#{pwd}
         WHERE user_name=#{userName}
     </update>
 
@@ -104,5 +124,11 @@
     <delete id="deleteRoleId" parameterType="integer">
         DELETE FROM t_user_role WHERE user_id=#{id}
     </delete>
+
+
+
+<!--    <select id="queryRouting" resultMap="routingResultMap">-->
+<!--        -->
+<!--    </select>-->
 
 </mapper>
