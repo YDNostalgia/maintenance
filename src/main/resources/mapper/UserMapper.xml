@@ -12,7 +12,7 @@
     </resultMap>
 
     <resultMap id="routingChildrenResultMap" type="routingChildren">
-        <result property="title" column="title"/>
+        <result property="title" column="ti"/>
         <result property="href" column="href"/>
         <result property="com" column="com"/>
     </resultMap>
@@ -25,7 +25,7 @@
 
     <!--    根据用户名查询相应的用户数据-->
     <select id="getUserByName" resultMap="userResultMap">
-        SELECT u.user_name,u.pwd,u.role_name,u.user_state,u.role_name,ro.title,ro.icon,rc.title,rc.href,rc.com
+        SELECT u.user_name,u.pwd,u.role_name,u.user_state,u.role_name,ro.title,ro.icon,rc.title ti,rc.href,rc.com
         FROM t_user u,t_user_role ur,t_role r,t_routing ro,t_role_routing rro,t_rout_children rc,routing_children_id rci
         WHERE u.id=ur.user_id AND ur.role_id=r.id AND r.id=rro.role_id AND rro.routing_id=ro.id AND ro.id=rci.routing_id AND rc.id=rci.childrern_id
           AND u.user_name=#{userName}
