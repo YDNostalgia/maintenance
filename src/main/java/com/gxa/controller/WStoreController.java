@@ -105,27 +105,30 @@ public class WStoreController {
 
     @GetMapping(value = "/dlocaltion/deleteWregion")
     @ApiOperation(value = "货位信息-删除区域信息")
-    public Result deleteWregion(Integer wRegionId){
+    public Result deleteWregion(int wRegionId){
         System.out.println("删除区域的id为：" + wRegionId);
         Result result = Result.failed();
         try {
+            int count = 0;
             List<WStore> wStores = this.wStoreService.queryAllWLocation();
-//            System.out.println("输出所有区域： " + wStores);
-            WStore wStore = wStores.get(wRegionId - 1);
-//            System.out.println("输出要删除的区域信息： " + wStore);
-            int count = wStore.getCount();
-//            System.out.println("要删除的区域的count值为：" + count);
 
+            for(int i = 0;i < wStores.size();i++){
+                WStore wStore = wStores.get(i);
+                int id = wStore.getId();
+                if(id == wRegionId){
+                    count = wStore.getCount();
+                }
+            }
             if(count > 0){
-                result = Result.failed("该区域内存有货物，不能删除！");
-            }else if(wStore.getCount() == 0){
+                result = Result.failed("该该区域内含有货物，不能删除！");
+            }else if(count == 0){
                 this.wStoreService.deleteWregion(wRegionId);
                 result = Result.success();
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return result;
     }
 
