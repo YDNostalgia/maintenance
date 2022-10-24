@@ -13,7 +13,7 @@
     </resultMap>
     <insert id="add">
         UPDATE w_receipt_management
-        SET receipt_date=#{receiptDate},prepared_by_id=#{preparedById},reviewed_by_id=#{reviewedById}
+        SET receipt_date=#{receiptDate},prepared_by_id=#{preparedById}
         WHERE receipt_no=#{receiptNo}
     </insert>
 
@@ -29,18 +29,24 @@
         WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
     </select>
     <select id="queryChoiceAll" resultMap="wReceiptManagementResultMap" parameterType="WReceiptManagementQueryDto">
-        SELECT rm.receipt_date,rm.receipt_no,u1.user_name,rm.auditStatus,u2.user_name
-        FROM t_user u1,w_receipt_management rm,t_user u2
-        WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
+        SELECT v.receipt_no,v.receipt_date,v.prepared_by,v.auditStatus,u2.user_name reviewed_by
+        FROM
+        (SELECT rm.receipt_no,rm.receipt_date,u1.user_name prepared_by,rm.auditStatus,reviewed_by_id
+        FROM t_user u1,w_receipt_management rm
+        WHERE u1.id = rm.prepared_by_id
         <if test="auditStatus != null and auditStatus != ''">
             AND rm.auditStatus=#{auditStatus}
         </if>
         <if test="receiptNo !=null and receiptNo != ''">
             AND rm.receipt_no=#{receiptNo}
         </if>
-        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
-            AND rm.receipt_date BETWEEN startTime AND endTime
+        <if test="startTime!=null ">
+            <![CDATA[   and DATE_FORMAT(rm.receipt_date, '%Y-%m-%d') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
         </if>
+        <if test="endTime!=null ">
+            <![CDATA[  and DATE_FORMAT(rm.receipt_date, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+        </if> ) v
+        LEFT JOIN t_user u2 ON u2.id = v.reviewed_by_id
     </select>
 
 

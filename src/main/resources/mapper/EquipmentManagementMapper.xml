@@ -149,10 +149,10 @@
 			GROUP BY equipmentclassification_name
     </select>
     <select id="queryquipmentclassificationDropList" resultMap="equipmentclassificationDropListMap" parameterType="string">
-			SELECT e3.equipmentclassification_name,e2.equipment_name,count(*) num
+			SELECT e2.equipment_name,count(*) num
             FROM equipment_managment e1,equipmentname e2,equipmentclassification e3
             WHERE e1.equipmentname_id=e2.id and e1.equipmentclassification_id=e3.id and e3.equipmentclassification_name=#{equipmentClassificationName}
-            GROUP BY equipmentclassification_id,equipmentname_id
+            GROUP BY e1.equipmentclassification_id,e1.equipmentname_id
     </select>
 
     <insert id="addEquipmentManagement" parameterType="equipmentManagementAU">
@@ -160,6 +160,9 @@
     </insert>
     <insert id="addEquipmentClassifications" parameterType="equipmentClass">
         INSERT INTO equipmentclassification(equipmentclassification_name)VALUES(#{equipmentClassName})
+    </insert>
+    <insert id="addEquipmentName" parameterType="equipmentName">
+        INSERT INTO equipmentname(equipment_name)VALUES(#{equipName})
     </insert>
 
     <update id="updateEquipmentManagement" parameterType="equipmentManagementAU">
