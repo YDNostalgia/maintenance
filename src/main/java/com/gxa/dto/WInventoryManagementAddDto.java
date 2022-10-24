@@ -22,6 +22,8 @@ public class WInventoryManagementAddDto {
     private Date inventoryDate;
     @ApiModelProperty(value = "制单人ID",name = "preparedBy")
     private Integer preparedById;
+    @ApiModelProperty(value = "制单人ID",name = "reviewedBy")
+    private Integer reviewedById;
     @ApiModelProperty(value = "盘点明细",name = "wInventroyDetails")
     private List<WInventoryDetailsAddDto> wInventoryDetailsAddDtos;
 }

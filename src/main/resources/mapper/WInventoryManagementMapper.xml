@@ -11,14 +11,10 @@
         <result property="reviewedBy" column="reviewed_by"></result>
     </resultMap>
 
-  <!--  <insert id="add">
-        INSERT INTO w_inventory_management(inventory_no,inventory_date,prepared_by_id)
-        VALUES (#{inventoryNo},#{inventoryDate},#{preparedById})
-    </insert>-->
 
     <update id="add">
         UPDATE w_inventory_management
-        SET inventory_date = #{inventoryDate},prepared_by_id =#{preparedById}
+        SET inventory_date = #{inventoryDate},prepared_by_id =#{preparedById},reviewed_by_id = #{reviewedById}
         WHERE inventory_no = #{inventoryNo}
     </update>
 
@@ -34,9 +30,11 @@
     </delete>
 
     <select id="queryByCondition" resultMap="wInventoryManagementResultMap" parameterType="wInventoryManagementQueryDto">
-        SELECT im.inventory_no,im.inventory_date,u1.user_name as prepared_by,im.auditStatus,u2.user_name as reviewed_by
-        FROM t_user u1,t_user u2,w_inventory_management im
-        WHERE u1.id=im.prepared_by_id AND u2.id=im.reviewed_by_id
+        SELECT v.inventory_no,v.inventory_date,v.prepared_by,v.auditStatus,u2.user_name as reviewed_by
+        FROM
+        (SELECT im.inventory_no,im.inventory_date,u1.user_name prepared_by,im.auditStatus,reviewed_by_id
+        FROM t_user u1,w_inventory_management im
+        WHERE u1.id=im.prepared_by_id
         <if test="startTime!=null ">
             <![CDATA[   and DATE_FORMAT(im.inventory_date, '%Y-%m-%d') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
         </if>
@@ -48,7 +46,7 @@
         </if>
         <if test="inventoryNo != null and inventoryNo != 0">
             AND im.inventory_no = #{inventoryNo}
-        </if> v
+        </if> ) v
         LEFT JOIN t_user u2 ON u2.id = v.reviewed_by_id
     </select>
     <select id="queryByInventoryNo" resultType="java.lang.Integer">
