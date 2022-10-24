@@ -96,6 +96,11 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     }
 
     @Override
+    public void addEquipmentName(EquipmentName equipmentName) {
+        this.equipmentManagementMapper.addEquipmentName(equipmentName);
+    }
+
+    @Override
     public void updateEquipmentClassification(EquipmentClass equipmentClassName) {
         this.equipmentManagementMapper.updateEquipmentClassification(equipmentClassName);
     }

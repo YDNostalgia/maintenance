@@ -1,6 +1,7 @@
 package com.gxa.service.impl;
 
 
+import com.gxa.dto.FileUrlDto;
 import com.gxa.service.MinioService;
 import com.gxa.utils.MinioUtil;
 import io.minio.MinioClient;
@@ -33,7 +34,11 @@ public class MinioServiceImpl implements MinioService {
     }
 
     @Override
-    public String getFileUrl(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        return minioUtil.getFileUrl(fileName);
+    public FileUrlDto getFileUrl(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        FileUrlDto fileUrlDto = new FileUrlDto();
+        String fileUrl = minioUtil.getFileUrl(fileName);
+        fileUrlDto.setFileName(fileName);
+        fileUrlDto.setFileUrl(fileUrl);
+        return  fileUrlDto;
     }
 }

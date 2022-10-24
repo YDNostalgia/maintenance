@@ -59,10 +59,10 @@ public class UserController {
         String userCaptcha=user.getCaptcha();
         System.out.println("111"+userCaptcha);
         System.out.println("222"+randomCode);
-        if (!randomCode.equals(userCaptcha)){
-            r=Result.failed("验证码不正确！！！");
-            return r;
-        }
+//        if (!randomCode.equals(userCaptcha)){
+//            r=Result.failed("验证码不正确！！！");
+//            return r;
+//        }
 //        if (user.getCaptcha());
         List<User> user1 = this.userService.getUserByName(user.getUserName());
         System.out.println(1111);

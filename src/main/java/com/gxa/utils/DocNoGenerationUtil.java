@@ -30,6 +30,8 @@ public class DocNoGenerationUtil{
         Date date = new Date();
         String oddNumberStr = new SimpleDateFormat("yyMMdd").format(date);
 
+        Integer oddNumber = null;
+
         String oddNumberStr1 = oddNumberStr + "000";
         Integer min = Integer.valueOf(oddNumberStr1);
         Integer max = min + 1000;
@@ -41,18 +43,11 @@ public class DocNoGenerationUtil{
 
         Integer total = this.docNoGenerationUtilMapper.queryQuantity(limitValue);
 
-        total++;
-        if(total<10){
-            oddNumberStr = oddNumberStr + "00" + total;
+        if (total < min){
+            oddNumber = min + 1;
+        }else {
+            oddNumber = total + 1;
         }
-        else if(total<100){
-            oddNumberStr = oddNumberStr + "0" + total;
-        }
-        else {
-            oddNumberStr = oddNumberStr + total;
-        }
-        Integer oddNumber = Integer.valueOf(oddNumberStr);
-
 
         HashMap<String, Integer> addMap = new HashMap<>();
         addMap.put("businessId",businessId);
