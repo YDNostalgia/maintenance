@@ -18,7 +18,7 @@ public class WInventoryManagementAddDto {
 
     @ApiModelProperty(value = "盘点单号",name = "inventoryNo")
     private Integer inventoryNo;
-    @ApiModelProperty(value = "领料日期",name = "inventoryDate")
+    @ApiModelProperty(value = "盘点日期",name = "inventoryDate")
     private Date inventoryDate;
     @ApiModelProperty(value = "制单人ID",name = "preparedBy")
     private Integer preparedById;
