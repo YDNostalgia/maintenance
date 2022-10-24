@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -33,6 +34,7 @@ public class User {
     private Integer state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
+    private List<Routing> routing;
 
     @Override
     public String toString() {

@@ -15,7 +15,7 @@ public class WInventoryDetails {
     private Integer id;
     @ApiModelProperty(value = "盘点单号",name = "inventoryNo")
     private Integer inventoryNo;
-    @ApiModelProperty(value = "入库单号",name = "receiptNo")
+    @ApiModelProperty(value = "批次号(入库单号)",name = "receiptNo")
     private Integer receiptNo;
     @ApiModelProperty(value = "器材",name = "wfacilityManagement")
     private WFacilityManagement wfacilityManagement;

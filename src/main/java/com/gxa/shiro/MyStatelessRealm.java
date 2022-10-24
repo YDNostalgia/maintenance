@@ -31,6 +31,7 @@ public class MyStatelessRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("--------------------授权------------------------");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         logger.info("授权开始");
         String jwt = (String) principals.getPrimaryPrincipal();
@@ -58,6 +59,7 @@ public class MyStatelessRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        System.out.println("--------------------认证------------------------");
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String jwt = (String) usernamePasswordToken.getPrincipal();
         if (JwtUtil.verifyToken(jwt)) {

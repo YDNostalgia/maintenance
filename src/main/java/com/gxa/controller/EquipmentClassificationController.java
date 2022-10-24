@@ -73,6 +73,7 @@ public class EquipmentClassificationController {
     public R equipmentClassificationDelete( Integer id){
         System.out.println(id);
         R r=new R();
+
         try{
             this.equipmentManagementService.deleteEquipmentClassification(id);
         }catch (Exception e){
@@ -83,9 +84,10 @@ public class EquipmentClassificationController {
         return r;
     }
 
-    @GetMapping("/equipmentclassification/list/droplist")
+    @PostMapping("/equipmentclassification/list/droplist")
     @ApiOperation("装备分类_具体种类的下拉查询")
-    public Result<List<EquipmentName>> equipmentclassificationDropList(@RequestBody String equipmentClassificationName){
+    public Result<List<EquipmentName>> equipmentclassificationDropList(String equipmentClassificationName){
+        System.out.println(equipmentClassificationName);
         Result<List<EquipmentName>> r=Result.success();
         try {
             List<EquipmentName> equipmentNames=this.equipmentManagementService.equipmentclassificationDropList(equipmentClassificationName);
@@ -97,10 +99,25 @@ public class EquipmentClassificationController {
         }
         return r;
     }
+    @PostMapping("/equipmentclassification/droplist/add")
+    @ApiOperation("添加装备名称")
+    public Result<EquipmentName> equipmentNameAdd(@RequestBody EquipmentName equipmentName){
+        //R r=new R();
+        Result<EquipmentName> r=Result.success();
+        try {
+            this.equipmentManagementService.addEquipmentName(equipmentName);
+            r=Result.success();
+        }catch (Exception e){
+            r.setCode("1");
+            r.setMsg("error");
+            e.printStackTrace();
+        }
+        return r;
+    }
 
     @PutMapping("/equipmentclassification/droplist/update")
     @ApiOperation("装备分类_下拉名称修改")
-    public Result<EquipmentName> equipmentclassificationUpdate(@RequestBody EquipmentName equipmentName){
+    public Result<EquipmentName> equipmentNameUpdate(@RequestBody EquipmentName equipmentName){
         //System.out.println(equipmentManagementAU);
         Result<EquipmentName> r=Result.success();
         try {

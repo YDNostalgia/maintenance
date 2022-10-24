@@ -40,8 +40,8 @@
         <result property="storageLocationName" column="storagelocation_name"></result>
     </resultMap>
     <resultMap id="equipmentListMap" type="equipmentList">
-        <id property="id" column="code"></id>
-        <result property="equipmentName" column="name"></result>
+        <id property="id" column="number"></id>
+        <result property="equipmentName" column="wname"></result>
         <result property="equipmentClass" column="type"></result>
         <result property="state" column="test_results"></result>
     </resultMap>
@@ -131,10 +131,10 @@
     <select id="queryEquipStorageLocation" resultMap="StorageLocationMap">
         SELECT * FROM storage_location
     </select>
-    <select id="querylistEquipmentone" resultMap="equipmentListMap">
-        SELECT d.code,d.name,d1.type,t.test_results
-        FROM d_equip d,t_keep t,d_type d1
-        WHERE d.code=t.equip_code and d.typeId=d1.id
+    <select id="querylistEquipmentone" resultMap="equipmentListMap" parameterType="Integer">
+       SELECT w1.number,w1.`name` wname,w2.`name` type,t.test_results FROM w_facility_management w1,w_facility_class2 w2,t_keep t
+       WHERE w1.facility_class2_id=w2.id AND w1.number=t.equip_code  AND
+       w1.number IN (SELECT  facility_id FROM equipment_facility WHERE equipment_id=#{id})
     </select>
     <select id="querylistMaintenanceRecords" resultMap="maintenanceRecordsMap">
         SELECT t.id,t.start_time,t.end_time,t.desc FROM t_keep t
@@ -149,10 +149,10 @@
 			GROUP BY equipmentclassification_name
     </select>
     <select id="queryquipmentclassificationDropList" resultMap="equipmentclassificationDropListMap" parameterType="string">
-			SELECT e3.equipmentclassification_name,e2.equipment_name,count(*) num
+			SELECT e2.equipment_name,count(*) num
             FROM equipment_managment e1,equipmentname e2,equipmentclassification e3
             WHERE e1.equipmentname_id=e2.id and e1.equipmentclassification_id=e3.id and e3.equipmentclassification_name=#{equipmentClassificationName}
-            GROUP BY equipmentclassification_id,equipmentname_id
+            GROUP BY e1.equipmentclassification_id,e1.equipmentname_id
     </select>
 
     <insert id="addEquipmentManagement" parameterType="equipmentManagementAU">
@@ -160,6 +160,9 @@
     </insert>
     <insert id="addEquipmentClassifications" parameterType="equipmentClass">
         INSERT INTO equipmentclassification(equipmentclassification_name)VALUES(#{equipmentClassName})
+    </insert>
+    <insert id="addEquipmentName" parameterType="equipmentName">
+        INSERT INTO equipmentname(equipment_name)VALUES(#{equipName})
     </insert>
 
     <update id="updateEquipmentManagement" parameterType="equipmentManagementAU">

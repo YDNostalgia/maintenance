@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WInventoryDetailsMapper">
+
+
+    <resultMap id="wFacilityUnitResultMap" type="wFacilityUnit">
+        <id property="id" column="id"/>
+        <result property="unit" column="unit"/>
+    </resultMap>
+
+    <resultMap id="wFacilityManagementResultMap" type="wFacilityManagement">
+        <id property="number" column="number"/>
+        <result property="name" column="name"/>
+        <result property="model" column="model"/>
+        <association property="facilityUnit" resultMap="wFacilityUnitResultMap"/>
+    </resultMap>
+
+    <resultMap id="wInventoryDetailsResultMap" type="wInventoryDetails">
+        <id property="id" column="id"/>
+        <result property="inventoryNo" column="inventory_no"/>
+        <result property="receiptNo" column="receipt_no"/>
+        <result property="quantity" column="quantity"/>
+        <association property="wfacilityManagement" resultMap="wFacilityManagementResultMap"/>
+    </resultMap>
+
+    <insert id="add">
+        INSERT INTO w_inventory_details (inventory_no,receipt_no,facility_management_id,quantity)
+        VALUES <foreach item="data" collection="list" separator=",">
+                (#{data.inventoryNo},#{data.receiptNo},#{data.wfacilityManagementId},#{data.quantity})
+              </foreach>
+    </insert>
+    <delete id="delete">
+        DELETE FROM w_inventory_details
+        WHERE inventory_no=#{inventoryNo}
+    </delete>
+
+    <select id="queryByInventoryNo" resultMap="wInventoryDetailsResultMap">
+        SELECT pd.id,pd.inventory_no,fm.number,fm.name,fm.model,fu.unit,pd.receipt_no,pd.quantity,pd.unitPrice
+        FROM  w_inventory_details pd,w_facility_management fm,w_facility_unit fu
+        WHERE  fm.number = pd.facility_management_id AND fm.facility_unit_id = fu.id AND pd.inventory_no = #{inventoryNo}
+    </select>
+</mapper>

@@ -46,4 +46,15 @@
       GROUP BY p.pdept,m ORDER BY p.pdept
     </select>
 
+    <resultMap id="queryMap" type="EquipmentNumber">
+        <result property="equipmentName" column="Equipment_name"></result>
+        <result property="number" column="number"></result>
+    </resultMap>
+    <select id="queryEquipmentStatistics" resultMap="queryMap">
+        SELECT wfm.`name` Equipment_name,ti.num number
+        FROM w_facility_management wfm,w_location wl,w_facility_class2 wfc2,w_facility_unit wfu,w_region wr,w_facility_class1 wfc1,t_keep_invoking ti
+        WHERE wfm.location_id=wl.id AND wfm.facility_class2_id=wfc2.id AND wfm.facility_unit_id=wfu.id AND wl.region_id=wr.id AND wfc1.id=wfc2.facility_class1_id
+          AND wfm.number=ti.kit_id
+    </select>
+
 </mapper>

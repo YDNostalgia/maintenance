@@ -15,11 +15,12 @@ public interface EquipmentManagementService {
     void addEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
     void updateEquipmentManagement(EquipmentManagementAU equipmentManagementAU);
     void deleteEquipmentManagement(Integer id);
-    List<EquipmentList> querylistEquipmentone();
+    List<EquipmentList> querylistEquipmentone(Integer id);
     List<MaintenanceRecords> querylistMaintenanceRecords();
     List<TechnicalData> querylistTechnicalData();
     List<EquipmentClassification> queryAllEquipmentClassifications();
     void addEquipmentClassification(EquipmentClass equipmentClassName);
+    void addEquipmentName(EquipmentName equipmentName);
     void updateEquipmentClassification(EquipmentClass equipmentClassName);
     void deleteEquipmentClassification(Integer id);
     List<EquipmentName> equipmentclassificationDropList(String equipmentClassificationName);

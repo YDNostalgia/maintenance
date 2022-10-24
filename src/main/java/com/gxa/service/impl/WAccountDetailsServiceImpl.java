@@ -22,8 +22,8 @@ public class WAccountDetailsServiceImpl implements WAccountDetailsService {
     private WAccountDetailsMapper wAccountDetailsMapper;
 
     @Override
-    public List<Integer> queryByWfacilityManagementId(Integer wfacilityManagementId) {
-        List<Integer> receiptNos = wAccountDetailsMapper.queryByWfacilityManagementId(wfacilityManagementId);
+    public List<Integer> queryByWfacilityManagementId(Integer wfacilityManagementId,Integer code) {
+        List<Integer> receiptNos = wAccountDetailsMapper.queryByWfacilityManagementId(wfacilityManagementId,code);
         return receiptNos;
     }
 

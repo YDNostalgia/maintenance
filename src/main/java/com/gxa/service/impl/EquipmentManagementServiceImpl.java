@@ -67,8 +67,8 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     }
 
     @Override
-    public List<EquipmentList> querylistEquipmentone() {
-        List<EquipmentList> equipmentLists=this.equipmentManagementMapper.querylistEquipmentone();
+    public List<EquipmentList> querylistEquipmentone(Integer id) {
+        List<EquipmentList> equipmentLists=this.equipmentManagementMapper.querylistEquipmentone(id);
         return equipmentLists;
     }
 
@@ -93,6 +93,11 @@ public class EquipmentManagementServiceImpl implements EquipmentManagementServic
     @Override
     public void addEquipmentClassification(EquipmentClass equipmentClassName) {
         this.equipmentManagementMapper.addEquipmentClassifications(equipmentClassName);
+    }
+
+    @Override
+    public void addEquipmentName(EquipmentName equipmentName) {
+        this.equipmentManagementMapper.addEquipmentName(equipmentName);
     }
 
     @Override
