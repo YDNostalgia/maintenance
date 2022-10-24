@@ -31,4 +31,8 @@
     </select>
 
 
+    <select id="queryAllEquipment" resultMap="equipmentCallResultMap">
+        SELECT wfm.number,wfm.`name` wfm_name,wfm.model
+        FROM w_facility_management wfm
+    </select>
 </mapper>

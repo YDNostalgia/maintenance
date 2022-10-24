@@ -236,7 +236,7 @@ public class PersonalController {
         return result;
     }
 
-    @PostMapping(value = "/personalTransfer/save")
+    @PostMapping(value = "/personalTransfer/add")
     @ApiOperation(value = "人员抽组提交")
     public R personalTransferSave(@RequestBody(required = false) PersonSubmitMtorderDto personSubmitMtorderDto){
         System.out.println("维修人员和待维修任务" + personSubmitMtorderDto);

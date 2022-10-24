@@ -237,6 +237,12 @@
       <version>4.4.12</version>
     </dependency>
 
+<!--    验证码-->
+    <dependency>
+      <groupId>com.github.penggle</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>2.3.2</version>
+    </dependency>
 
     <!--    添加mybatis的分页插件 pagehelper依赖-->
     <dependency>
