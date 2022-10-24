@@ -17,8 +17,6 @@ public class WReceiptManagementAddDto {
     private Date receiptDate;
     @ApiModelProperty(value = "制单人",name = "preparedBy")
     private Integer preparedById;
-    @ApiModelProperty(value = "审核人",name = "reviewedBy")
-    private Integer reviewedById;
     @ApiModelProperty(value = "入库明细",name = "wReceiptDetails")
     private List<WReceiptDetailsAddDto> wReceiptDetailsAddDtos;
 }

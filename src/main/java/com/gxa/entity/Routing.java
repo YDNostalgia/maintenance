@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -18,5 +20,5 @@ public class Routing {
     @ApiModelProperty("图标")
     private String icon;
     @ApiModelProperty("子级路由内容")
-    private RoutingChildren children;
+    private List<RoutingChildren> children;
 }
