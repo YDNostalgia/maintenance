@@ -1,5 +1,6 @@
 package com.gxa.controller;
 
+import com.gxa.dto.FileUrlDto;
 import com.gxa.service.MinioService;
 import com.gxa.utils.Result;
 import io.swagger.annotations.Api;
@@ -50,11 +51,11 @@ public class FileController {
     @ApiOperation(value = "获取图片预览地址")
     @GetMapping("/getUrl")
     @ResponseBody
-    public Result<String>  getFileUrl(@RequestParam String fileName) {
-        Result<String> r = Result.failed("获取失败");
+    public Result<FileUrlDto>  getFileUrl(@RequestParam String fileName) {
+        Result<FileUrlDto> r = Result.failed("获取失败");
         try {
-            String fileUrl = minioService.getFileUrl(fileName);
-            r = Result.success(fileUrl);
+            FileUrlDto fileUrlDto = minioService.getFileUrl(fileName);
+            r = Result.success(fileUrlDto);
             return r;
         }catch (Exception e){
             e.printStackTrace();
