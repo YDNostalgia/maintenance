@@ -33,6 +33,7 @@ public class User {
     private Integer state;
     @ApiModelProperty(value = "备注", name = "note")
     private String note;
+    private Routing routing;
 
     @Override
     public String toString() {

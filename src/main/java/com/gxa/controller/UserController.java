@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin.dom.core.Element;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +36,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    public String randomCode="";
+
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
     /**
@@ -43,7 +45,6 @@ public class UserController {
      */
 
     @GetMapping("/login")
-
     @ResponseBody
     public Result<String> toLogin() {
         Result<String> r=Result.failed("请登录");
@@ -53,30 +54,34 @@ public class UserController {
     @PostMapping("/user/login")
     @ApiOperation("用户登录")
     @ResponseBody
-    public Result<String> login(@RequestBody User user, HttpServletRequest request) {
-        Result<String> r=new Result<>();
-        System.out.println(user.getUserName());
-        System.out.println(user.getPwd());
-        HttpSession session= request.getSession();
-
+    public Result<List<User>> login(@RequestBody User user, HttpServletRequest request) {
+        Result<List<User>> r=new Result<>();
+        String userCaptcha=user.getCaptcha();
+        System.out.println("111"+userCaptcha);
+        System.out.println("222"+randomCode);
+        if (!randomCode.equals(userCaptcha)){
+            r=Result.failed("验证码不正确！！！");
+            return r;
+        }
 //        if (user.getCaptcha());
-        User user1 = this.userService.getUserByName(user.getUserName());
+        List<User> user1 = this.userService.getUserByName(user.getUserName());
         System.out.println(1111);
         if (user1 == null) {
             r=Result.failed("user not exists");
             return r;
         }
-        if (!user1.getPwd().equals(user.getPwd())) {
+        if (!user1.get(0).getPwd().equals(user.getPwd())) {
             r=Result.failed("username or password is false");
             return r;
         }
-        if (user1.getState() == 0 ) {
+        if (user1.get(0).getState() == 0 ) {
             r=Result.failed("该用户已被禁用，请联系系统管理员");
             return r;
         }
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("username", user1.getUserName());
-        map.put("roleName",user1.getRoleName());
+        map.put("username", user1.get(0).getUserName());
+        map.put("pwd", user1.get(0).getPwd());
+        map.put("roleName",user1.get(0).getRoleName());
 //        for (Object value : map.values()) {
 //            System.out.println("value = " + value);
 //        }
@@ -86,7 +91,8 @@ public class UserController {
         try {
             subject.login(usernamePasswordToken);
             logger.info("登录成功");
-            r=Result.success(jwt);
+            r=Result.success(user1);
+            r.setMsg(jwt);
             return r;
         }catch (Exception e) {
             r=Result.failed();
@@ -101,6 +107,7 @@ public class UserController {
     @GetMapping(value = "/checkCode")
     public void checkCode(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session= request.getSession();
         //设置相应类型,告诉浏览器输出的内容为图片
         response.setContentType("image/jpeg");
         //设置响应头信息，告诉浏览器不要缓存此内容
@@ -111,8 +118,10 @@ public class UserController {
         CaptchaUtil captchaUtil = new CaptchaUtil();
         try {
             captchaUtil.getRandcode(request, response);//输出图片方法
-            String captcha = (String) request.getSession().getAttribute("captcha");
+            String captcha = (String) session.getAttribute("captcha");
+            randomCode=captcha;
             System.out.println(captcha);
+            System.out.println(randomCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -229,6 +238,8 @@ public class UserController {
     @GetMapping( "/unauthorized")
     public Result<String> unAuth(){
         Result<String> r=Result.failed("没有权限");
+        r.setCode("1");
+        System.out.println(r.getMsg());
         return r;
     }
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.mapper.WReceiptManagementMapper">
+
+    <resultMap id="wReceiptManagementResultMap" type="wReceiptManagement">
+        <result property="receiptDate" column="receipt_date"></result>
+        <result property="receiptNo" column="receipt_no"></result>
+        <result property="preparedBy" column="prepared_by"></result>
+        <result property="auditStatus" column="auditStatus"></result>
+        <result property="reviewedBy" column="reviewed_by"></result>
+    </resultMap>
+    <insert id="add">
+        UPDATE w_receipt_management
+        SET receipt_date=#{receiptDate},prepared_by_id=#{preparedById},reviewed_by_id=#{reviewedById}
+        WHERE receipt_no=#{receiptNo}
+    </insert>
+
+    <update id="update">
+        UPDATE w_receipt_management
+        SET auditStatus=#{auditStatus}
+        WHERE  receipt_no=#{receiptNo}
+    </update>
+
+    <select id="queryAll" resultMap="wReceiptManagementResultMap">
+        SELECT rm.receipt_date,rm.receipt_no,u1.user_name,rm.auditStatus,u2.user_name
+        FROM t_user u1,w_receipt_management rm,t_user u2
+        WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
+    </select>
+    <select id="queryChoiceAll" resultMap="wReceiptManagementResultMap" parameterType="WReceiptManagementQueryDto">
+        SELECT rm.receipt_date,rm.receipt_no,u1.user_name,rm.auditStatus,u2.user_name
+        FROM t_user u1,w_receipt_management rm,t_user u2
+        WHERE u1.id=rm.prepared_by_id AND rm.reviewed_by_id=u2.id
+        <if test="auditStatus != null and auditStatus != ''">
+            AND rm.auditStatus=#{auditStatus}
+        </if>
+        <if test="receiptNo !=null and receiptNo != ''">
+            AND rm.receipt_no=#{receiptNo}
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND rm.receipt_date BETWEEN startTime AND endTime
+        </if>
+    </select>
+
+
+
+    <select id="queryByReceiptNo" resultType="java.lang.Integer">
+        SELECT auditStatus
+        FROM w_receipt_management
+        WHERE receipt_no=#{receiptNo}
+    </select>
+    <delete id="delete">
+        DELETE FROM w_receipt_management
+        WHERE receipt_no=#{receiptNo}
+    </delete>
+</mapper>

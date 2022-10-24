@@ -20,7 +20,7 @@ public class KeepProcessContrller {
     private KeepProcessService keepProcessService;
 
     @ApiOperation("维修记录--记录详情--维修过程 查询")
-    @PostMapping("KeepProcess/queryByKeepId")
+    @PostMapping("/KeepProcess/queryByKeepId")
     public Result<List<KeepProcess>> queryByKeepId(Integer keepId){
         System.out.println("list keepId-------->" + keepId);
         Result<List<KeepProcess>> r = Result.success();
@@ -35,7 +35,7 @@ public class KeepProcessContrller {
     }
 
         @ApiOperation("维修记录添加")
-    @PostMapping("KeepProcess/addKeepProcess")
+    @PostMapping("/KeepProcess/add")
     public Result<List<KeepProcess>> addKeepProcess(@RequestBody(required = false) KeepProcessDto keepProcessDto){
         System.out.println("add-----------"+keepProcessDto);
         Result<List<KeepProcess>> r = Result.success();

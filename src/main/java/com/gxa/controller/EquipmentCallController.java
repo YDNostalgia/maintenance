@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.gxa.dto.EquipCallDto;
 import com.gxa.dto.KeepPlanDto;
 import com.gxa.entity.EquipCall;
+import com.gxa.entity.KeepManagement;
 import com.gxa.entity.KeepPlan;
 import com.gxa.entity.KeepPlanAU;
 import com.gxa.service.EquipmentCallService;
@@ -26,7 +27,7 @@ public class EquipmentCallController {
     private Result<Integer> r;
 
     @ApiOperation("器材调用 查询")
-    @PostMapping("EquipmentCall/queryAllEquipmentCall")
+    @PostMapping("/EquipmentCall/queryAllEquipmentCall")
     public Result<List<EquipCall>> queryAllKeepPlan(int id){
         System.out.println("id---------->" +id);
         Result<List<EquipCall>> r = Result.success();
@@ -42,12 +43,26 @@ public class EquipmentCallController {
 
 
     @ApiOperation("维修计划添加")
-    @PostMapping("/EquipmentCall/addEquipmentCall")
+    @PostMapping("/EquipmentCall/add")
     public Result<Integer> addEquipmentCall(@RequestBody(required = false) EquipCallDto equipCallDto){
         Result<Integer> r = Result.success();
         try {
             System.out.println("EquipCallDto-----"+equipCallDto);
             equipmentCallService.addEquipmentCall(equipCallDto);
+        }catch (Exception e){
+            e.printStackTrace();
+            Result.failed();
+        }
+        return r;
+    }
+
+    @ApiOperation("器材下拉 查询")
+    @PostMapping("/EquipmentCall/queryAllEquipment")
+    public Result<List<KeepManagement>> queryAllEquipment(){
+        Result<List<KeepManagement>> r = Result.success();
+        try{
+            List<KeepManagement> keepManagements = equipmentCallService.queryAllEquipment();
+            r = Result.success(keepManagements);
         }catch (Exception e){
             e.printStackTrace();
             Result.failed();

@@ -22,7 +22,7 @@ public class KeepFileContrller {
     @Autowired
     private KeepFileService keepFileService;
     @ApiOperation("维修档案查询")
-    @PostMapping("keepFile/queryAllkeepFile")
+    @PostMapping("/keepFile/queryAllkeepFile")
     public Result<List<KeepFile>> queryAllkeepFile(@RequestBody(required = false) KeepPlanDto keepPlanDto,Integer page,Integer limit){
         System.out.println("select--------"+keepPlanDto);
         System.out.println(page+"----页面----"+limit);
@@ -50,7 +50,7 @@ public class KeepFileContrller {
 //        return r;
 //    }
     @ApiOperation("维修档案修改")
-    @PutMapping("keepFile/updatekeepFile")
+    @PutMapping("/keepFile/update")
     public Result<Integer> updatekeepFile(@RequestBody(required = false) KeepFileAU keepFileAU){
         System.out.println("update---------"+keepFileAU);
         Result<Integer> r = Result.success();
@@ -63,7 +63,7 @@ public class KeepFileContrller {
         return r;
     }
     @ApiOperation("维修档案删除")
-    @DeleteMapping("keepFile/deletekeepFile")
+    @DeleteMapping("/keepFile/delete")
     public Result<Integer> deletekeepFile(@RequestParam("id") Integer id){
             System.out.println("delete---------"+id);
             Result<Integer> r = Result.success();

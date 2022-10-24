@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserMapper {
-    User getUserByName(String userName);
+    List<User> getUserByName(String userName);
 
     Set<String> queryPermsByUserName(String roleName);
 

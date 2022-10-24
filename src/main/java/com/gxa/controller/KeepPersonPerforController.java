@@ -19,7 +19,7 @@ public class KeepPersonPerforController {
     private KeepPersonPerforService keepPersonPerforService;
 
     @ApiOperation("数据统计---维修人员绩效 查询")
-    @PostMapping("KeepPersonPerfor/queryKeepPersonPerfor")
+    @PostMapping("/KeepPersonPerfor/queryKeepPersonPerfor")
     public Result<List<KeepPersonPerfor>> queryKeepPersonPerfor(){
 
         Result<List<KeepPersonPerfor>> r = Result.failed();

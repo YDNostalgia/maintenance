@@ -76,19 +76,21 @@
 
     <mvc:cors>
         <mvc:mapping path="/**" allowed-origin-patterns="*"  allow-credentials="true" max-age="1800"
-                     allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"/>
+                     allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"
+                     allowed-headers="*"/>
+
     </mvc:cors>
 
-
+<!--    配置文件上传解析器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10485760"></property> <!--最大上传文件大小，单位：字节-->
     </bean>
 
 
-<!--&lt;!&ndash;    配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法&ndash;&gt;-->
-<!--    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
-<!--&lt;!&ndash;    启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用&ndash;&gt;-->
-<!--    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
-<!--          depends-on="lifecycleBeanPostProcessor"/>-->
+<!--    配置了生命周期的后置处理器，作用是调用IOC容器中的shiro bean的生命周期方法-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+<!--    启用了IOC容器中使用shiro的注解，但必须在配置LifecycleBeanPostProcessor之后才能使用-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
 
 </beans>
