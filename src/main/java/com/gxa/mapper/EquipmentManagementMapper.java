@@ -20,10 +20,10 @@ public interface EquipmentManagementMapper {
     List<TechnicalData> querylistTechnicalData();
     List<EquipmentClassification> queryAllEquipmentClassifications();
     void addEquipmentClassifications(EquipmentClass equipmentClassName);
+    void addEquipmentName(EquipmentName equipmentName);
     void updateEquipmentClassification(EquipmentClass equipmentClassName);
     void deleteEquipmentClassification(Integer id);
     List<EquipmentName> queryquipmentclassificationDropList(String equipmentClassificationName);
     void updateEquipmentclassification(EquipmentName equipmentName);
-
     void deleteEquipmentManagementByIds(List<Integer> ids);
 }
