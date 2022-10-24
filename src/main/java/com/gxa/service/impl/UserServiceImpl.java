@@ -20,7 +20,7 @@ public class UserServiceImpl  implements UserService {
 
 
     @Override
-    public User getUserByName(String userName) {
+    public List<User> getUserByName(String userName) {
         return userMapper.getUserByName(userName);
     }
 
