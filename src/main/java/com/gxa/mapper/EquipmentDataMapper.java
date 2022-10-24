@@ -17,7 +17,11 @@ public interface EquipmentDataMapper {
 
     void update(EquipmentDataToEdit equipmentDataToEdit);
 
-    void deleteByCategoryId(int categoryId);
+    void deleteByCategoryId(Integer categoryId);
+
+    //查询资料数
+
+    Integer getDataCountInteger(Integer categoryId);
 
 
 }

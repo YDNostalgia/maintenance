@@ -19,8 +19,10 @@ import java.util.List;
 @RestController
 @Api(tags = "资料类型接口")
 public class EquipmentDataController {
+
     @Autowired
     private EquipmentDataService equipmentDataService;
+    private Result<Integer> integerResult;
 
     @ApiOperation("查询资料分类")
     @GetMapping("/equipmentData/list")
@@ -69,17 +71,26 @@ public class EquipmentDataController {
     @ApiOperation("删除资料分类")
     @DeleteMapping("/equipmentData/delete")
     @ResponseBody
-    public Result<Integer> delete( @RequestParam("categoryId") int categoryId ){
-        System.out.println("categoryId------"+categoryId);
-        Result<Integer> r = Result.success();
-        try {
-            equipmentDataService.delete(categoryId);
-        }catch (Exception e){
-            e.printStackTrace();
-            r = Result.failed();
+    public Result<Integer> delete( @RequestParam("categoryId") Integer categoryId ){
+
+        Integer dataCount = equipmentDataService.getDataCountInteger(categoryId);
+        Result<Integer> r = new Result<>();
+
+
+        if (dataCount == 0){
+
+            try {
+                equipmentDataService.delete(categoryId);
+                r = Result.success();
+            }catch (Exception e){
+                e.printStackTrace();
+               r =  Result.failed();
+            }
+        }else {
+           r =  Result.failed("删除失败，不能删除资料数不为0的资料分类");
         }
         return r;
     }
+}
 
-    }
 

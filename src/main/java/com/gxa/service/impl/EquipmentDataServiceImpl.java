@@ -37,9 +37,16 @@ public class EquipmentDataServiceImpl implements EquipmentDataService {
     }
 
     @Override
-    public void delete(int categoryId) {
+    public void delete(Integer categoryId) {
 
         equipmentDataMapper.deleteByCategoryId(categoryId);
     }
+
+    @Override
+    public Integer getDataCountInteger(Integer categoryId) {
+        Integer dataCountInteger = equipmentDataMapper.getDataCountInteger(categoryId);
+        return dataCountInteger;
+    }
+
 
 }
