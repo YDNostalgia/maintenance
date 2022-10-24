@@ -48,7 +48,8 @@
         </if>
         <if test="inventoryNo != null and inventoryNo != 0">
             AND im.inventory_no = #{inventoryNo}
-        </if>
+        </if> v
+        LEFT JOIN t_user u2 ON u2.id = v.reviewed_by_id
     </select>
     <select id="queryByInventoryNo" resultType="java.lang.Integer">
            SELECT auditStatus
